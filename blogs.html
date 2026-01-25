@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights & Articles | LedgersCFO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #1e293b; }
+        
+        .glass-nav { 
+            background: rgba(255, 255, 255, 0.98); 
+            backdrop-filter: blur(20px); 
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5); 
+            box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05);
+        }
+
+        .blog-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .blog-card img {
+            transition: transform 0.7s ease;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar {
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(40px); 
+            transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1); 
+        }
+        
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Section -->
+    <nav class="sticky top-0 glass-nav z-50">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+        <a href="index.html" class="text-2xl font-extrabold tracking-tighter hover:opacity-80 transition">
+            LEDGERS<span class="text-blue-600">CFO</span>
+        </a>
+        <div class="hidden md:flex space-x-10 font-bold text-sm text-slate-500">
+            <a href="index.html" class="hover:text-blue-600 transition">← Back to Home</a>
+        </div>
+        <a href="index.html#audit-form" class="bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-extrabold shadow-lg hover:bg-blue-600 transition">
+            Get Started
+        </a>
+    </div>
+</nav>
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 to-blue-50">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">Insights & Articles</h1>
+            <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-12">Expert guidance on cross-border tax, compliance, and strategic finance for global startups.</p>
+            
+            <!-- Search Bar -->
+            <div class="max-w-2xl mx-auto mb-12">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="Search articles..." class="search-bar w-full px-6 py-5 rounded-2xl border-2 border-slate-200 outline-none focus:border-blue-500 text-lg" oninput="filterBlogs()">
+                    <svg class="w-6 h-6 absolute right-6 top-1/2 transform -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button onclick="filterByCategory('all')" class="filter-btn active px-6 py-3 bg-slate-100 text-slate-700 rounded-full font-bold text-sm" data-category="all">All Articles</button>
+                <button onclick="filterByCategory('compliance')" class="filter-btn px-6 py-3 bg-slate-100 text-slate-700 rounded-full font-bold text-sm" data-category="compliance">Compliance</button>
+                <button onclick="filterByCategory('strategy')" class="filter-btn px-6 py-3 bg-slate-100 text-slate-700 rounded-full font-bold text-sm" data-category="strategy">Strategy</button>
+                <button onclick="filterByCategory('funding')" class="filter-btn px-6 py-3 bg-slate-100 text-slate-700 rounded-full font-bold text-sm" data-category="funding">Funding</button>
+                <button onclick="filterByCategory('tax')" class="filter-btn px-6 py-3 bg-slate-100 text-slate-700 rounded-full font-bold text-sm" data-category="tax">Tax</button>
+                <button onclick="filterByCategory('accounting')" class="filter-btn px-6 py-3 bg-slate-100 text-slate-700 rounded-full font-bold text-sm" data-category="accounting">Accounting</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div id="blogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                
+                <!-- Blog Card 1 -->
+                <article class="blog-card bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100" data-category="compliance" data-title="Mastering Form 5471 for Offshore Subsidiaries" data-excerpt="navigate complex disclosure requirements">
+                    <div class="h-60 overflow-hidden">
+                        <img src="https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover" alt="Finance Chart">
+                    </div>
+                    <div class="p-10">
+                        <span class="category-tag bg-blue-100 text-blue-700">Compliance</span>
+                        <h3 class="font-bold text-2xl mb-4 mt-5 leading-tight">Mastering Form 5471 for Offshore Subsidiaries</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">How to navigate the complex disclosure requirements for US entities with Indian subsidiaries.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-bold">5 min read</span>
+                            <button onclick="openBlog('form-5471')" class="text-blue-600 font-extrabold text-sm hover:text-blue-700 transition">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 2 -->
+                <article class="blog-card bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100" data-category="strategy" data-title="LTV/CAC Benchmarks for 2026 SaaS Founders" data-excerpt="venture capitalists unit economics funding">
+                    <div class="h-60 overflow-hidden">
+                        <img src="https://images.pexels.com/photos/5900222/pexels-photo-5900222.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover" alt="Strategy">
+                    </div>
+                    <div class="p-10">
+                        <span class="category-tag bg-emerald-100 text-emerald-700">Strategy</span>
+                        <h3 class="font-bold text-2xl mb-4 mt-5 leading-tight">LTV/CAC Benchmarks for 2026 SaaS Founders</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">What venture capitalists are looking for in unit economics in the current funding environment.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-bold">7 min read</span>
+                            <button onclick="openBlog('ltv-cac-benchmarks')" class="text-blue-600 font-extrabold text-sm hover:text-blue-700 transition">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 3 -->
+                <article class="blog-card bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100" data-category="funding" data-title="Bridge Rounds vs. Runway Extension" data-excerpt="financial instrument milestone dilution">
+                    <div class="h-60 overflow-hidden">
+                        <img src="https://images.pexels.com/photos/7063771/pexels-photo-7063771.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover" alt="Funding">
+                    </div>
+                    <div class="p-10">
+                        <span class="category-tag bg-purple-100 text-purple-700">Funding</span>
+                        <h3 class="font-bold text-2xl mb-4 mt-5 leading-tight">Bridge Rounds vs. Runway Extension</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Choosing the right financial instrument to reach your next milestone without excessive dilution.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-bold">6 min read</span>
+                            <button onclick="openBlog('bridge-rounds')" class="text-blue-600 font-extrabold text-sm hover:text-blue-700 transition">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 4 -->
+                <article class="blog-card bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100" data-category="tax" data-title="Section 174 R&D Tax Credit Opportunities" data-excerpt="research development expenses tax deductions">
+                    <div class="h-60 overflow-hidden">
+                        <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover" alt="Tax">
+                    </div>
+                    <div class="p-10">
+                        <span class="category-tag bg-amber-100 text-amber-700">Tax</span>
+                        <h3 class="font-bold text-2xl mb-4 mt-5 leading-tight">Section 174 R&D Tax Credit Opportunities</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Maximizing your R&D tax credits while staying compliant with new IRS regulations for 2026.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-bold">8 min read</span>
+                            <button onclick="openBlog('rd-tax-credit')" class="text-blue-600 font-extrabold text-sm hover:text-blue-700 transition">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 5 -->
+                <article class="blog-card bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100" data-category="compliance" data-title="Delaware Franchise Tax: Complete Guide 2026" data-excerpt="franchise tax calculation authorized shares">
+                    <div class="h-60 overflow-hidden">
+                        <img src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover" alt="Delaware">
+                    </div>
+                    <div class="p-10">
+                        <span class="category-tag bg-blue-100 text-blue-700">Compliance</span>
+                        <h3 class="font-bold text-2xl mb-4 mt-5 leading-tight">Delaware Franchise Tax: Complete Guide 2026</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Everything you need to know about calculating and filing your Delaware franchise tax this year.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-bold">10 min read</span>
+                            <button onclick="openBlog('delaware-franchise-tax')" class="text-blue-600 font-extrabold text-sm hover:text-blue-700 transition">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 6 -->
+                <article class="blog-card bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100" data-category="accounting" data-title="Cash vs. Accrual Accounting for Startups" data-excerpt="accounting methods financial reporting startup">
+                    <div class="h-60 overflow-hidden">
+                        <img src="https://images.pexels.com/photos/5900228/pexels-photo-5900228.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover" alt="Accounting">
+                    </div>
+                    <div class="p-10">
+                        <span class="category-tag bg-indigo-100 text-indigo-700">Accounting</span>
+                        <h3 class="font-bold text-2xl mb-4 mt-5 leading-tight">Cash vs. Accrual Accounting for Startups</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Choosing the right accounting method for your startup's stage and investor requirements.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-bold">6 min read</span>
+                            <button onclick="openBlog('cash-vs-accrual')" class="text-blue-600 font-extrabold text-sm hover:text-blue-700 transition">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 7 -->
+                <article class="blog-card bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100" data-category="strategy" data-title="Building a 3-Statement Financial Model" data-excerpt="financial modeling balance sheet income statement">
+                    <div class="h-60 overflow-hidden">
+                        <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover" alt="Financial Model">
+                    </div>
+                    <div class="p-10">
+                        <span class="category-tag bg-emerald-100 text-emerald-700">Strategy</span>
+                        <h3 class="font-bold text-2xl mb-4 mt-5 leading-tight">Building a 3-Statement Financial Model</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Step-by-step guide to creating investor-ready financial models that tell your growth story.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-bold">12 min read</span>
+                            <button onclick="openBlog('financial-model')" class="text-blue-600 font-extrabold text-sm hover:text-blue-700 transition">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 8 -->
+                <article class="blog-card bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100" data-category="tax" data-title="Transfer Pricing for US-India Operations" data-excerpt="transfer pricing cost plus arm's length">
+                    <div class="h-60 overflow-hidden">
+                        <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover" alt="Transfer Pricing">
+                    </div>
+                    <div class="p-10">
+                        <span class="category-tag bg-amber-100 text-amber-700">Tax</span>
+                        <h3 class="font-bold text-2xl mb-4 mt-5 leading-tight">Transfer Pricing for US-India Operations</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Navigating transfer pricing rules between your Delaware C-Corp and Indian subsidiary.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-bold">9 min read</span>
+                            <button onclick="openBlog('transfer-pricing')" class="text-blue-600 font-extrabold text-sm hover:text-blue-700 transition">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 9 -->
+                <article class="blog-card bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100" data-category="funding" data-title="Preparing for Series A: Financial Diligence" data-excerpt="series a fundraising due diligence investors">
+                    <div class="h-60 overflow-hidden">
+                        <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover" alt="Series A">
+                    </div>
+                    <div class="p-10">
+                        <span class="category-tag bg-purple-100 text-purple-700">Funding</span>
+                        <h3 class="font-bold text-2xl mb-4 mt-5 leading-tight">Preparing for Series A: Financial Diligence</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">What investors look for during financial due diligence and how to prepare your data room.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-bold">11 min read</span>
+                            <button onclick="openBlog('series-a-diligence')" class="text-blue-600 font-extrabold text-sm hover:text-blue-700 transition">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- No Results Message -->
+            <div id="noResults" class="text-center py-20 hidden">
+                <div class="text-6xl mb-6">🔍</div>
+                <h3 class="text-3xl font-bold text-slate-900 mb-4">No articles found</h3>
+                <p class="text-slate-500 text-lg">Try adjusting your search or filter criteria</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-blue-700 text-white px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6">Ready to get started?</h2>
+            <p class="text-blue-100 text-xl mb-10">Schedule a free consultation with our CFO experts today.</p>
+            <a href="index.html#audit-form" class="inline-block bg-white text-blue-700 px-12 py-5 rounded-2xl font-extrabold text-xl hover:bg-blue-50 transition shadow-xl">
+                Book Consultation
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer (same as main page) -->
+    <footer class="bg-slate-900 text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-2xl font-bold tracking-tighter mb-3">LEDGERS<span class="text-blue-400">CFO</span></p>
+            <p class="text-slate-400 text-sm">© 2026 LedgersCFO Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Filter by category
+        function filterByCategory(category) {
+            const allCards = document.querySelectorAll('.blog-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update button states
+            buttons.forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Filter cards
+            let visibleCount = 0;
+            allCards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0);
+        }
+
+        // Search functionality
+        function filterBlogs() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const allCards = document.querySelectorAll('.blog-card');
+            let visibleCount = 0;
+
+            allCards.forEach(card => {
+                const title = card.dataset.title.toLowerCase();
+                const excerpt = card.dataset.excerpt.toLowerCase();
+                
+                if (title.includes(searchTerm) || excerpt.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0);
+        }
+
+        // Open individual blog (placeholder)
+        function openBlog(slug) {
+            alert(`Opening blog: ${slug}\n\nIn production, this would navigate to the full article page.`);
+            // In production: window.location.href = `blog-${slug}.html`;
+        }
+
+        // Reveal on scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
