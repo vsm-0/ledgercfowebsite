@@ -1653,6 +1653,30 @@ body {
     text-align: center;
 }
 
+.nav-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-toggle-line {
+  width: 24px;
+  height: 2px;
+  background-color: #0f172a;
+  border-radius: 999px;
+  display: block;
+}
+
+.nav-toggle-line + .nav-toggle-line {
+  margin-top: 6px;
+}
+
+
     </style>
 </head>
 <body>
@@ -1660,22 +1684,23 @@ body {
 <nav class="sticky top-0 glass-nav z-50 bg-white/70 backdrop-blur" id="mainNav">
   <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
     <!-- LOGO + HAMBURGER -->
-    <div class="flex items-center justify-between w-full md:w-auto gap-3">
+    <div class="flex items-center justify-between w-full md:w-auto">
       <a href="#home" class="text-2xl font-extrabold tracking-tighter hover:opacity-80 transition">
         LEDGERS<span class="text-blue-600">CFO</span>
       </a>
 
       <!-- MOBILE HAMBURGER -->
-<button
-  class="md:hidden ml-4 inline-flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-white shadow-sm"
+      <button
+  class="nav-toggle md:hidden ml-4"
   aria-label="Toggle navigation"
   id="mobileMenuButton"
 >
-  <span class="block w-6 h-0.5 bg-slate-800 mb-1.5 rounded-full"></span>
-  <span class="block w-6 h-0.5 bg-slate-800 mb-1.5 rounded-full"></span>
-  <span class="block w-6 h-0.5 bg-slate-800 rounded-full"></span>
+  <span class="nav-toggle-line"></span>
+  <span class="nav-toggle-line"></span>
+  <span class="nav-toggle-line"></span>
 </button>
 
+    </div>
 
     <!-- DESKTOP NAV -->
     <div class="hidden md:flex items-center space-x-10 font-bold text-sm text-slate-500">
@@ -3417,6 +3442,7 @@ body {
 </footer>
 
 <script>
+
   document.addEventListener("DOMContentLoaded", function () {
     const btn = document.getElementById("mobileMenuButton");
     const menu = document.getElementById("mobileMenu");
