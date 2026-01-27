@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LedgersCFO | Investor-Ready Global Finance 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
@@ -257,7 +257,16 @@ body {
         /* Accordion */
         .accordion-content { transition: all 0.4s ease-in-out; max-height: 0; overflow: hidden; opacity: 0; }
         .accordion-content.open { max-height: 500px; opacity: 1; padding-bottom: 1.5rem; }
+/* Canvas Chart Specific Styles */
+canvas {
+    display: block !important;
+}
 
+#growthChart {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+}
         /* Floating Video Widget (Initially Hidden) */
         #videoWidget { 
             position: fixed; 
@@ -990,6 +999,95 @@ body {
             margin-top: 0.5rem;
         }
 
+/* Table-style two-column comparison */
+.comparison-table {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  font-size: 0.85rem;          /* small font */
+}
+
+/* Column cards */
+.comparison-col {
+  background: #ffffff;
+  border-radius: 1.75rem;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+/* Slight visual difference for LedgersCFO side */
+.comparison-col-ledgers {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+/* Tighten inner blocks for compact look */
+.comparison-col .metrics-list,
+.comparison-col .points-list,
+.comparison-col .features-box,
+.comparison-col .additional-features,
+.comparison-col .timeline-box,
+.comparison-col .bottom-cta {
+  margin-bottom: 1.25rem;
+}
+
+/* Smaller text but readable */
+.comparison-col p,
+.comparison-col li,
+.comparison-col .metric-label,
+.comparison-col .metric-value {
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+@media (max-width: 768px) {
+  .comparison-wrapper {
+    padding: 2rem 1rem;
+  }
+
+  .comparison-table {
+    grid-template-columns: 1fr;   /* stack columns */
+    gap: 1.25rem;
+    font-size: 0.8rem;
+  }
+
+  .comparison-col {
+    padding: 1.25rem 1rem;
+    border-radius: 1.25rem;
+  }
+
+  .comparison-header h2 {
+    font-size: 1.7rem;
+    line-height: 1.2;
+  }
+
+  .comparison-header p {
+    font-size: 0.95rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .metric-row {
+    padding: 0.7rem 0.9rem;
+  }
+
+  .point-item {
+    padding: 0.85rem;
+  }
+
+  .timeline-box,
+  .features-box,
+  .additional-features,
+  .bottom-cta {
+    padding: 1.1rem 1rem;
+  }
+}
+
+
         /* Disable text selection while sliding */
 .select-none {
     user-select: none;
@@ -1675,6 +1773,23 @@ body {
 .nav-toggle-line + .nav-toggle-line {
   margin-top: 6px;
 }
+#growthChart,
+#growthChart canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 350px !important;
+  max-height: 350px !important;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important; /* Fallback */
+}
+#growthChart:empty::after {
+  content: "Loading chart...";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #64748b;
+  font-weight: 600;
+}
 
 
     </style>
@@ -1968,434 +2083,603 @@ body {
         </button>
     </div> -->
 
-    <section id="home" class="relative pt-20 pb-32 px-6" alignment="center">
-        <div class="max-w-7xl mx-auto flex flex-col items-center justify-center">
-            <div class="reveal" style="transition-delay: 0.2s; display: flex; justify-content: center; width: 100%;">
-                <div class="bg-white p-10 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)] border border-slate-100 relative max-w-2xl w-full">
-                    <div class="flex justify-between items-center mb-12">
-                        <div>
-                            <h3 class="font-extrabold text-slate-900 text-xl tracking-tight">Capital Efficiency</h3>
-                            <p class="text-xs text-slate-400 mt-1">Real-time portfolio performance</p>
-                        </div>
-                        <div class="flex -space-x-2">
-                            <div class="w-10 h-10 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center font-bold text-xs">JD</div>
-                            <div class="w-10 h-10 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center font-bold text-xs">AS</div>
-                        </div>
+    <section id="home" class="relative pt-20 pb-32 px-6 z-10" alignment="center">
+    <div class="max-w-7xl mx-auto flex flex-col items-center justify-center">
+        <div class="reveal active" style="transition-delay: 0.2s; display: flex; justify-content: center; width: 100%;">
+            <div class="bg-white p-10 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)] border border-slate-100 relative max-w-2xl w-full z-20">
+                <div class="flex justify-between items-center mb-12">
+                    <div>
+                        <h3 class="font-extrabold text-slate-900 text-xl tracking-tight">Capital Efficiency</h3>
+                        <p class="text-xs text-slate-400 mt-1">Real-time portfolio performance</p>
                     </div>
-                    <div class="h-[350px] w-full">
-                        <canvas id="growthChart"></canvas>
+                    <div class="flex -space-x-2">
+                        <div class="w-10 h-10 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center font-bold text-xs">JD</div>
+                        <div class="w-10 h-10 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center font-bold text-xs">AS</div>
                     </div>
+                </div>
+                <div style="height: 350px; width: 100%; max-width: 100%;">
+                    <canvas id="growthChart" style="display: block; width: 100% !important; height: 350px !important;"></canvas>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 <!-- slide difference-->
 
-<div class="comparison-wrapper">
-        <div class="comparison-header">
-            <h2>Why Choose LedgersCFO?</h2>
-            <p>Slide the bar to see the difference in clarity and performance</p>
-            <div class="vs-title">
-                <span class="other">😰 OTHER FIRMS</span>
-                <span class="vs-text">VS</span>
-                <span class="ledgers">🚀 LEDGERSCFO</span>
-            </div>
+<!-- ========================================
+     COMPARISON TABLE SECTION
+     Add this section wherever you want in your index.html
+     (Recommended: After the hero section or before pricing)
+     ======================================== -->
+
+<section id="comparison" class="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 reveal">
+    <div class="container mx-auto px-6 max-w-7xl">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
+                Why Choose <span class="text-gradient">LedgersCFO</span>?
+            </h2>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+                See the clear difference between traditional firms and our operator-led approach
+            </p>
         </div>
-        
-        <div class="slider-container" id="sliderContainer">
-            <!-- AFTER LAYER (LedgersCFO) -->
-            <div class="content-wrapper">
-                <div class="single-col">
-                    <!-- Metrics -->
-                    <div>
-                        <h3 class="section-title">📊 Real-Time Metrics</h3>
-                        <div class="metrics-list">
-                            <div class="metric-row">
-                                <span class="metric-label">ARR</span>
-                                <span class="metric-value">$2,400,000</span>
-                            </div>
-                            <div class="metric-row">
-                                <span class="metric-label">Cash Balance</span>
-                                <span class="metric-value">$850,000</span>
-                            </div>
-                            <div class="metric-row">
-                                <span class="metric-label">Cash Runway</span>
-                                <span class="metric-value">18 months</span>
-                            </div>
-                            <div class="metric-row">
-                                <span class="metric-label">Revenue</span>
-                                <span class="metric-value">$3,200,000</span>
-                            </div>
-                            <div class="metric-row">
-                                <span class="metric-label">COGS</span>
-                                <span class="metric-value">$640,000</span>
-                            </div>
-                            <div class="metric-row">
-                                <span class="metric-label">S&M Spend</span>
-                                <span class="metric-value">$480,000</span>
-                            </div>
-                            <div class="metric-row">
-                                <span class="metric-label">R&D Spend</span>
-                                <span class="metric-value">$720,000</span>
-                            </div>
-                            <div class="metric-row">
-                                <span class="metric-label">G&A Spend</span>
-                                <span class="metric-value">$320,000</span>
-                            </div>
-                            <div class="metric-row">
-                                <span class="metric-label">Burn Multiple</span>
-                                <span class="metric-value">1.2x</span>
-                            </div>
-                            <div class="metric-row">
-                                <span class="metric-label">CAC / LTV</span>
-                                <span class="metric-value">$12.5k / $48k</span>
-                            </div>
+
+        <!-- Comparison Table Container -->
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+            
+            <!-- Table Header -->
+            <div class="grid grid-cols-1 md:grid-cols-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+                <div class="p-4 md:p-6 border-b md:border-b-0 md:border-r border-blue-500/30">
+                    <h3 class="text-xl md:text-2xl font-bold text-center">Feature</h3>
+                </div>
+                <div class="p-4 md:p-6 border-b md:border-b-0 md:border-r border-blue-500/30 bg-blue-500/20">
+                    <div class="text-center">
+                        <div class="text-2xl md:text-3xl mb-2">😰</div>
+                        <h3 class="text-xl md:text-2xl font-bold">Other Firms</h3>
+                    </div>
+                </div>
+                <div class="p-4 md:p-6 bg-blue-400/20">
+                    <div class="text-center">
+                        <div class="text-2xl md:text-3xl mb-2">🚀</div>
+                        <h3 class="text-xl md:text-2xl font-bold">LedgersCFO</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 1: REAL-TIME METRICS -->
+            <div class="bg-slate-100 px-4 md:px-6 py-3">
+                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
+                    <span>📊</span> Real-Time Metrics & Visibility
+                </h4>
+            </div>
+
+            <!-- ARR -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">ARR (Annual Recurring Revenue)</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">$2,400,000</p>
+                </div>
+            </div>
+
+            <!-- Cash Balance -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Cash Balance</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">$850,000</p>
+                </div>
+            </div>
+
+            <!-- Cash Runway -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Cash Runway</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">18 months</p>
+                </div>
+            </div>
+
+            <!-- Revenue -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Revenue</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">$3,200,000</p>
+                </div>
+            </div>
+
+            <!-- COGS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">COGS (Cost of Goods Sold)</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">$640,000</p>
+                </div>
+            </div>
+
+            <!-- S&M Spend -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">S&M Spend (Sales & Marketing)</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">$480,000</p>
+                </div>
+            </div>
+
+            <!-- R&D Spend -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">R&D Spend (Research & Development)</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">$720,000</p>
+                </div>
+            </div>
+
+            <!-- G&A Spend -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">G&A Spend (General & Administrative)</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">$320,000</p>
+                </div>
+            </div>
+
+            <!-- Burn Multiple -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Burn Multiple</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">1.2x</p>
+                </div>
+            </div>
+
+            <!-- CAC / LTV -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">CAC / LTV (Customer Acquisition Cost / Lifetime Value)</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">$12.5k / $48k</p>
+                </div>
+            </div>
+
+            <!-- SECTION 2: PROBLEMS vs SOLUTIONS -->
+            <div class="bg-slate-100 px-4 md:px-6 py-3">
+                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
+                    <span>💡</span> Problems vs Solutions
+                </h4>
+            </div>
+
+            <!-- Communication -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Communication & Response Time</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">😵</span>
+                        <div>
+                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">Confusing Communication</p>
+                            <p class="text-xs text-slate-600">Emails take 2-3 days. Multiple back-and-forth cycles delay progress.</p>
                         </div>
                     </div>
-                    
-                    <!-- Solutions -->
-                    <div>
-                        <h3 class="section-title"><centre>🚀 The Solution</centre></h3>
-                        <div class="points-list">
-                            <div class="point-item">
-                                <span class="point-icon">⚡</span>
-                                <div class="point-content">
-                                    <h5>Instant Communication</h5>
-                                    <p>Dedicated Slack/WhatsApp channel. Real-time answers within hours, not days.</p>
-                                </div>
-                            </div>
-                            <div class="point-item">
-                                <span class="point-icon">💎</span>
-                                <div class="point-content">
-                                    <h5>Transparent Pricing</h5>
-                                    <p>Fixed quotes upfront. No surprises. Save 50-60% vs traditional firms.</p>
-                                </div>
-                            </div>
-                            <div class="point-item">
-                                <span class="point-icon">🌍</span>
-                                <div class="point-content">
-                                    <h5>True Cross-Border Expertise</h5>
-                                    <p>US CPAs + Indian CAs on one team handling compliance seamlessly.</p>
-                                </div>
-                            </div>
-                            <div class="point-item">
-                                <span class="point-icon">🤖</span>
-                                <div class="point-content">
-                                    <h5>Automated Systems</h5>
-                                    <p>Connect your books once. Auto-sync bank feeds. We handle the heavy lifting.</p>
-                                </div>
-                            </div>
-                            <div class="point-item">
-                                <span class="point-icon">✅</span>
-                                <div class="point-content">
-                                    <h5>Proactive Deadline Management</h5>
-                                    <p>Zero penalties on our watch. Automated tracking keeps you ahead.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Timeline -->
-                    <div>
-                        <div class="timeline-box">
-                            <h4>⏱️ LedgersCFO Timeline</h4>
-                            <div class="timeline-item">
-                                <span>Initial Response:</span>
-                                <span class="timeline-value">2-4 hours</span>
-                            </div>
-                            <div class="timeline-item">
-                                <span>Document Collection:</span>
-                                <span class="timeline-value">3-5 days</span>
-                            </div>
-                            <div class="timeline-item">
-                                <span>Draft Review:</span>
-                                <span class="timeline-value">2-3 days</span>
-                            </div>
-                            <div class="timeline-item">
-                                <span>Final Filing:</span>
-                                <span class="timeline-value">Same day</span>
-                            </div>
-                            <div class="timeline-item total">
-                                <span>Total Time:</span>
-                                <span class="timeline-total">1-2 Weeks</span>
-                            </div>
-                            <div class="pricing-badge">
-                                <div class="label">Investment</div>
-                                <div class="price">Starting at: $1,000/year</div>
-                                <div class="note">✅ All-inclusive. No hidden fees. Ever.</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Core Features -->
-                    <div>
-                        <div class="features-box">
-                            <h4>✨ Core Features</h4>
-                            <div class="feature-row">
-                                <span class="feature-label">Compliance Coverage:</span>
-                                <span class="feature-badge">End-to-End</span>
-                            </div>
-                            <div class="feature-row">
-                                <span class="feature-label">CFO Support:</span>
-                                <span class="feature-badge">Included</span>
-                            </div>
-                            <div class="feature-row">
-                                <span class="feature-label">Pricing Model:</span>
-                                <span class="feature-badge">Fixed & Clear</span>
-                            </div>
-                            <div class="feature-row">
-                                <span class="feature-label">Response Time:</span>
-                                <span class="feature-badge">Real-Time</span>
-                            </div>
-                            <div class="feature-row">
-                                <span class="feature-label">Automation:</span>
-                                <span class="feature-badge">Full Stack</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Additional Features Comparison -->
-                    <div>
-                        <div class="additional-features">
-                            <h4>🎯 Feature Comparison</h4>
-                            <div class="feature-comparison-row">
-                                <span class="feature-comparison-label">Access & Responsiveness</span>
-                                <span class="feature-comparison-value">Slack / WhatsApp + Very Responsive</span>
-                            </div>
-                            <div class="feature-comparison-row">
-                                <span class="feature-comparison-label">Team Ownership</span>
-                                <span class="feature-comparison-value">One Dedicated Team End-to-End</span>
-                            </div>
-                            <div class="feature-comparison-row">
-                                <span class="feature-comparison-label">Founder Visibility</span>
-                                <span class="feature-comparison-value">Dashboard: Cash, Burn, Runway, ARR, P&L</span>
-                            </div>
-                            <div class="feature-comparison-row">
-                                <span class="feature-comparison-label">Pricing</span>
-                                <span class="feature-comparison-value">Fixed Pricing, No Surprise Bills</span>
-                            </div>
-                            <div class="feature-comparison-row">
-                                <span class="feature-comparison-label">Operating Experience</span>
-                                <span class="feature-comparison-value">Operator-Led (Startup Finance Experience)</span>
-                            </div>
-                            <div class="feature-comparison-row">
-                                <span class="feature-comparison-label">Cross-Border Expertise</span>
-                                <span class="feature-comparison-value">US ↔ India Specialists (Delaware + India Ops)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Bottom CTA -->
-                    <div>
-                        <div class="bottom-cta">
-                            <h3>LedgersCFO isn't just tax filing — it's finance operations built for founders.</h3>
-                            <p>Get transparency, control, and peace of mind with operator-led finance teams.</p>
-                            <a href="#" class="cta-button">Get Pricing & Compliance Plan</a>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">⚡</span>
+                        <div>
+                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">Instant Communication</p>
+                            <p class="text-xs text-slate-600">Dedicated Slack/WhatsApp channel. Real-time answers within hours, not days.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- BEFORE LAYER (Other Firms) -->
-            <div class="before-layer" id="beforeLayer">
-                <div class="content-wrapper">
-                    <div class="single-col">
-                        <!-- Metrics (Unknown) -->
+
+            <!-- Pricing -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Pricing Transparency</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">💸</span>
                         <div>
-                            <h3 class="section-title">📊 Your Metrics</h3>
-                            <div class="metrics-list">
-                                <div class="metric-row">
-                                    <span class="metric-label">ARR</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                                <div class="metric-row">
-                                    <span class="metric-label">Cash Balance</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                                <div class="metric-row">
-                                    <span class="metric-label">Cash Runway</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                                <div class="metric-row">
-                                    <span class="metric-label">Revenue</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                                <div class="metric-row">
-                                    <span class="metric-label">COGS</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                                <div class="metric-row">
-                                    <span class="metric-label">S&M Spend</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                                <div class="metric-row">
-                                    <span class="metric-label">R&D Spend</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                                <div class="metric-row">
-                                    <span class="metric-label">G&A Spend</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                                <div class="metric-row">
-                                    <span class="metric-label">Burn Multiple</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                                <div class="metric-row">
-                                    <span class="metric-label">CAC / LTV</span>
-                                    <span class="metric-value">???</span>
-                                </div>
-                            </div>
+                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">Hidden Costs</p>
+                            <p class="text-xs text-slate-600">"$2k basic filing" turns into $5k+ with surprise state returns and fees.</p>
                         </div>
-                        
-                        <!-- Problems -->
+                    </div>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">💎</span>
                         <div>
-                            <h3 class="section-title" alignment="center">😰 The Problems</h3>
-                            <div class="points-list">
-                                <div class="point-item">
-                                    <span class="point-icon">😵</span>
-                                    <div class="point-content">
-                                        <h5>Confusing Communication</h5>
-                                        <p>Emails take 2-3 days. Multiple back-and-forth cycles delay progress.</p>
-                                    </div>
-                                </div>
-                                <div class="point-item">
-                                    <span class="point-icon">💸</span>
-                                    <div class="point-content">
-                                        <h5>Hidden Costs</h5>
-                                        <p>"$2k basic filing" turns into $5k+ with surprise state returns and fees.</p>
-                                    </div>
-                                </div>
-                                <div class="point-item">
-                                    <span class="point-icon">🤷</span>
-                                    <div class="point-content">
-                                        <h5>No Cross-Border Expertise</h5>
-                                        <p>US CPAs don't understand Indian compliance. You need multiple firms.</p>
-                                    </div>
-                                </div>
-                                <div class="point-item">
-                                    <span class="point-icon">📊</span>
-                                    <div class="point-content">
-                                        <h5>Manual Everything</h5>
-                                        <p>Excel sheets and email attachments. You're doing all the heavy lifting.</p>
-                                    </div>
-                                </div>
-                                <div class="point-item">
-                                    <span class="point-icon">⏰</span>
-                                    <div class="point-content">
-                                        <h5>Deadline Stress</h5>
-                                        <p>Last-minute scrambles lead to costly penalties and compliance issues.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Timeline -->
-                        <div>
-                            <div class="timeline-box">
-                                <h4>⏱️ Typical Timeline</h4>
-                                <div class="timeline-item">
-                                    <span>Initial Response:</span>
-                                    <span class="timeline-value">2-3 days</span>
-                                </div>
-                                <div class="timeline-item">
-                                    <span>Document Collection:</span>
-                                    <span class="timeline-value">2-3 weeks</span>
-                                </div>
-                                <div class="timeline-item">
-                                    <span>Draft Review:</span>
-                                    <span class="timeline-value">1-2 weeks</span>
-                                </div>
-                                <div class="timeline-item">
-                                    <span>Final Filing:</span>
-                                    <span class="timeline-value">2-4 days</span>
-                                </div>
-                                <div class="timeline-item total">
-                                    <span>Total Time:</span>
-                                    <span class="timeline-total">6-8 Weeks</span>
-                                </div>
-                                <div class="pricing-badge">
-                                    <div class="label">Average Cost</div>
-                                    <div class="price">$4,500 - $7,000</div>
-                                    <div class="note">⚠️ Plus surprise additional fees</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Traditional Services -->
-                        <div>
-                            <div class="features-box">
-                                <h4>Traditional Services</h4>
-                                <div class="feature-row">
-                                    <span class="feature-label">Compliance Coverage:</span>
-                                    <span class="feature-badge">Fragmented</span>
-                                </div>
-                                <div class="feature-row">
-                                    <span class="feature-label">CFO Support:</span>
-                                    <span class="feature-badge">Not Available</span>
-                                </div>
-                                <div class="feature-row">
-                                    <span class="feature-label">Pricing Model:</span>
-                                    <span class="feature-badge warning">Surprise Bills</span>
-                                </div>
-                                <div class="feature-row">
-                                    <span class="feature-label">Response Time:</span>
-                                    <span class="feature-badge">2-3 Days</span>
-                                </div>
-                                <div class="feature-row">
-                                    <span class="feature-label">Automation:</span>
-                                    <span class="feature-badge">Manual</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Additional Features Comparison (Other Firms) -->
-                        <div>
-                            <div class="additional-features">
-                                <h4>❌ What You're Missing</h4>
-                                <div class="feature-comparison-row">
-                                    <span class="feature-comparison-label">Access & Responsiveness</span>
-                                    <span class="feature-comparison-value">Email-Only, Slow Turnaround</span>
-                                </div>
-                                <div class="feature-comparison-row">
-                                    <span class="feature-comparison-label">Team Ownership</span>
-                                    <span class="feature-comparison-value">Multiple Teams, Handoffs, Follow-ups</span>
-                                </div>
-                                <div class="feature-comparison-row">
-                                    <span class="feature-comparison-label">Founder Visibility</span>
-                                    <span class="feature-comparison-value">Only Reports/PDFs, Limited Visibility</span>
-                                </div>
-                                <div class="feature-comparison-row">
-                                    <span class="feature-comparison-label">Pricing</span>
-                                    <span class="feature-comparison-value">Variable Billing, Add-ons Later</span>
-                                </div>
-                                <div class="feature-comparison-row">
-                                    <span class="feature-comparison-label">Operating Experience</span>
-                                    <span class="feature-comparison-value">Compliance-Only Teams</span>
-                                </div>
-                                <div class="feature-comparison-row">
-                                    <span class="feature-comparison-label">Cross-Border Expertise</span>
-                                    <span class="feature-comparison-value">Generic Firm, Weak Cross-Border Support</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Bottom CTA (Other Firms) -->
-                        <div>
-                            <div class="bottom-cta">
-                                <h3>Traditional firms leave you in the dark with scattered services.</h3>
-                                <p>Disconnected teams, hidden fees, and no real visibility into your finances.</p>
-                                <a href="#" class="cta-button">See What You're Missing</a>
-                            </div>
+                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">Transparent Pricing</p>
+                            <p class="text-xs text-slate-600">Fixed quotes upfront. No surprises. Save 50-60% vs traditional firms.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Slider Handle -->
-            <div class="slider-handle" id="sliderHandle"></div>
+
+            <!-- Cross-Border Expertise -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Cross-Border Compliance</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">🤷</span>
+                        <div>
+                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">No Cross-Border Expertise</p>
+                            <p class="text-xs text-slate-600">US CPAs don't understand Indian compliance. You need multiple firms.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">🌍</span>
+                        <div>
+                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">True Cross-Border Expertise</p>
+                            <p class="text-xs text-slate-600">US CPAs + Indian CAs on one team handling compliance seamlessly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automation -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Workflow Automation</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">📊</span>
+                        <div>
+                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">Manual Everything</p>
+                            <p class="text-xs text-slate-600">Excel sheets and email attachments. You're doing all the heavy lifting.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">🤖</span>
+                        <div>
+                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">Automated Systems</p>
+                            <p class="text-xs text-slate-600">Connect your books once. Auto-sync bank feeds. We handle the heavy lifting.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deadline Management -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Deadline Management</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">⏰</span>
+                        <div>
+                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">Deadline Stress</p>
+                            <p class="text-xs text-slate-600">Last-minute scrambles lead to costly penalties and compliance issues.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base md:text-lg">✅</span>
+                        <div>
+                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">Proactive Deadline Management</p>
+                            <p class="text-xs text-slate-600">Zero penalties on our watch. Automated tracking keeps you ahead.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: TIMELINE COMPARISON -->
+            <div class="bg-slate-100 px-4 md:px-6 py-3">
+                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
+                    <span>⏱️</span> Timeline & Efficiency
+                </h4>
+            </div>
+
+            <!-- Initial Response -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Initial Response Time</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-red-600 font-bold">2-3 days</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">2-4 hours</p>
+                </div>
+            </div>
+
+            <!-- Document Collection -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Document Collection</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-red-600 font-bold">2-3 weeks</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">3-5 days</p>
+                </div>
+            </div>
+
+            <!-- Draft Review -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Draft Review Time</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-red-600 font-bold">1-2 weeks</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">2-3 days</p>
+                </div>
+            </div>
+
+            <!-- Final Filing -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Final Filing</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-xs md:text-sm text-red-600 font-bold">2-4 days</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <p class="text-xs md:text-sm text-blue-700 font-bold">Same day</p>
+                </div>
+            </div>
+
+            <!-- Total Time -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 bg-slate-50">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-bold text-slate-800">⏳ Total Time Required</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-sm md:text-base text-red-700 font-extrabold">6-8 Weeks</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-100 text-center">
+                    <p class="text-sm md:text-base text-blue-700 font-extrabold">1-2 Weeks</p>
+                </div>
+            </div>
+
+            <!-- Cost Comparison -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 bg-slate-50">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-bold text-slate-800">💰 Investment / Cost</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <p class="text-sm md:text-base text-red-700 font-extrabold mb-1">$4,500 - $7,000</p>
+                    <p class="text-xs text-red-600">⚠️ Plus surprise fees</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-100 text-center">
+                    <p class="text-sm md:text-base text-blue-700 font-extrabold mb-1">Starting at $1,000/year</p>
+                    <p class="text-xs text-blue-600">✅ All-inclusive. No hidden fees.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 4: CORE FEATURES -->
+            <div class="bg-slate-100 px-4 md:px-6 py-3">
+                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
+                    <span>✨</span> Core Features & Services
+                </h4>
+            </div>
+
+            <!-- Compliance Coverage -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Compliance Coverage</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">Fragmented</span>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">End-to-End</span>
+                </div>
+            </div>
+
+            <!-- CFO Support -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">CFO Support</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">Not Available</span>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">Included</span>
+                </div>
+            </div>
+
+            <!-- Pricing Model -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Pricing Model</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">Surprise Bills</span>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">Fixed & Clear</span>
+                </div>
+            </div>
+
+            <!-- Response Time -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Response Time</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">2-3 Days</span>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">Real-Time</span>
+                </div>
+            </div>
+
+            <!-- Automation -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Automation Level</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
+                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">Manual</span>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
+                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">Full Stack</span>
+                </div>
+            </div>
+
+            <!-- SECTION 5: FEATURE COMPARISON -->
+            <div class="bg-slate-100 px-4 md:px-6 py-3">
+                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
+                    <span>🎯</span> Detailed Feature Comparison
+                </h4>
+            </div>
+
+            <!-- Access & Responsiveness -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Access & Responsiveness</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs text-slate-600">Email-only, slow turnaround</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <p class="text-xs text-blue-700 font-semibold">Slack / WhatsApp + Very Responsive</p>
+                </div>
+            </div>
+
+            <!-- Team Ownership -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Team Ownership</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs text-slate-600">Multiple teams, handoffs, follow-ups</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <p class="text-xs text-blue-700 font-semibold">One Dedicated Team End-to-End</p>
+                </div>
+            </div>
+
+            <!-- Founder Visibility -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Founder Visibility</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs text-slate-600">Only reports/PDFs, limited visibility</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <p class="text-xs text-blue-700 font-semibold">Dashboard: Cash, Burn, Runway, ARR, P&L</p>
+                </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Pricing Structure</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs text-slate-600">Variable billing, add-ons come later</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <p class="text-xs text-blue-700 font-semibold">Fixed Pricing, No Surprise Bills</p>
+                </div>
+            </div>
+
+            <!-- Operating Experience -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Operating Experience</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs text-slate-600">Compliance-only teams (no operating experience)</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <p class="text-xs text-blue-700 font-semibold">Operator-Led (Startup Finance Experience)</p>
+                </div>
+            </div>
+
+            <!-- Cross-Border Expertise -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs md:text-sm font-semibold text-slate-700">Cross-Border Expertise</p>
+                </div>
+                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p class="text-xs text-slate-600">Generic firm, weak cross-border support</p>
+                </div>
+                <div class="p-3 md:p-4 bg-blue-50/50">
+                    <p class="text-xs text-blue-700 font-semibold">US ↔ India Specialists (Delaware + India Ops)</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom CTA -->
+        <div class="mt-12 text-center bg-gradient-to-r from-blue-600 to-blue-700 rounded-3xl p-8 md:p-12 text-white shadow-2xl reveal">
+            <h3 class="text-2xl md:text-4xl font-bold mb-4">
+                LedgersCFO isn't just tax filing — it's finance operations built for founders.
+            </h3>
+            <p class="text-base md:text-xl mb-6 opacity-95">
+                Get transparency, control, and peace of mind with operator-led finance teams.
+            </p>
+            <button onclick="handleAction('Get Pricing & Compliance Plan')" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition-all btn-animate shadow-lg">
+                Get Pricing & Compliance Plan
+            </button>
         </div>
     </div>
+</section>
+
+<!-- ========================================
+     END OF COMPARISON TABLE SECTION
+     ======================================== -->
    
 <!-- Our Trusted Partners Section -->
 <section class="partners-section py-20 px-6">
@@ -3464,6 +3748,66 @@ body {
       }
     });
   });
+// Slider Logic
+let currentSlide = 1;
+const totalSlides = 4;
+let autoSlideInterval;
+
+function showSlide(slideNum) {
+  // Hide all slides and dots
+  document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+  document.querySelectorAll('.slide-dot').forEach(dot => dot.classList.remove('active'));
+  
+  // Show current slide and dot
+  const currentSlideEl = document.querySelector(`[data-slide="${slideNum}"]`);
+  const currentDot = document.querySelector(`[data-dot="${slideNum}"]`);
+  currentSlideEl.classList.add('active');
+  currentDot.classList.add('active');
+  
+  // Trigger animations
+  setTimeout(() => {
+    currentSlideEl.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+  }, 100);
+  
+  currentSlide = slideNum;
+}
+
+function changeSlide(direction) {
+  currentSlide += direction;
+  if (currentSlide > totalSlides) currentSlide = 1;
+  if (currentSlide < 1) currentSlide = totalSlides;
+  showSlide(currentSlide);
+}
+
+function goToSlide(slideNum) {
+  currentSlide = slideNum;
+  showSlide(currentSlide);
+}
+
+function startAutoSlide() {
+  autoSlideInterval = setInterval(() => changeSlide(1), 5000);
+}
+
+function resetAutoSlide() {
+  clearInterval(autoSlideInterval);
+  startAutoSlide();
+}
+
+// Init on load
+document.addEventListener('DOMContentLoaded', () => {
+  showSlide(1); // Ensure first slide active
+  startAutoSlide();
+  
+  // Pause on hover
+  document.querySelector('.slides-wrapper').addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+  document.querySelector('.slides-wrapper').addEventListener('mouseleave', startAutoSlide);
+  
+  // Keyboard arrows
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+    if (e.key === 'ArrowRight') changeSlide(1);
+  });
+});
 
     // Reveal Logic (Scroll Animations)
     const observer = new IntersectionObserver((entries) => {
@@ -3927,29 +4271,62 @@ function calculateSavings() {
         document.getElementById('videoWidget').style.display = 'none';
     }
 
-    // Chart.js - High Fidelity Financial Growth Chart
-    const ctx = document.getElementById('growthChart').getContext('2d');
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, '#2563eb');
-    gradient.addColorStop(1, '#60a5fa');
-
-            let currentSlide = 1;
-        const totalSlides = 4;
-        let autoSlideInterval;
-
-        // Change slide function
-        function changeSlide(direction) {
-            currentSlide += direction;
-            if (currentSlide > totalSlides) currentSlide = 1;
-            if (currentSlide < 1) currentSlide = totalSlides;
-            showSlide(currentSlide);
+// Chart.js - High Fidelity Financial Growth Chart
+document.addEventListener('DOMContentLoaded', () => {
+  const ctx = document.getElementById('growthChart');
+  if (!ctx) {
+    console.error('Canvas element not found');
+    return;
+  }
+  if (typeof Chart === 'undefined') {
+    console.error('Chart.js not loaded');
+    return;
+  }
+  
+  const canvasCtx = ctx.getContext('2d');
+  try {
+    new Chart(canvasCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Q1 \'25', 'Q2 \'25', 'Q3 \'25', 'Q4 \'25', 'Q1 2026'],
+        datasets: [{
+          label: 'AUM $M',
+          data: [42, 68, 55, 88, 105],
+          backgroundColor: ['#e2e8f0', '#cbd5e1', '#94a3b8', '#3b82f6', '#1e40af'],
+          hoverBackgroundColor: '#2563eb',
+          borderRadius: 20,
+          barThickness: 60,
+          borderSkipped: false,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1e293b',
+            titleFont: { size: 14, weight: 'bold' },
+            bodyFont: { size: 12 },
+            padding: 15,
+            displayColors: false,
+            callbacks: {
+              label: ctx => `${ctx.raw}M AUM`
+            }
+          }
+        },
+        scales: {
+          y: { display: false, grid: { display: false }, beginAtZero: true },
+          x: { grid: { display: false }, border: { display: false }, ticks: { font: { family: 'Plus Jakarta Sans' } } }
         }
+      }
+    });
+    console.log('Chart created successfully!');
+  } catch (error) {
+    console.error('Error creating chart:', error);
+  }
+});
 
-        // Go to specific slide
-        function goToSlide(slideNum) {
-            currentSlide = slideNum;
-            showSlide(currentSlide);
-        }
 // Global Button Redirect Logic
 function handleAction(actionName) {
     // Buttons that should go to login/signin
@@ -4066,52 +4443,45 @@ function handleAction(actionName) {
             console.log(msg);
             alert(`Action: ${msg}`);
         }
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Q1 25', 'Q2 25', 'Q3 25', 'Q4 25', 'Q1 2026'],
-            datasets: [{
-                data: [42, 68, 55, 88, 105],
-                backgroundColor: ['#e2e8f0', '#cbd5e1', '#94a3b8', '#3b82f6', '#1e40af'],
-                hoverBackgroundColor: '#2563eb',
-                borderRadius: 20,
-                barThickness: 60, // Increased Width for better visibility
-                borderSkipped: false,
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    backgroundColor: '#1e293b',
-                    titleFont: { size: 14, weight: 'bold' },
-                    bodyFont: { size: 12 },
-                    padding: 15,
-                    displayColors: false,
-                    callbacks: { label: (ctx) => ` $${ctx.raw}M AUM` }
-                }
-            },
-            scales: {
-                y: { display: false, grid: { display: false } },
-                x: { 
-                    grid: { display: false }, 
-                    border: { display: false },
-                    ticks: { 
-                        font: { size: 11, weight: 'bold', family: 'Plus Jakarta Sans' },
-                        color: '#94a3b8'
-                    }
-                }
-            },
-            animation: {
-                duration: 2500,
-                easing: 'easeOutElastic',
-                delay: (ctx) => ctx.dataIndex * 400
-            },
-        }
-    });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" onload="initGrowthChart()"></script>
+<script>
+function initGrowthChart() {
+  const ctx = document.getElementById('growthChart')?.getContext('2d');
+  if (!ctx) {
+    setTimeout(initGrowthChart, 500);
+    return;
+  }
+  if (typeof Chart === 'undefined') return;
+  
+  // Destroy existing if any
+  if (window.growthChartInstance) window.growthChartInstance.destroy();
+  
+  window.growthChartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Q1\'25', 'Q2\'25', 'Q3\'25', 'Q4\'25', 'Q1 2026'],
+      datasets: [{
+        data: [42, 68, 55, 88, 105],
+        backgroundColor: ['#e2e8f0', '#cbd5e1', '#94a3b8', '#3b82f6', '#1e40af'],
+        borderRadius: 12,
+        borderSkipped: false,
+        barThickness: 'flex'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false }, ticks: { color: '#64748b' } }, y: { display: false } },
+      animation: { duration: 1500 }
+    }
+  });
+  console.log('Growth chart loaded!');
+}
+document.addEventListener('DOMContentLoaded', initGrowthChart);
+window.addEventListener('load', initGrowthChart);
 </script>
+
 </body>
 </html>
