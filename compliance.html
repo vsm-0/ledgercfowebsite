@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Tax Compliance | LedgersCFO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; background-color: #ffffff; color: #1e293b; }
+        
+        .serif-italic { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; }
+        
+        .text-gradient { 
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa); 
+            background-size: 200% 200%; 
+            animation: gradient-shift 3s ease infinite; 
+            background-clip: text; 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+        .glass-nav { 
+            background: rgba(255, 255, 255, 0.75); 
+            backdrop-filter: blur(20px); 
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5); 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .glass-nav.scrolled { padding: 0.5rem 0; background: rgba(255, 255, 255, 0.98); box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05); }
+
+        .btn-animate { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            cursor: pointer; 
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-animate:active { transform: scale(0.95); }
+        .btn-animate:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -10px rgba(37, 99, 235, 0.5); }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .accordion-content { transition: all 0.4s ease-in-out; max-height: 0; overflow: hidden; opacity: 0; }
+        .accordion-content.open { max-height: 1000px; opacity: 1; padding-bottom: 1.5rem; }
+
+        #toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transform: translateX(200%);
+            transition: 0.5s;
+            z-index: 2000;
+        }
+        #toast.show { transform: translateX(0); }
+
+        .partner-box {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem 3rem;
+            box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            border: 2px solid transparent;
+        }
+
+        .partner-box img {
+            max-height: 55px;
+            max-width: 150px;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(0.6);
+            transition: all 0.4s ease;
+            transform: scale(0.9);
+        }
+
+        .partner-item:hover .partner-box {
+            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.2);
+            border-color: #3b82f6;
+            transform: translateY(-5px);
+        }
+
+        .partner-item:hover .partner-box img {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.15);
+        }
+
+        /* Logo Slideshow Container */
+        .logo-slideshow {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            height: 120px;
+        }
+
+        .logo-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .logo-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .logo-slide.exit {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+        .logo-box {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+        }
+
+        .logo-box img {
+            max-height: 50px;
+            max-width: 120px;
+            object-fit: contain;
+        }
+
+        .step-card {
+            position: relative;
+            background: white;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.3);
+            transform: translateY(-6px);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -1.5rem;
+            left: 2rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-table thead {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+            color: white;
+        }
+
+        .pricing-table th {
+            padding: 1.5rem;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+        }
+
+        .pricing-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .pricing-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .client-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .client-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.3);
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            display: none;
+        }
+
+        .nav-item:hover::after {
+            display: block;
+        }
+
+        .dropdown-menu {
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .dropdown-menu::before {
+            border-left: 1px solid rgba(229, 231, 235, 0.8);
+            border-top: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+            padding: 0.5rem;
+            margin-top: 1rem;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: white;
+            rotate: 45deg;
+            border-radius: 2px;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .dropdown-item:hover {
+            background: #eff6ff;
+            color: #2563eb;
+            transform: translateX(4px);
+        }
+
+        .dropdown-item-icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toast">Action Simulated Successfully!</div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 glass-nav z-50" id="mainNav">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-extrabold tracking-tighter hover:opacity-80 transition">
+                LEDGERS<span class="text-blue-600">CFO</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-10 font-bold text-sm text-slate-500">
+                <a href="index.html#home" class="hover:text-blue-600 transition">Home</a>
+                <a href="index.html#strategy" class="hover:text-blue-600 transition">Strategy</a>
+                <a href="compliance.html" class="text-blue-600 transition">Compliance</a>
+                <a href="index.html#pricing" class="hover:text-blue-600 transition">Pricing</a>
+                <a href="index.html#resources" class="hover:text-blue-600 transition">Resources</a>
+
+                <div class="nav-item">
+                    <a href="index.html#services" class="hover:text-blue-600 transition inline-flex items-center gap-1">
+                        Services
+                        <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="countries.html" class="dropdown-item">
+                            <span class="dropdown-item-icon">🌐</span>
+                            Countries
+                        </a>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="index.html#insights" class="hover:text-blue-600 transition cursor-pointer">Insights</a>
+                    <div class="dropdown-menu">
+                        <a href="blogs.html" class="dropdown-item">
+                            <span class="dropdown-item-icon">📝</span>
+                            Our Blog
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="handleAction('Audit Requested')" class="btn-animate bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-extrabold shadow-lg">
+                Schedule Audit
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 to-blue-50">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 text-[10px] font-bold tracking-widest text-blue-700 uppercase bg-blue-50 rounded-full">
+                    <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span></span>
+                    Accurate, Compliant, On Time
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-[1.1] tracking-tight mb-8">
+                    US Tax Return Filing
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto mb-12 leading-relaxed">
+                    Expert tax professionals + smart communication. Our tax filing service ensures your Federal and State filings are prepared correctly and filed before deadlines.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <button onclick="handleAction('Free Consultation Booked')" class="btn-animate bg-blue-700 text-white px-12 py-6 rounded-2xl font-extrabold text-lg shadow-xl">
+                        Book A Free Consultation
+                    </button>
+                    <button onclick="document.getElementById('pricing-section').scrollIntoView({behavior:'smooth'})" class="btn-animate bg-white text-blue-700 px-12 py-6 rounded-2xl font-extrabold text-lg shadow-xl border-2 border-blue-700">
+                        See Pricing
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End-to-end Support -->
+    <section class="py-32 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">End-to-end US tax support</h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">Federal (1120/1065), State returns, 5471/5472, FinCEN 114, 1099 & R&D Credit Assistance</p>
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-[3rem] p-12 md:p-20 text-white reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h3 class="text-3xl md:text-4xl font-extrabold mb-6">Quick Scope Check</h3>
+                        <p class="text-blue-100 text-lg mb-8">Tell us your entity type, states, and tax year to receive a fixed quote.</p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center gap-3 text-lg">
+                                <svg class="w-6 h-6 text-blue-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                C‑Corp/LLC
+                            </li>
+                            <li class="flex items-center gap-3 text-lg">
+                                <svg class="w-6 h-6 text-blue-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                Foreign ownership forms (5472/5471) handled
+                            </li>
+                            <li class="flex items-center gap-3 text-lg">
+                                <svg class="w-6 h-6 text-blue-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                FinCEN 114 and 1099 filings included
+                            </li>
+                        </ul>
+                        <button onclick="handleAction('Free Consultation Booked')" class="bg-white text-blue-700 px-10 py-5 rounded-2xl font-extrabold text-lg hover:bg-blue-50 transition shadow-xl">
+                            Book A Free Consultation
+                        </button>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-2xl p-8">
+                        <h4 class="font-bold text-xl mb-6 text-center">Trusted by many startups</h4>
+                        <div class="logo-slideshow">
+                            <!-- Slide 1 -->
+                            <div class="logo-slide active">
+                                <div class="logo-box"><img src="1.webp" alt="Ragas"></div>
+                                <div class="logo-box"><img src="2.webp" alt="Goldcast"></div>
+                                <div class="logo-box"><img src="3.webp" alt="Scalekit"></div>
+                                <div class="logo-box"><img src="4.webp" alt="Kwanzoo"></div>
+                            </div>
+                            <!-- Slide 2 -->
+                            <div class="logo-slide">
+                                <div class="logo-box"><img src="5.webp" alt="E42AI@Work"></div>
+                                <div class="logo-box"><img src="6.webp" alt="WayToCloudsols"></div>
+                                <div class="logo-box"><img src="7.webp" alt="ReachISO"></div>
+                                <div class="logo-box"><img src="8.webp" alt="CareerKarma"></div>
+                            </div>
+                            <!-- Slide 3 -->
+                            <div class="logo-slide">
+                                <div class="logo-box"><img src="9.webp" alt="PostHog"></div>
+                                <div class="logo-box"><img src="10.webp" alt="Limitless"></div>
+                                <div class="logo-box"><img src="11.webp" alt="Explo"></div>
+                                <div class="logo-box"><img src="12.webp" alt="Tydo"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4-Step Process -->
+    <section class="py-32 bg-slate-50 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Simple 4‑Step Filing Process</h2>
+                <p class="text-xl text-slate-600">Trusted by many startups</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="step-card reveal">
+                    <div class="step-number">1</div>
+                    <h3 class="text-2xl font-bold mb-4 mt-4">Kickoff (15–30m)</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">We map your structure, states, and deadlines.</p>
+                </div>
+
+                <div class="step-card reveal" style="transition-delay: 0.1s;">
+                    <div class="step-number">2</div>
+                    <h3 class="text-2xl font-bold mb-4 mt-4">Documents</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Secure checklist + read‑only access to books/bank.</p>
+                </div>
+
+                <div class="step-card reveal" style="transition-delay: 0.2s;">
+                    <div class="step-number">3</div>
+                    <h3 class="text-2xl font-bold mb-4 mt-4">Prep & Review</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">We prepare returns, reconcile, and review with you.</p>
+                </div>
+
+                <div class="step-card reveal" style="transition-delay: 0.3s;">
+                    <div class="step-number">4</div>
+                    <h3 class="text-2xl font-bold mb-4 mt-4">File & Deliver</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">E‑filed returns + summary + next‑year roadmap. Dedicated Slack/WhatsApp support throughout.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transparent Pricing -->
+    <section id="pricing-section" class="py-32 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Transparent Pricing</h2>
+                <p class="text-xl text-slate-600">Clear, fixed pricing for all our services</p>
+            </div>
+
+            <div class="reveal">
+                <div class="overflow-x-auto">
+                    <table class="pricing-table">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Description</th>
+                                <th>Starting From</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold text-slate-900">Federal Return (Form 1120)</td>
+                                <td class="text-slate-600">Annual return for C‑Corp (books finalized)</td>
+                                <td class="font-bold text-blue-600 text-lg">$500</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-900">Federal Return (Form 1120 — Nil revenue)</td>
+                                <td class="text-slate-600">No revenue/transactions for the year</td>
+                                <td class="font-bold text-blue-600 text-lg">$150</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-900">State Return (each)</td>
+                                <td class="text-slate-600">Delaware, California, New York, others based on nexus</td>
+                                <td class="font-bold text-blue-600 text-lg">$200</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-900">Form 5472</td>
+                                <td class="text-slate-600">Foreign‑owned US corporation reporting</td>
+                                <td class="font-bold text-blue-600 text-lg">$150</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-900">Form 5471</td>
+                                <td class="text-slate-600">US shareholder of foreign corporation reporting</td>
+                                <td class="font-bold text-blue-600 text-lg">$300</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-900">FinCEN Form 114 (FBAR)</td>
+                                <td class="text-slate-600">Foreign bank account report</td>
+                                <td class="font-bold text-blue-600 text-lg">$150</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-900">Form 1099 Filing</td>
+                                <td class="text-slate-600">Annual reporting for payments to contractors/vendors</td>
+                                <td class="font-bold text-blue-600 text-lg">from $10 per form</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-900">Miscellaneous Forms</td>
+                                <td class="text-slate-600">Extensions, statements, elections & other schedules</td>
+                                <td class="font-bold text-blue-600 text-lg">from $50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-blue-50 border-2 border-blue-200 rounded-3xl p-10 mt-12">
+                    <div class="space-y-6">
+                        <p class="text-slate-700 text-lg"><strong class="text-blue-700">R&D Tax Credit:</strong> Our team will help you determine if you qualify for the R&D tax credit. If you do, we'll handle the filing process for you.</p>
+                        <p class="text-slate-700 text-lg"><strong class="text-blue-700">Not sure yet or haven't finalized the books?</strong> We'll file your extension for free to protect your deadlines.</p>
+                        <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-8 rounded-2xl text-center">
+                            <p class="text-2xl font-extrabold mb-2">🎉 Limited Time Offer</p>
+                            <p class="text-xl">We're offering a 40% discount on filing fees. Please reach out to avail.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <button onclick="handleAction('Free Consultation Booked')" class="btn-animate bg-blue-700 text-white px-16 py-6 rounded-2xl font-extrabold text-xl shadow-2xl">
+                        Book Free Consultation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Can Avail -->
+    <section class="py-32 bg-slate-50 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Who Can Avail This Service</h2>
+                <p class="text-xl text-slate-600">Tailored solutions for different business structures</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="client-card reveal">
+                    <div class="text-6xl mb-6">🏢</div>
+                    <h3 class="text-2xl font-bold mb-4">US C‑Corps & LLCs</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Standard Federal (1120/1065) + State filings. Extensions, amendments and notices handled.</p>
+                </div>
+
+                <div class="client-card reveal" style="transition-delay: 0.1s;">
+                    <div class="text-6xl mb-6">🌏</div>
+                    <h3 class="text-2xl font-bold mb-4">US C‑Corps with India Subsidiary</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Federal return, State returns based on nexus, Form 5471, FinCEN 114 (commonly required), and other forms after analysis.</p>
+                </div>
+
+                <div class="client-card reveal" style="transition-delay: 0.2s;">
+                    <div class="text-6xl mb-6">🇮🇳</div>
+                    <h3 class="text-2xl font-bold mb-4">India Founders with US Entity</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Federal return, State returns based on nexus, Form 5472, FinCEN 114 (if applicable), and related schedules.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose LedgersCFO -->
+    <section class="py-32 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Why Founders Choose LedgersCFO</h2>
+                <p class="text-xl text-slate-600">The advantages that set us apart</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center reveal">
+                    <div class="why-icon">👨‍💼</div>
+                    <h3 class="text-2xl font-bold mb-4">Expert Team</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">US tax specialists with cross‑border capability. Investor‑ready workpapers.</p>
+                </div>
+
+                <div class="text-center reveal" style="transition-delay: 0.1s;">
+                    <div class="why-icon">💰</div>
+                    <h3 class="text-2xl font-bold mb-4">Save 50–60%</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Transparent, fixed pricing that beats typical US CPA firms.</p>
+                </div>
+
+                <div class="text-center reveal" style="transition-delay: 0.2s;">
+                    <div class="why-icon">💬</div>
+                    <h3 class="text-2xl font-bold mb-4">Dedicated Support</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Work on Slack or WhatsApp — whichever you're comfortable with.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="py-32 bg-slate-50 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-slate-600">Get answers to common questions</p>
+            </div>
+
+            <div class="space-y-5 reveal">
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>No revenue this year - do I still need to file?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Yes. Even with zero revenue, most US corporations must file an annual tax return (Form 1120 or 1065) to maintain good standing and avoid penalties. We offer a discounted rate for nil-revenue filings.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>Our Indian entity has a US subsidiary. What forms will be applicable?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Typically Form 5471 (to report the US subsidiary from the Indian parent's perspective if individual shareholders are US persons), plus standard US Federal (1120) and State returns for the subsidiary itself. We'll analyze your structure and confirm all required forms.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>Our US entity has an India subsidiary. What forms will be applicable?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Generally Form 5471 (to report the Indian subsidiary), FinCEN 114 if the US entity has signature authority over foreign accounts exceeding $10,000, and potentially transfer pricing documentation. We handle all of these.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>What if I didn't file Form 5472?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Failure to file Form 5472 can result in significant penalties ($25,000+ per form per year). We can help you file delinquent returns and potentially qualify for penalty relief programs. Contact us immediately to discuss your situation.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>What if I didn't file Form 5471?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Missing Form 5471 filings can result in penalties of $10,000 per form per year (or more in certain cases). We offer delinquent filing services and can explore reasonable cause defenses to minimize penalties.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>What if I didn't file FinCEN Form 114 (FBAR)?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Non-willful FBAR violations can result in penalties up to $10,000 per year, while willful violations carry much steeper penalties. We can help you come into compliance through delinquent FBAR filing procedures and work to minimize penalties.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>Do you handle R&D Credit filings?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Yes. We'll assess your eligibility for the R&D tax credit, calculate the credit amount, and prepare the necessary forms (Form 6765 and supporting documentation). This can result in significant tax savings for qualifying companies.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>Can I request a tax extension? How does it work?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Yes. We file Form 7004 to extend your filing deadline by 6 months. This gives you more time to finalize your books and prepare accurate returns. We offer free extension filing to protect your deadlines while you get organized.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>When is the deadline to file Form 7004?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Form 7004 must be filed by the original tax return due date (typically March 15 for S-Corps and partnerships, April 15 for C-Corps). Once filed, it extends your deadline by 6 months.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>What if I already missed the deadline?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Don't panic. We can file your late returns and work to minimize penalties through reasonable cause arguments or voluntary disclosure programs. The sooner you act, the better your options. Contact us immediately.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-32 bg-gradient-to-br from-blue-700 to-blue-900 text-white px-6">
+        <div class="max-w-5xl mx-auto text-center reveal">
+            <h2 class="text-4xl md:text-6xl font-extrabold mb-8 tracking-tight leading-tight">Get Your US Tax Return Filed Correctly</h2>
+            <p class="text-xl md:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto">Unsure or waiting on books? We'll protect your deadlines with a free extension and scope your work within 24 hours.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <button onclick="handleAction('Free Consultation Booked')" class="btn-animate bg-white text-blue-700 px-14 py-6 rounded-2xl font-extrabold text-xl shadow-2xl">
+                    Book Free Consultation
+                </button>
+                <button onclick="document.getElementById('pricing-section').scrollIntoView({behavior:'smooth'})" class="btn-animate bg-blue-600 text-white px-14 py-6 rounded-2xl font-extrabold text-xl shadow-2xl border-2 border-white/30">
+                    See Pricing & Packages
+                </button>
+            </div>
+            <p class="mt-10 text-blue-200 text-lg font-bold">🎉 Limited time: 40% discount available — contact us to apply it to your quote.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+                
+                <div class="lg:col-span-1">
+                    <div class="mb-6">
+                        <p class="text-3xl font-bold tracking-tighter">LEDGERS<span class="text-blue-400">CFO</span></p>
+                        <p class="text-slate-400 text-sm mt-3 leading-relaxed">Providing institutional finance for global startups. Your trusted partner in US-India compliance.</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="https://www.linkedin.com/company/ledgerscfo" target="_blank" class="w-10 h-10 bg-slate-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                        <a href="https://twitter.com/ledgerscfo" target="_blank" class="w-10 h-10 bg-slate-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html#home" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Home</a></li>
+                        <li><a href="index.html#services" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Services</a></li>
+                        <li><a href="index.html#pricing" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Pricing</a></li>
+                        <li><a href="index.html#resources" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Resources</a></li>
+                        <li><a href="index.html#insights" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Insights</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="compliance.html" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Tax Filing</a></li>
+                        <li><button onclick="handleAction('Service: Bookkeeping')" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm text-left">Bookkeeping</button></li>
+                        <li><button onclick="handleAction('Service: CFO Services')" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm text-left">CFO Services</button></li>
+                        <li><button onclick="handleAction('Service: Compliance')" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm text-left">Compliance</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Contact Us - USA</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Address</p>
+                            <p class="text-slate-300 text-sm leading-relaxed">5900 Balcones Drive STE 100<br>Austin, TX 78731<br>USA</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Phone</p>
+                            <a href="tel:+18575041102" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold text-sm">+1 (857) 504-1102</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Contact Us - India</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Address</p>
+                            <p class="text-slate-300 text-sm leading-relaxed">3rd floor, 38/17, #11678<br>SMART AVENUE, Nehru Road<br>Kammanahalli, HRBR Layout<br>Bangalore-560043</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Phone</p>
+                            <a href="tel:+918197210333" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold text-sm">+91 81972 10333</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-slate-800">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p class="text-slate-400 text-sm">© 2026 LedgersCFO Inc. All rights reserved. Built for Growth.</p>
+                    <div class="flex gap-8 text-xs font-semibold text-slate-400 uppercase tracking-widest">
+                        <a href="index.html" class="hover:text-blue-400 transition-colors">Home</a>
+                        <a href="mailto:hello@ledgerscfo.com" class="hover:text-blue-400 transition-colors">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal Logic
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Scroll Event for Nav
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Interactive Button Handler
+        function handleAction(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('.accordion-icon');
+            const isOpen = content.classList.contains('open');
+
+            // Close all others
+            document.querySelectorAll('.accordion-content').forEach(c => {
+                c.classList.remove('open');
+                c.previousElementSibling.querySelector('.accordion-icon').innerText = '+';
+                c.previousElementSibling.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+            });
+
+            if (!isOpen) {
+                content.classList.add('open');
+                icon.innerText = '-';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Logo Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.logo-slide');
+        const totalSlides = slides.length;
+
+        function showNextSlide() {
+            // Mark current slide as exiting
+            slides[currentSlide].classList.remove('active');
+            slides[currentSlide].classList.add('exit');
+
+            // Move to next slide
+            currentSlide = (currentSlide + 1) % totalSlides;
+
+            // Show next slide
+            slides[currentSlide].classList.remove('exit');
+            slides[currentSlide].classList.add('active');
+
+            // Clean up exit class after animation
+            setTimeout(() => {
+                slides.forEach(slide => {
+                    if (!slide.classList.contains('active')) {
+                        slide.classList.remove('exit');
+                    }
+                });
+            }, 600);
+        }
+
+        // Auto-advance slides every 3 seconds
+        setInterval(showNextSlide, 3000);
+    </script>
+</body>
+</html>-all hover:border-blue-400">
+                    <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                        <span>I am an India resident with a US entity and I haven't done ODI yet - do I still need to file US taxes?</span>
+                        <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                    </button>
+                    <div class="accordion-content px-8 text-slate-600 text-lg leading-relaxed">
+                        Yes, ODI (an Indian regulatory requirement) has no relation to US tax filing obligations. If you own a US entity, you generally must file the applicable US returns regardless of ODI status.
+                    </div>
+                </div>
+
+                <div class="border-2 border-slate-100 rounded-3xl overflow-hidden bg-white transition

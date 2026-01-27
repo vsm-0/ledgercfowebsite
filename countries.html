@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Expansion | LedgersCFO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #1e293b; overflow-x: hidden; }
+        
+        .glass-nav { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5); 
+        }
+
+        .country-tile {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #f1f5f9;
+            overflow: hidden;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        /* The Water Effect */
+        .country-tile::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(to top, #1e40af, #3b82f6);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .country-tile:hover::before {
+            height: 100%;
+        }
+
+        .country-tile:hover {
+            border-color: #2563eb;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Color transition for the text */
+        .country-tile span.country-name {
+            transition: color 0.4s ease;
+        }
+
+        .country-tile:hover span.country-name {
+            color: white !important;
+        }
+
+        .flag-emoji {
+            font-size: 3rem; /* Larger flag size */
+            margin-bottom: 0.5rem;
+            transition: transform 0.4s ease;
+        }
+
+        .country-tile:hover .flag-emoji {
+            transform: scale(1.2) rotate(5deg); /* Subtle pop effect on hover */
+        }
+        .country-tile {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #f1f5f9;
+        }
+
+        .country-tile:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1);
+        }
+
+        .service-chip {
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .service-chip:hover {
+            background-color: #eff6ff;
+            border-color: #3b82f6;
+            color: #2563eb;
+            transform: scale(1.05);
+        }
+
+        .country-section {
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(30px); 
+            transition: all 0.8s ease-out; 
+        }
+        
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sticky top-0 glass-nav z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-extrabold tracking-tighter hover:opacity-80 transition">
+                LEDGERS<span class="text-blue-600">CFO</span>
+            </a>
+            <div class="hidden md:flex space-x-8 font-bold text-sm text-slate-500">
+                <a href="index.html" class="hover:text-blue-600 transition">← Back to Home</a>
+                <a href="#usa" class="hover:text-blue-600 transition">USA</a>
+                <a href="#uk" class="hover:text-blue-600 transition">UK</a>
+                <a href="#india" class="hover:text-blue-600 transition">India</a>
+                <a href="#singapore" class="hover:text-blue-600 transition">Singapore</a>
+                <a href="#uae" class="hover:text-blue-600 transition">UAE</a>
+            </div>
+            <a href="index.html#audit-form" class="bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg hover:bg-blue-700 transition">
+                Contact Global Desk
+            </a>
+        </div>
+    </nav>
+        
+       <section class="pt-20 pb-16 px-6 bg-slate-50">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-4">Global Jurisdictions</h2>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-12">Select Your Target Market</h1>
+        
+        <div class="flex flex-wrap justify-center gap-6">
+            <a href="#usa" class="country-tile bg-white p-8 rounded-2xl w-44 h-44 shadow-sm">
+                <span class="flag-emoji">🇺🇸</span>
+                <span class="country-name font-bold text-slate-700 text-lg">USA</span>
+            </a>
+            
+            <a href="#uk" class="country-tile bg-white p-8 rounded-2xl w-44 h-44 shadow-sm">
+                <span class="flag-emoji">🇬🇧</span>
+                <span class="country-name font-bold text-slate-700 text-lg">UK</span>
+            </a>
+            
+            <a href="#india" class="country-tile bg-white p-8 rounded-2xl w-44 h-44 shadow-sm">
+                <span class="flag-emoji">🇮🇳</span>
+                <span class="country-name font-bold text-slate-700 text-lg">India</span>
+            </a>
+            
+            <a href="#singapore" class="country-tile bg-white p-8 rounded-2xl w-44 h-44 shadow-sm">
+                <span class="flag-emoji">🇸🇬</span>
+                <span class="country-name font-bold text-slate-700 text-lg">Singapore</span>
+            </a>
+            
+            <a href="#uae" class="country-tile bg-white p-8 rounded-2xl w-44 h-44 shadow-sm">
+                <span class="flag-emoji">🇦🇪</span>
+                <span class="country-name font-bold text-slate-700 text-lg">UAE</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+    <section id="usa" class="country-section py-24 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+            <div class="lg:w-1/2 reveal">
+                <div class="inline-block px-4 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-bold uppercase mb-6">Market Entry</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Start Your Business in the <span class="text-blue-600">US</span> Effortlessly</h2>
+                <p class="text-slate-600 text-lg mb-8 leading-relaxed">Our US-based CPAs and financial experts set up your company, file federal and state taxes, and manage cross-border compliance. You get peace of mind knowing your business is compliant, organized, and ready to grow.</p>
+                
+                <a href="index.html#audit-form" class="inline-flex items-center gap-2 text-blue-600 font-extrabold text-lg group">
+                    Book a Consultation here <span class="group-hover:translate-x-2 transition-transform">→</span>
+                </a>
+
+                <div class="mt-12">
+                    <h4 class="font-bold text-slate-900 mb-4">Why Choose LedgersCFO for US</h4>
+                    <p class="text-slate-500 mb-6 italic">"One place for all your compliance work"</p>
+                    
+                    <h4 class="font-bold text-slate-900 mb-4 uppercase text-xs tracking-wider">Services we offer in US</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Bookkeeping</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Fractional CFO & Financial Planning</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Cross Border Compliance</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Tax Filings</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Company Incorporation</span>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2 reveal">
+                <div class="rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white">
+                    <img src="https://images.pexels.com/photos/378570/pexels-photo-378570.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="US Business Skyline - New York" class="w-full h-[500px] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="uk" class="country-section py-24 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-16">
+            <div class="lg:w-1/2 reveal">
+                <div class="inline-block px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold uppercase mb-6">Financial Clarity</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Start Your Business in the <span class="text-blue-600">UK</span> Effortlessly</h2>
+                <p class="text-slate-600 text-lg mb-8 leading-relaxed">Our team brings deep experience in the UK, offering accurate bookkeeping, fractional CFO support, and financial planning & analysis (FP&A) to strengthen your business finances.</p>
+                
+                <a href="index.html#audit-form" class="inline-flex items-center gap-2 text-blue-600 font-extrabold text-lg group">
+                    Book a Consultation here <span class="group-hover:translate-x-2 transition-transform">→</span>
+                </a>
+
+                <div class="mt-12">
+                    <h4 class="font-bold text-slate-900 mb-4">Why Choose LedgersCFO for UK</h4>
+                    <p class="text-slate-500 mb-6 italic">"One place for complete financial clarity and control"</p>
+                    
+                    <h4 class="font-bold text-slate-900 mb-4 uppercase text-xs tracking-wider">Services we offer in UK</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Bookkeeping</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Fractional CFO & Financial Planning</span>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2 reveal">
+                <div class="rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white">
+                    <img src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="UK Financial District - London" class="w-full h-[500px] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="india" class="country-section py-24 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+            <div class="lg:w-1/2 reveal">
+                <div class="inline-block px-4 py-1.5 bg-orange-50 text-orange-700 rounded-full text-xs font-bold uppercase mb-6">Regional Expertise</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Your Finance & Compliance Partner in <span class="text-blue-600">India</span></h2>
+                <p class="text-slate-600 text-lg mb-8 leading-relaxed">Our team of Chartered Accountants and finance experts in India guides you and handles your company registration, tax filings, and compliance with cross-border rules.</p>
+                
+                <a href="index.html#audit-form" class="inline-flex items-center gap-2 text-blue-600 font-extrabold text-lg group">
+                    Book a Consultation here <span class="group-hover:translate-x-2 transition-transform">→</span>
+                </a>
+
+                <div class="mt-12">
+                    <h4 class="font-bold text-slate-900 mb-4">Why Choose LedgersCFO for India</h4>
+                    <p class="text-slate-500 mb-6 italic">"One place for all your compliance work"</p>
+                    
+                    <h4 class="font-bold text-slate-900 mb-4 uppercase text-xs tracking-wider">Services we offer in India</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Bookkeeping</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Fractional CFO & Financial Planning</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Cross Border Compliance</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Company Incorporation</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Tax Filings</span>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2 reveal">
+                <div class="rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white">
+                    <img src="https://images.pexels.com/photos/1007427/pexels-photo-1007427.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="India Tech Hub - Bangalore" class="w-full h-[500px] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="singapore" class="country-section py-24 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-16">
+            <div class="lg:w-1/2 reveal">
+                <div class="inline-block px-4 py-1.5 bg-red-50 text-red-700 rounded-full text-xs font-bold uppercase mb-6">APAC Gateway</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Start Your Business in <span class="text-blue-600">Singapore</span> Effortlessly</h2>
+                <p class="text-slate-600 text-lg mb-8 leading-relaxed">Our team, with proven experience and successful outcomes for clients across Singapore, offers reliable bookkeeping and FP&A to drive business growth.</p>
+                
+                <a href="index.html#audit-form" class="inline-flex items-center gap-2 text-blue-600 font-extrabold text-lg group">
+                    Book a Consultation here <span class="group-hover:translate-x-2 transition-transform">→</span>
+                </a>
+
+                <div class="mt-12">
+                    <h4 class="font-bold text-slate-900 mb-4">Why Choose LedgersCFO for Singapore</h4>
+                    <p class="text-slate-500 mb-6 italic">"One place for complete financial clarity and control"</p>
+                    
+                    <h4 class="font-bold text-slate-900 mb-4 uppercase text-xs tracking-wider">Services we offer in Singapore</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Bookkeeping</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Fractional CFO & Financial Planning</span>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2 reveal">
+                <div class="rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white">
+                    <img src="https://images.pexels.com/photos/777059/pexels-photo-777059.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Singapore Skyline" class="w-full h-[500px] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="uae" class="country-section py-24 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+            <div class="lg:w-1/2 reveal">
+                <div class="inline-block px-4 py-1.5 bg-purple-50 text-purple-700 rounded-full text-xs font-bold uppercase mb-6">MENA Strategy</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Start Your Business in the <span class="text-blue-600">UAE</span> Effortlessly</h2>
+                <p class="text-slate-600 text-lg mb-8 leading-relaxed">Our UAE-based experts deliver precise bookkeeping and fractional CFO services tailored to your unique business needs in the Emirates.</p>
+                
+                <a href="index.html#audit-form" class="inline-flex items-center gap-2 text-blue-600 font-extrabold text-lg group">
+                    Book a Consultation here <span class="group-hover:translate-x-2 transition-transform">→</span>
+                </a>
+
+                <div class="mt-12">
+                    <h4 class="font-bold text-slate-900 mb-4">Why Choose LedgersCFO for UAE</h4>
+                    <p class="text-slate-500 mb-6 italic">"One place for complete financial clarity and control"</p>
+                    
+                    <h4 class="font-bold text-slate-900 mb-4 uppercase text-xs tracking-wider">Services we offer in UAE</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Bookkeeping</span>
+                        <span class="service-chip px-5 py-2.5 rounded-xl font-bold text-sm bg-white">Fractional CFO & Financial Planning</span>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2 reveal">
+                <div class="rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white">
+                    <img src="https://images.pexels.com/photos/1470502/pexels-photo-1470502.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="UAE Business District - Dubai" class="w-full h-[500px] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-2xl font-bold tracking-tighter mb-4">LEDGERS<span class="text-blue-400">CFO</span></p>
+            <p class="text-slate-400 text-sm mb-8">Helping global startups scale with borderless financial intelligence.</p>
+            <p class="text-slate-600 text-xs">© 2026 LedgersCFO Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal on scroll logic
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
