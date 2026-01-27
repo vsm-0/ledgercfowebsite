@@ -111,6 +111,107 @@
                 right: 1rem;
             }
         }
+body {
+  overflow-x: hidden;
+}
+
+/* Global mobile padding */
+@media (max-width: 768px) {
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+}
+/* Base header layout */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo + hamburger on the left */
+.logo-and-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Hamburger button base */
+.nav-toggle {
+  display: none; /* hidden on desktop */
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 28px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Hamburger lines */
+.nav-toggle-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #0f172a; /* adjust to match brand */
+  border-radius: 999px;
+}
+
+/* Mobile behavior */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex; /* show hamburger on mobile */
+  }
+
+  .nav {
+    position: absolute;
+    top: 64px;           /* height of header; adjust if needed */
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    display: none;       /* hidden by default */
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+    z-index: 50;
+  }
+
+  .nav a {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+
+  /* When menu is open */
+  .nav.nav-open {
+    display: flex;
+  }
+
+  /* Optional: keep header pinned and full width */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #ffffff;
+  }
+}
+/* Ensure nav wrapper doesn't overflow */
+#mainNav {
+  position: sticky;
+  top: 0;
+}
+
+/* For safety on mobile */
+body {
+  overflow-x: hidden;
+}
 
         /* Navigation Glassmorphism */
         .glass-nav { 
@@ -1551,51 +1652,79 @@
 </head>
 <body>
 
+<nav class="sticky top-0 glass-nav z-50" id="mainNav">
+  <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+    
+    <!-- LOGO + HAMBURGER (LEFT) -->
+    <div class="flex items-center gap-3">
+      <a href="#home" class="text-2xl font-extrabold tracking-tighter hover:opacity-80 transition">
+        LEDGERS<span class="text-blue-600">CFO</span>
+      </a>
 
-   <nav class="sticky top-0 glass-nav z-50" id="mainNav">
-    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-        <a href="#home" class="text-2xl font-extrabold tracking-tighter hover:opacity-80 transition">
-            LEDGERS<span class="text-blue-600">CFO</span>
-        </a>
-
-        <div class="hidden md:flex items-center space-x-10 font-bold text-sm text-slate-500">
-            <a href="#landing-slides" class="hover:text-blue-600 transition">Home</a>
-            <a href="#strategy" class="hover:text-blue-600 transition">Strategy</a>
-            <a href="compliance.html" class="hover:text-blue-600 transition">Compliance</a>
-            <a href="#pricing" class="hover:text-blue-600 transition">Pricing</a>
-            <a href="#resources" class="hover:text-blue-600 transition">Resources</a>
-
-            <div class="nav-item">
-                <a href="#services" class="hover:text-blue-600 transition inline-flex items-center gap-1">
-                    Services
-                    <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="countries.html" class="dropdown-item">
-                        <span class="dropdown-item-icon">🌐</span>
-                        Countries
-                    </a>
-                </div>
-            </div>
-
-            <div class="nav-item">
-                <a href="#insights" class="hover:text-blue-600 transition cursor-pointer">Insights</a>
-                <div class="dropdown-menu">
-                    <a href="blogs.html" class="dropdown-item">
-                        <span class="dropdown-item-icon">📝</span>
-                        Our Blog
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <button onclick="handleAction('Audit Requested')" class="btn-animate bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-extrabold shadow-lg">
-            Schedule Audit
-        </button>
+      <!-- HAMBURGER (MOBILE ONLY) -->
+      <button 
+        class="md:hidden flex flex-col justify-between w-7 h-5 nav-toggle" 
+        aria-label="Toggle navigation"
+      >
+        <span class="block h-0.5 w-full bg-slate-900 rounded-full"></span>
+        <span class="block h-0.5 w-full bg-slate-900 rounded-full"></span>
+        <span class="block h-0.5 w-full bg-slate-900 rounded-full"></span>
+      </button>
     </div>
+
+    <!-- NAV LINKS + CTA -->
+    <div class="hidden md:flex items-center space-x-10 font-bold text-sm text-slate-500 nav-links">
+      <a href="#landing-slides" class="hover:text-blue-600 transition">Home</a>
+      <a href="#strategy" class="hover:text-blue-600 transition">Strategy</a>
+      <a href="compliance.html" class="hover:text-blue-600 transition">Compliance</a>
+      <a href="#pricing" class="hover:text-blue-600 transition">Pricing</a>
+      <a href="#resources" class="hover:text-blue-600 transition">Resources</a>
+
+      <div class="nav-item">
+        <a href="#services" class="hover:text-blue-600 transition inline-flex items-center gap-1">
+          Services
+          <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </a>
+        <div class="dropdown-menu">
+          <a href="countries.html" class="dropdown-item">
+            <span class="dropdown-item-icon">🌐</span>
+            Countries
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="#insights" class="hover:text-blue-600 transition cursor-pointer">Insights</a>
+        <div class="dropdown-menu">
+          <a href="blogs.html" class="dropdown-item">
+            <span class="dropdown-item-icon">📝</span>
+            Our Blog
+          </a>
+        </div>
+      </div>
+
+      <button onclick="handleAction('Audit Requested')" class="btn-animate bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-extrabold shadow-lg">
+        Schedule Audit
+      </button>
+    </div>
+
+    <!-- MOBILE DROPDOWN MENU -->
+    <div class="md:hidden hidden flex-col gap-4 font-bold text-sm text-slate-600 bg-white/90 backdrop-blur nav-menu-mobile absolute left-0 right-0 top-full px-6 pb-6 shadow-lg">
+      <a href="#landing-slides" class="hover:text-blue-600 transition">Home</a>
+      <a href="#strategy" class="hover:text-blue-600 transition">Strategy</a>
+      <a href="compliance.html" class="hover:text-blue-600 transition">Compliance</a>
+      <a href="#pricing" class="hover:text-blue-600 transition">Pricing</a>
+      <a href="#resources" class="hover:text-blue-600 transition">Resources</a>
+
+      <button onclick="handleAction('Audit Requested')" class="btn-animate bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-extrabold shadow-lg w-full text-center">
+        Schedule Audit
+      </button>
+    </div>
+  </div>
 </nav>
+
 
     <!-- Landing Slides Section -->
     <section id="landing-slides" class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
@@ -3271,6 +3400,17 @@
 </footer>
 
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.querySelector(".nav-toggle");
+    const mobileMenu = document.querySelector(".nav-menu-mobile");
+
+    if (toggle && mobileMenu) {
+      toggle.addEventListener("click", function () {
+        mobileMenu.classList.toggle("hidden");
+      });
+    }
+  });
+
     // Reveal Logic (Scroll Animations)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -3786,6 +3926,17 @@ function handleAction(actionName) {
         setTimeout(()=>toast.classList.remove('show'), 2500);
     }
 }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const navToggle = document.querySelector(".nav-toggle");
+    const nav = document.querySelector(".nav");
+
+    if (navToggle && nav) {
+      navToggle.addEventListener("click", function () {
+        nav.classList.toggle("nav-open");
+      });
+    }
+  });
 
         // Show slide function
         function showSlide(slideNum) {
