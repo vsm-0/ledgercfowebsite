@@ -1,0 +1,3882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LedgersCFO | Investor-Ready Global Finance 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; background-color: #ffffff; color: #1e293b; }
+        
+        /* Serif Italic Styling */
+        .serif-italic { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; }
+        
+        /* Text Gradient Animation */
+        .text-gradient { 
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa); 
+            background-size: 200% 200%; 
+            animation: gradient-shift 3s ease infinite; 
+            background-clip: text; 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+        /* Landing Slides Styles */
+        .slides-wrapper {
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slide-dot.active {
+            width: 40px;
+            border-radius: 6px;
+            background: #2563eb;
+        }
+
+        .slide-dot:hover {
+            background: #64748b;
+        }
+
+        .slide-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 20;
+            color: #475569;
+        }
+
+        .slide-arrow:hover {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slide-arrow.left {
+            left: 2rem;
+        }
+
+        .slide-arrow.right {
+            right: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .slide-arrow {
+                width: 40px;
+                height: 40px;
+            }
+            .slide-arrow.left {
+                left: 1rem;
+            }
+            .slide-arrow.right {
+                right: 1rem;
+            }
+        }
+
+        /* Navigation Glassmorphism */
+        .glass-nav { 
+            background: rgba(255, 255, 255, 0.75); 
+            backdrop-filter: blur(20px); 
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5); 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .glass-nav.scrolled { padding: 0.5rem 0; background: rgba(255, 255, 255, 0.98); box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05); }
+
+        /* Interactive Buttons */
+        .btn-animate { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            cursor: pointer; 
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-animate:active { transform: scale(0.95); }
+        .btn-animate:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -10px rgba(37, 99, 235, 0.5); }
+
+        /* Reveal on Scroll */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Reveal on Scroll */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Progress Bars */
+        .progress-bar { width: 0%; transition: width 1.8s cubic-bezier(0.65, 0, 0.35, 1); }
+
+        /* Accordion */
+        .accordion-content { transition: all 0.4s ease-in-out; max-height: 0; overflow: hidden; opacity: 0; }
+        .accordion-content.open { max-height: 500px; opacity: 1; padding-bottom: 1.5rem; }
+
+        /* Floating Video Widget (Initially Hidden) */
+        #videoWidget { 
+            position: fixed; 
+            bottom: -400px; /* Hidden below screen */
+            right: 30px; 
+            width: 200px; 
+            height: 300px; 
+            border-radius: 24px; 
+            overflow: hidden; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); 
+            z-index: 1000; 
+            border: 4px solid white; 
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        #videoWidget.visible { bottom: 30px; }
+
+        /* Floating Form Fields */
+        .floating-group {
+            position: relative;
+            margin-bottom: 1.8rem;
+        }
+
+        .floating-input {
+            width: 100%;
+            padding: 1.4rem 1.2rem;
+            border-radius: 1.2rem;
+            background: #0f172a; /* slate-900 */
+            border: 1px solid #1e293b;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .floating-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.25);
+        }
+
+        .floating-label {
+            position: absolute;
+            top: 50%;
+            left: 1.2rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            pointer-events: none;
+            transform: translateY(-50%);
+            background: #0f172a;
+            padding: 0 0.4rem;
+            transition: all 0.25s ease;
+        }
+
+        /* Float effect */
+        .floating-input:focus + .floating-label,
+        .floating-input:not(:placeholder-shown) + .floating-label {
+            top: -0.55rem;
+            font-size: 0.7rem;
+            color: #3b82f6;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* Select styling fix */
+        select.floating-input {
+            cursor: pointer;
+        }
+
+
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transform: translateX(200%);
+            transition: 0.5s;
+            z-index: 2000;
+        }
+        #toast.show { transform: translateX(0); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Service Card Hover Effect */
+        .service-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .service-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+            color: white;
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .service-card:hover .service-card-content {
+            transform: translateY(0);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+                /* Industry Cards */
+        .industry-card {
+            position: relative;
+            height: 320px;
+            border-radius: 2rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+        }
+
+        .industry-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+        }
+
+        .industry-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .industry-card:hover .industry-image {
+            transform: scale(1.20);
+        }
+
+        .industry-image img {
+            transition: filter 0.5s ease;
+        }
+
+        .industry-card:hover .industry-image img {
+            filter: brightness(0.6);
+        }
+
+        .industry-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.7) 0%, rgba(37, 99, 235, 0.8) 100%);
+            opacity: 0.6;
+            transition: opacity 0.5s ease;
+        }
+
+        .industry-card:hover .industry-overlay {
+            opacity: 0.85;
+        }
+
+        .industry-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem;
+            z-index: 10;
+            transform: translateY(10px);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .industry-card:hover .industry-content {
+            transform: translateY(0);
+        }
+
+        .industry-content h3 {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+                /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Modal Container */
+        .modal-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 95%;
+            max-width: 1200px;
+            max-height: 90vh;
+            background: white;
+            border-radius: 2.5rem;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow-y: auto;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-container.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Modal Header */
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            padding: 2.5rem 3rem;
+            border-radius: 2.5rem 2.5rem 0 0;
+            z-index: 10;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 3rem;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 1.5rem;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: translateY(-4px);
+        }
+
+        /* Process Steps */
+        .process-steps {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .process-step {
+            display: flex;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.3);
+        }
+
+        .step-number {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        /* Pricing Table */
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-table thead {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+            color: white;
+        }
+
+        .pricing-table th {
+            padding: 1.5rem;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+        }
+
+        .pricing-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .pricing-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Client Type Cards */
+        .client-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .client-card {
+            padding: 2rem;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .client-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Why Choose Section */
+        .why-choose-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .why-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .why-icon {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-radius: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+        
+
+       .calc-tab {
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 1rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calc-tab:hover {
+    border-color: #3b82f6;
+    color: #2563eb;
+}
+
+.calc-tab.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+.calculator-wrapper {
+    position: relative;
+    min-height: 600px;
+}
+
+.calculator-container {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.calculator-container.active {
+    display: block;
+}
+
+.calculator-box-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.calculator-box {
+    background: white;
+    border-radius: 2rem;
+    padding: 3rem;
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+    border: 2px solid #f1f5f9;
+}
+
+.calculator-input-group {
+    margin-bottom: 1.5rem;
+}
+
+.calculator-input {
+    width: 100%;
+    padding: 1.2rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+/* Grid container to force 4 per row */
+.calculator-tabs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Forces 4 equal columns */
+    gap: 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.calc-tab {
+    padding: 1rem 0.5rem; /* Adjusted padding for grid fit */
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 1rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.calc-tab:hover {
+    border-color: #3b82f6;
+    color: #2563eb;
+    transform: translateY(-2px);
+}
+
+.calc-tab.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* Responsive: Switch to 2x4 or 1x8 on smaller screens */
+@media (max-width: 1024px) {
+    .calculator-tabs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .calculator-tabs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.calculator-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.calculator-result {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.tax-amount {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.method-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #3b82f6;
+    color: white;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin: 1.5rem 0;
+        }
+
+                /* Partner Carousel */
+        .partners-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e7f0ff 100%);
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            animation: scroll 20s linear infinite;
+            width: fit-content;
+        }
+
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .partner-item {
+            flex: 0 0 auto;
+            margin: 0 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .partner-item:hover {
+            transform: scale(1.1);
+        }
+
+        /* Updated Partner Box for Expansion & Colorize */
+.partner-box {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem 3rem;
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Smooth bouncy transition */
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    border: 2px solid transparent;
+}
+
+/* Image starts grayscale and smaller */
+.partner-box img {
+    max-height: 55px;
+    max-width: 150px;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.6); /* Muted grayscale */
+    transition: all 0.4s ease;
+    transform: scale(0.9); /* Slightly smaller by default */
+}
+
+/* Hover State: Colorize + Expand */
+.partner-item:hover .partner-box {
+    box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.2);
+    border-color: #3b82f6;
+    transform: translateY(-5px); /* Lift effect */
+}
+
+.partner-item:hover .partner-box img {
+    filter: grayscale(0%) opacity(1); /* Colorize */
+    transform: scale(1.15); /* Expand the logo itself */
+}
+        
+        /* This is the magic fix for alignment */
+        .hidden.md\:flex {
+            align-items: center; /* Ensures the parent container aligns all children to the middle */
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;       /* Treat the dropdown container as a flex element */
+            align-items: center; /* Center the 'Services' or 'Insights' text vertically */
+            height: 100%;        /* Match the height of the nav row */
+        }
+
+        /* Ensure standard links and dropdown triggers look identical */
+        .hidden.md\:flex > a, 
+        .nav-item > a {
+            display: flex;
+            align-items: center;
+            line-height: 1;      /* Prevents text descent from pushing the item down */
+        }
+
+                /* Mobile Dropdown */
+        @media (max-width: 768px) {
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                margin-top: 0.5rem;
+                box-shadow: none;
+                background: #f8fafc;
+            }
+            
+            .dropdown-menu::before {
+                display: none;
+            }
+            
+            .nav-item:hover .dropdown-menu {
+                margin-top: 0.5rem;
+            }
+        }
+
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+            padding: 0.5rem;
+            margin-top: 1rem;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: white;
+            rotate: 45deg;
+            border-radius: 2px;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 0.5rem;
+        }
+
+        /* Disable text selection while sliding */
+.select-none {
+    user-select: none;
+    -webkit-user-select: none;
+}
+#sliderContainer {
+    cursor: ew-resize;
+}
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .dropdown-item:hover {
+            background: #eff6ff;
+            color: #2563eb;
+            transform: translateX(4px);
+        }
+
+        .dropdown-item-icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+.select-none { user-select: none; -webkit-user-select: none; }
+    #sliderContainer { cursor: ew-resize; }
+    /* Ensure the before layer stays on top but allows events through the handle */
+    #beforeLayer { z-index: 10; transition: clip-path 0.05s linear; }
+    #sliderHandle { z-index: 20; }
+
+                /* Subtle Jitter - only animates every few seconds */
+        @keyframes subtle-jitter {
+            0%, 90%, 100% { transform: rotate(0deg); }
+            91% { transform: rotate(-2deg); }
+            92% { transform: rotate(2deg); }
+            93% { transform: rotate(-2deg); }
+            94% { transform: rotate(2deg); }
+            95% { transform: rotate(-2deg); }
+        }
+
+        .subtle-jitter-button {
+            display: inline-block;
+            animation: subtle-jitter 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subtle-jitter-button:hover {
+            animation: none;
+            transform: scale(1.05);
+        }
+
+        /* Fallback text for partners without logos */
+        .partner-text {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #1e293b;
+            white-space: nowrap;
+        }
+
+                /* Prose styling for modals */
+        .prose {
+            color: #334155;
+            line-height: 1.75;
+        }
+
+        .prose h3 {
+            color: #0f172a;
+        }
+
+        .prose p {
+            margin-bottom: 1rem;
+        }
+
+        .prose strong {
+            color: #1e293b;
+            font-weight: 700;
+        }
+    .select-none { user-select: none; -webkit-user-select: none; }
+    #sliderContainer { cursor: ew-resize; position: relative; }
+    #beforeLayer { transition: clip-path 0.04s linear; will-change: clip-path; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        
+        .comparison-wrapper {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+            padding: 6rem 2rem;
+        }
+        
+        .comparison-header {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+        
+        .comparison-header h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+        
+        .comparison-header p {
+            font-size: 1.25rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+        
+        .vs-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .vs-title .other { opacity: 0.5; }
+        .vs-title .vs-text { color: #2563eb; font-style: italic; font-size: 1.5rem; }
+        .vs-title .ledgers { color: #2563eb; }
+        
+        .slider-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            background: white;
+            border-radius: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            overflow: hidden;
+            min-height: 1000px;
+            user-select: none;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .content-wrapper {
+            padding: 4rem;
+        }
+        
+        .single-col {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-align: center;
+        }
+        
+        /* Metrics */
+        .metrics-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: white;
+            border-radius: 1rem;
+            border: 2px solid #f1f5f9;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .metric-label {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+        
+        .metric-value {
+            font-size: 1.125rem;
+            font-weight: 800;
+            color: #2563eb;
+        }
+        
+        /* Problems/Solutions */
+        .points-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .point-item {
+            display: flex;
+    align-items: center;   /* vertical center */
+    justify-content: center; /* horizontal center */
+    gap: 1rem;
+    padding: 1.25rem;
+    background: white;
+    border-radius: 1.25rem;
+    border: 2px solid #f1f5f9;
+    text-align: center; /* center text */
+        }
+        
+        .point-icon {
+            font-size: 1.75rem;
+            flex-shrink: 0;
+        }
+        
+        .point-content h5 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.375rem;
+        }
+        
+        .point-content p {
+            font-size: 0.875rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        /* Timeline Box */
+        .timeline-box {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            color: white;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(37,99,235,0.3);
+        }
+        
+        .timeline-box h4 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            text-align: center;
+        }
+        
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.875rem 0;
+            font-size: 1rem;
+        }
+        
+        .timeline-item.total {
+            border-top: 2px solid rgba(255,255,255,0.2);
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        .timeline-value {
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .timeline-total {
+            font-weight: 900;
+            color: #dbeafe;
+            font-size: 1.5rem;
+        }
+        
+        .pricing-badge {
+            background: rgba(30,64,175,0.5);
+            border: 2px solid rgba(219,234,254,0.3);
+            border-radius: 1.5rem;
+            padding: 1.75rem;
+            margin-top: 1.5rem;
+        }
+        
+        .pricing-badge .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-badge .price {
+            font-size: 1.75rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-badge .note {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        
+        /* Features Box */
+        .features-box {
+            background: white;
+            border: 2px solid #dbeafe;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: 0 4px 15px rgba(37,99,235,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .features-box h4 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .feature-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: #eff6ff;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-label {
+            font-size: 1rem;
+            color: #475569;
+            font-weight: 600;
+        }
+        
+        .feature-badge {
+            background: #2563eb;
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+        
+        /* Additional Features Table */
+        .additional-features {
+            background: white;
+            border: 2px solid #dbeafe;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: 0 4px 15px rgba(37,99,235,0.1);
+        }
+        
+        .additional-features h4 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .feature-comparison-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background: #f8fafc;
+            border-radius: 1rem;
+            margin-bottom: 0.75rem;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .feature-comparison-label {
+            font-size: 0.95rem;
+            color: #334155;
+            font-weight: 600;
+            flex: 1;
+        }
+        
+        .feature-comparison-value {
+            font-size: 0.875rem;
+            color: #2563eb;
+            font-weight: 700;
+            text-align: right;
+            padding: 0.5rem 1rem;
+            background: #dbeafe;
+            border-radius: 0.5rem;
+        }
+        
+        /* Bottom CTA Section */
+        .bottom-cta {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            border-radius: 2rem;
+            padding: 3rem;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(37,99,235,0.3);
+            margin-top: 2rem;
+        }
+        
+        .bottom-cta h3 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+        
+        .bottom-cta p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #2563eb;
+            padding: 1.25rem 3rem;
+            border-radius: 1rem;
+            font-weight: 800;
+            font-size: 1.125rem;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* Before Layer (Other Firms) */
+        .before-layer {
+            position: absolute;
+            inset: 0;
+            background: white;
+            z-index: 10;
+            pointer-events: none;
+            clip-path: inset(0 50% 0 0);
+            border-right: 4px solid #2563eb;
+        }
+        
+        .before-layer .metric-row {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+        
+        .before-layer .metric-value {
+            color: #94a3b8;
+        }
+        
+        .before-layer .section-title {
+            color: #94a3b8;
+        }
+        
+        .before-layer .point-item {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+        
+        .before-layer .point-content h5 {
+            color: #64748b;
+        }
+        
+        .before-layer .timeline-box {
+            background: #f1f5f9;
+            color: #64748b;
+            box-shadow: none;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .before-layer .timeline-box h4 {
+            color: #64748b;
+            border-bottom-color: #cbd5e1;
+        }
+        
+        .before-layer .timeline-value {
+            color: #64748b;
+        }
+        
+        .before-layer .timeline-total {
+            color: #ef4444;
+        }
+        
+        .before-layer .pricing-badge {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+        }
+        
+        .before-layer .pricing-badge .price {
+            color: #64748b;
+        }
+        
+        .before-layer .pricing-badge .note {
+            color: #ef4444;
+        }
+        
+        .before-layer .features-box {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+            box-shadow: none;
+        }
+        
+        .before-layer .features-box h4 {
+            color: #64748b;
+        }
+        
+        .before-layer .feature-row {
+            background: #f1f5f9;
+        }
+        
+        .before-layer .feature-badge {
+            background: #cbd5e1;
+            color: #64748b;
+        }
+        
+        .before-layer .feature-badge.warning {
+            background: #fecaca;
+            color: #991b1b;
+        }
+        
+        .before-layer .additional-features {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+            box-shadow: none;
+        }
+        
+        .before-layer .additional-features h4 {
+            color: #64748b;
+        }
+        
+        .before-layer .feature-comparison-row {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        
+        .before-layer .feature-comparison-value {
+            background: #e2e8f0;
+            color: #64748b;
+        }
+        
+        .before-layer .bottom-cta {
+            background: #f1f5f9;
+            color: #64748b;
+            box-shadow: none;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .before-layer .cta-button {
+            background: #cbd5e1;
+            color: #64748b;
+        }
+        
+        /* Slider Handle */
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #2563eb;
+            left: 50%;
+            z-index: 50;
+            cursor: ew-resize;
+            transition: background 0.2s;
+        }
+        
+        .slider-handle:hover {
+            background: #1e40af;
+        }
+        
+        .slider-handle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            background: #2563eb;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slider-handle:hover::before {
+            background: #1e40af;
+        }
+        
+        .slider-handle::after {
+            content: '⇔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.75rem;
+            font-weight: 900;
+            z-index: 1;
+        }
+
+        .slider-handle {
+    display: none !important;
+}
+
+.comparison-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 3rem 1rem;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: auto;
+}
+
+.before-layer {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    clip-path: none !important;
+    border-right: none !important;
+}
+
+.container {
+    max-width: 100%;
+    padding: 16px;
+    overflow-x: hidden;
+}
+
+.comparison-header {
+    max-width: 100%;
+    padding: 0 1rem;
+}
+
+.comparison-header h2 {
+    font-size: 2rem;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.comparison-header p {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.vs-title {
+    flex-direction: column;
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+
+
+   <nav class="sticky top-0 glass-nav z-50" id="mainNav">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+        <a href="#home" class="text-2xl font-extrabold tracking-tighter hover:opacity-80 transition">
+            LEDGERS<span class="text-blue-600">CFO</span>
+        </a>
+
+        <div class="hidden md:flex items-center space-x-10 font-bold text-sm text-slate-500">
+            <a href="#landing-slides" class="hover:text-blue-600 transition">Home</a>
+            <a href="#strategy" class="hover:text-blue-600 transition">Strategy</a>
+            <a href="compliance.html" class="hover:text-blue-600 transition">Compliance</a>
+            <a href="#pricing" class="hover:text-blue-600 transition">Pricing</a>
+            <a href="#resources" class="hover:text-blue-600 transition">Resources</a>
+
+            <div class="nav-item">
+                <a href="#services" class="hover:text-blue-600 transition inline-flex items-center gap-1">
+                    Services
+                    <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="countries.html" class="dropdown-item">
+                        <span class="dropdown-item-icon">🌐</span>
+                        Countries
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <a href="#insights" class="hover:text-blue-600 transition cursor-pointer">Insights</a>
+                <div class="dropdown-menu">
+                    <a href="blogs.html" class="dropdown-item">
+                        <span class="dropdown-item-icon">📝</span>
+                        Our Blog
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="handleAction('Audit Requested')" class="btn-animate bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-extrabold shadow-lg">
+            Schedule Audit
+        </button>
+    </div>
+</nav>
+
+    <!-- Landing Slides Section -->
+    <section id="landing-slides" class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <!-- Slides Container -->
+            <div class="slides-wrapper relative" style="min-height: 90vh;">
+                
+                <!-- Slide 1: Bookkeeping & Tax -->
+                <div class="slide active" data-slide="1">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center px-6 py-20 lg:py-32">
+                        <div class="reveal active">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 mb-6 text-xs font-bold tracking-widest text-blue-700 uppercase bg-white rounded-full shadow-sm">
+                                <span class="text-2xl">📊</span>
+                                Expert Finance
+                            </div>
+                            <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-[1.05] tracking-tight mb-8">
+                                Bookkeeping & Tax<br>
+                                <span class="text-gradient">by Startup Experts</span>
+                            </h1>
+                            <p class="text-2xl text-slate-600 mb-12 leading-relaxed">
+                                Accurate, hassle-free, and tailored for growth.
+                            </p>
+                            <button onclick="handleAction('Trial Started - Slide 1')" class="btn-animate bg-blue-600 text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl hover:bg-blue-700">
+                                Get Started Free
+                            </button>
+                        </div>
+                        <div class="reveal active" style="transition-delay: 0.2s;">
+                            <div class="relative">
+                                <div class="absolute -top-10 -right-10 w-72 h-72 bg-blue-200 rounded-full blur-[100px] opacity-40"></div>
+                                <img src="https://images.pexels.com/photos/6289065/pexels-photo-6289065.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                                     alt="Expert Bookkeeping" 
+                                     class="rounded-[3rem] shadow-2xl relative z-10 w-full h-[500px] object-cover border-4 border-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: One Team -->
+                <div class="slide" data-slide="2">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center px-6 py-20 lg:py-32">
+                        <div class="reveal">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 mb-6 text-xs font-bold tracking-widest text-blue-700 uppercase bg-white rounded-full shadow-sm">
+                                <span class="text-2xl">🤝</span>
+                                Unified Approach
+                            </div>
+                            <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-[1.05] tracking-tight mb-8">
+                                One Team,<br>
+                                <span class="text-gradient">All Answers</span>
+                            </h1>
+                            <p class="text-2xl text-slate-600 mb-12 leading-relaxed">
+                                No juggling 10 firms—your dedicated finance partner handles everything.
+                            </p>
+                            <button onclick="handleAction('Contact - Slide 2')" class="btn-animate bg-slate-900 text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl">
+                                Meet Your Team
+                            </button>
+                        </div>
+                        <div class="reveal" style="transition-delay: 0.2s;">
+                            <div class="relative">
+                                <div class="absolute -top-10 -left-10 w-72 h-72 bg-blue-300 rounded-full blur-[100px] opacity-40"></div>
+                                <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                                     alt="Unified Team" 
+                                     class="rounded-[3rem] shadow-2xl relative z-10 w-full h-[500px] object-cover border-4 border-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Due Diligence Ready -->
+                <div class="slide" data-slide="3">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center px-6 py-20 lg:py-32">
+                        <div class="reveal">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 mb-6 text-xs font-bold tracking-widest text-blue-700 uppercase bg-white rounded-full shadow-sm">
+                                <span class="text-2xl">✅</span>
+                                Funding Ready
+                            </div>
+                            <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-[1.05] tracking-tight mb-8">
+                                Be Due Diligence<br>
+                                <span class="text-gradient">Ready</span>
+                            </h1>
+                            <p class="text-2xl text-slate-600 mb-8 leading-relaxed">
+                                Raise capital tomorrow, hassle-free.
+                            </p>
+                            <p class="text-lg text-slate-500 mb-12 leading-relaxed">
+                                With us, you're funding-ready because we keep your books, tax, and compliance spotless every single day.
+                            </p>
+                            <button onclick="handleAction('Audit Requested - Slide 3')" class="btn-animate bg-gradient-to-r from-blue-600 to-blue-700 text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl">
+                                Start Your Audit
+                            </button>
+                        </div>
+                        <div class="reveal" style="transition-delay: 0.2s;">
+                            <div class="relative">
+                                <div class="absolute -bottom-10 -right-10 w-72 h-72 bg-blue-400 rounded-full blur-[100px] opacity-40"></div>
+                                <img src="https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                                     alt="Due Diligence Ready" 
+                                     class="rounded-[3rem] shadow-2xl relative z-10 w-full h-[500px] object-cover border-4 border-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Incorporate in US -->
+                <div class="slide" data-slide="4">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center px-6 py-20 lg:py-32">
+                        <div class="reveal">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 mb-6 text-xs font-bold tracking-widest text-blue-700 uppercase bg-white rounded-full shadow-sm">
+                                <span class="text-2xl">🇺🇸</span>
+                                US Expansion
+                            </div>
+                            <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-[1.05] tracking-tight mb-8">
+                                Incorporate<br>
+                                <span class="text-gradient">in the US</span>
+                            </h1>
+                            <p class="text-2xl text-slate-600 mb-8 leading-relaxed">
+                                Delaware C-Corp setup made simple.
+                            </p>
+                            <p class="text-lg text-slate-500 mb-12 leading-relaxed">
+                                From entity formation to EIN, bank accounts, and compliance—we handle it all so you can focus on building.
+                            </p>
+                            <button onclick="handleAction('Incorporation Inquiry - Slide 4')" class="btn-animate bg-slate-900 text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl">
+                                Start Incorporation
+                            </button>
+                        </div>
+                        <div class="reveal" style="transition-delay: 0.2s;">
+                            <div class="relative">
+                                <div class="absolute -top-10 -left-10 w-72 h-72 bg-blue-500 rounded-full blur-[100px] opacity-40"></div>
+                                <img src="https://images.pexels.com/photos/936722/pexels-photo-936722.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                                     alt="US Incorporation" 
+                                     class="rounded-[3rem] shadow-2xl relative z-10 w-full h-[500px] object-cover border-4 border-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Slide Navigation Dots -->
+            <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
+                <button onclick="goToSlide(1)" class="slide-dot active" data-dot="1"></button>
+                <button onclick="goToSlide(2)" class="slide-dot" data-dot="2"></button>
+                <button onclick="goToSlide(3)" class="slide-dot" data-dot="3"></button>
+                <button onclick="goToSlide(4)" class="slide-dot" data-dot="4"></button>
+            </div>
+
+            <!-- Next/Prev Arrows -->
+            <button onclick="changeSlide(-1)" class="slide-arrow left">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <button onclick="changeSlide(1)" class="slide-arrow right">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Rest of your page content continues here 
+    <section id="main-content" class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+                Investor-Ready <span class="text-gradient">Global</span> Finance
+            </h2>
+            <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-12">
+                We bridge the gap between Delaware C-Corps and Indian subsidiaries. Board-level CFO strategy meets automated compliance for founders.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button onclick="handleAction('Start Free Trial')" class="btn-animate bg-slate-900 text-white px-10 py-5 rounded-2xl font-bold text-lg shadow-2xl">
+                    Start Free Trial
+                </button>
+                <div class="flex items-center gap-5 border-l border-slate-200 pl-8">
+                    <div>
+                        <p class="text-3xl font-extrabold text-slate-900">$1.2B+</p>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Managed Assets</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+
+    <div id="toast">Action Simulated Successfully!</div>
+
+    <div id="videoWidget">
+        <video id="testimonialVideo" muted loop playsinline class="w-full h-full object-cover">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-businessman-at-his-desk-working-with-his-laptop-31718-large.mp4" type="video/mp4">
+        </video>
+        <div class="absolute bottom-4 left-4 right-4 text-white">
+            <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Founder Testimonial</p>
+            <p class="font-bold text-sm">Aman S. on Scale</p>
+        </div>
+        <button onclick="closeVideo()" class="absolute top-2 right-2 bg-black/30 hover:bg-black/50 text-white rounded-full p-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    </div> -->
+
+    <section id="home" class="relative pt-20 pb-32 px-6" alignment="center">
+        <div class="max-w-7xl mx-auto flex flex-col items-center justify-center">
+            <div class="reveal" style="transition-delay: 0.2s; display: flex; justify-content: center; width: 100%;">
+                <div class="bg-white p-10 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)] border border-slate-100 relative max-w-2xl w-full">
+                    <div class="flex justify-between items-center mb-12">
+                        <div>
+                            <h3 class="font-extrabold text-slate-900 text-xl tracking-tight">Capital Efficiency</h3>
+                            <p class="text-xs text-slate-400 mt-1">Real-time portfolio performance</p>
+                        </div>
+                        <div class="flex -space-x-2">
+                            <div class="w-10 h-10 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center font-bold text-xs">JD</div>
+                            <div class="w-10 h-10 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center font-bold text-xs">AS</div>
+                        </div>
+                    </div>
+                    <div class="h-[350px] w-full">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- slide difference-->
+
+<div class="comparison-wrapper">
+        <div class="comparison-header">
+            <h2>Why Choose LedgersCFO?</h2>
+            <p>Slide the bar to see the difference in clarity and performance</p>
+            <div class="vs-title">
+                <span class="other">😰 OTHER FIRMS</span>
+                <span class="vs-text">VS</span>
+                <span class="ledgers">🚀 LEDGERSCFO</span>
+            </div>
+        </div>
+        
+        <div class="slider-container" id="sliderContainer">
+            <!-- AFTER LAYER (LedgersCFO) -->
+            <div class="content-wrapper">
+                <div class="single-col">
+                    <!-- Metrics -->
+                    <div>
+                        <h3 class="section-title">📊 Real-Time Metrics</h3>
+                        <div class="metrics-list">
+                            <div class="metric-row">
+                                <span class="metric-label">ARR</span>
+                                <span class="metric-value">$2,400,000</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Cash Balance</span>
+                                <span class="metric-value">$850,000</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Cash Runway</span>
+                                <span class="metric-value">18 months</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Revenue</span>
+                                <span class="metric-value">$3,200,000</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">COGS</span>
+                                <span class="metric-value">$640,000</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">S&M Spend</span>
+                                <span class="metric-value">$480,000</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">R&D Spend</span>
+                                <span class="metric-value">$720,000</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">G&A Spend</span>
+                                <span class="metric-value">$320,000</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Burn Multiple</span>
+                                <span class="metric-value">1.2x</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">CAC / LTV</span>
+                                <span class="metric-value">$12.5k / $48k</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Solutions -->
+                    <div>
+                        <h3 class="section-title"><centre>🚀 The Solution</centre></h3>
+                        <div class="points-list">
+                            <div class="point-item">
+                                <span class="point-icon">⚡</span>
+                                <div class="point-content">
+                                    <h5>Instant Communication</h5>
+                                    <p>Dedicated Slack/WhatsApp channel. Real-time answers within hours, not days.</p>
+                                </div>
+                            </div>
+                            <div class="point-item">
+                                <span class="point-icon">💎</span>
+                                <div class="point-content">
+                                    <h5>Transparent Pricing</h5>
+                                    <p>Fixed quotes upfront. No surprises. Save 50-60% vs traditional firms.</p>
+                                </div>
+                            </div>
+                            <div class="point-item">
+                                <span class="point-icon">🌍</span>
+                                <div class="point-content">
+                                    <h5>True Cross-Border Expertise</h5>
+                                    <p>US CPAs + Indian CAs on one team handling compliance seamlessly.</p>
+                                </div>
+                            </div>
+                            <div class="point-item">
+                                <span class="point-icon">🤖</span>
+                                <div class="point-content">
+                                    <h5>Automated Systems</h5>
+                                    <p>Connect your books once. Auto-sync bank feeds. We handle the heavy lifting.</p>
+                                </div>
+                            </div>
+                            <div class="point-item">
+                                <span class="point-icon">✅</span>
+                                <div class="point-content">
+                                    <h5>Proactive Deadline Management</h5>
+                                    <p>Zero penalties on our watch. Automated tracking keeps you ahead.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline -->
+                    <div>
+                        <div class="timeline-box">
+                            <h4>⏱️ LedgersCFO Timeline</h4>
+                            <div class="timeline-item">
+                                <span>Initial Response:</span>
+                                <span class="timeline-value">2-4 hours</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span>Document Collection:</span>
+                                <span class="timeline-value">3-5 days</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span>Draft Review:</span>
+                                <span class="timeline-value">2-3 days</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span>Final Filing:</span>
+                                <span class="timeline-value">Same day</span>
+                            </div>
+                            <div class="timeline-item total">
+                                <span>Total Time:</span>
+                                <span class="timeline-total">1-2 Weeks</span>
+                            </div>
+                            <div class="pricing-badge">
+                                <div class="label">Investment</div>
+                                <div class="price">Starting at: $1,000/year</div>
+                                <div class="note">✅ All-inclusive. No hidden fees. Ever.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Core Features -->
+                    <div>
+                        <div class="features-box">
+                            <h4>✨ Core Features</h4>
+                            <div class="feature-row">
+                                <span class="feature-label">Compliance Coverage:</span>
+                                <span class="feature-badge">End-to-End</span>
+                            </div>
+                            <div class="feature-row">
+                                <span class="feature-label">CFO Support:</span>
+                                <span class="feature-badge">Included</span>
+                            </div>
+                            <div class="feature-row">
+                                <span class="feature-label">Pricing Model:</span>
+                                <span class="feature-badge">Fixed & Clear</span>
+                            </div>
+                            <div class="feature-row">
+                                <span class="feature-label">Response Time:</span>
+                                <span class="feature-badge">Real-Time</span>
+                            </div>
+                            <div class="feature-row">
+                                <span class="feature-label">Automation:</span>
+                                <span class="feature-badge">Full Stack</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Features Comparison -->
+                    <div>
+                        <div class="additional-features">
+                            <h4>🎯 Feature Comparison</h4>
+                            <div class="feature-comparison-row">
+                                <span class="feature-comparison-label">Access & Responsiveness</span>
+                                <span class="feature-comparison-value">Slack / WhatsApp + Very Responsive</span>
+                            </div>
+                            <div class="feature-comparison-row">
+                                <span class="feature-comparison-label">Team Ownership</span>
+                                <span class="feature-comparison-value">One Dedicated Team End-to-End</span>
+                            </div>
+                            <div class="feature-comparison-row">
+                                <span class="feature-comparison-label">Founder Visibility</span>
+                                <span class="feature-comparison-value">Dashboard: Cash, Burn, Runway, ARR, P&L</span>
+                            </div>
+                            <div class="feature-comparison-row">
+                                <span class="feature-comparison-label">Pricing</span>
+                                <span class="feature-comparison-value">Fixed Pricing, No Surprise Bills</span>
+                            </div>
+                            <div class="feature-comparison-row">
+                                <span class="feature-comparison-label">Operating Experience</span>
+                                <span class="feature-comparison-value">Operator-Led (Startup Finance Experience)</span>
+                            </div>
+                            <div class="feature-comparison-row">
+                                <span class="feature-comparison-label">Cross-Border Expertise</span>
+                                <span class="feature-comparison-value">US ↔ India Specialists (Delaware + India Ops)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom CTA -->
+                    <div>
+                        <div class="bottom-cta">
+                            <h3>LedgersCFO isn't just tax filing — it's finance operations built for founders.</h3>
+                            <p>Get transparency, control, and peace of mind with operator-led finance teams.</p>
+                            <a href="#" class="cta-button">Get Pricing & Compliance Plan</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BEFORE LAYER (Other Firms) -->
+            <div class="before-layer" id="beforeLayer">
+                <div class="content-wrapper">
+                    <div class="single-col">
+                        <!-- Metrics (Unknown) -->
+                        <div>
+                            <h3 class="section-title">📊 Your Metrics</h3>
+                            <div class="metrics-list">
+                                <div class="metric-row">
+                                    <span class="metric-label">ARR</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Cash Balance</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Cash Runway</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Revenue</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">COGS</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">S&M Spend</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">R&D Spend</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">G&A Spend</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Burn Multiple</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">CAC / LTV</span>
+                                    <span class="metric-value">???</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Problems -->
+                        <div>
+                            <h3 class="section-title" alignment="center">😰 The Problems</h3>
+                            <div class="points-list">
+                                <div class="point-item">
+                                    <span class="point-icon">😵</span>
+                                    <div class="point-content">
+                                        <h5>Confusing Communication</h5>
+                                        <p>Emails take 2-3 days. Multiple back-and-forth cycles delay progress.</p>
+                                    </div>
+                                </div>
+                                <div class="point-item">
+                                    <span class="point-icon">💸</span>
+                                    <div class="point-content">
+                                        <h5>Hidden Costs</h5>
+                                        <p>"$2k basic filing" turns into $5k+ with surprise state returns and fees.</p>
+                                    </div>
+                                </div>
+                                <div class="point-item">
+                                    <span class="point-icon">🤷</span>
+                                    <div class="point-content">
+                                        <h5>No Cross-Border Expertise</h5>
+                                        <p>US CPAs don't understand Indian compliance. You need multiple firms.</p>
+                                    </div>
+                                </div>
+                                <div class="point-item">
+                                    <span class="point-icon">📊</span>
+                                    <div class="point-content">
+                                        <h5>Manual Everything</h5>
+                                        <p>Excel sheets and email attachments. You're doing all the heavy lifting.</p>
+                                    </div>
+                                </div>
+                                <div class="point-item">
+                                    <span class="point-icon">⏰</span>
+                                    <div class="point-content">
+                                        <h5>Deadline Stress</h5>
+                                        <p>Last-minute scrambles lead to costly penalties and compliance issues.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Timeline -->
+                        <div>
+                            <div class="timeline-box">
+                                <h4>⏱️ Typical Timeline</h4>
+                                <div class="timeline-item">
+                                    <span>Initial Response:</span>
+                                    <span class="timeline-value">2-3 days</span>
+                                </div>
+                                <div class="timeline-item">
+                                    <span>Document Collection:</span>
+                                    <span class="timeline-value">2-3 weeks</span>
+                                </div>
+                                <div class="timeline-item">
+                                    <span>Draft Review:</span>
+                                    <span class="timeline-value">1-2 weeks</span>
+                                </div>
+                                <div class="timeline-item">
+                                    <span>Final Filing:</span>
+                                    <span class="timeline-value">2-4 days</span>
+                                </div>
+                                <div class="timeline-item total">
+                                    <span>Total Time:</span>
+                                    <span class="timeline-total">6-8 Weeks</span>
+                                </div>
+                                <div class="pricing-badge">
+                                    <div class="label">Average Cost</div>
+                                    <div class="price">$4,500 - $7,000</div>
+                                    <div class="note">⚠️ Plus surprise additional fees</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Traditional Services -->
+                        <div>
+                            <div class="features-box">
+                                <h4>Traditional Services</h4>
+                                <div class="feature-row">
+                                    <span class="feature-label">Compliance Coverage:</span>
+                                    <span class="feature-badge">Fragmented</span>
+                                </div>
+                                <div class="feature-row">
+                                    <span class="feature-label">CFO Support:</span>
+                                    <span class="feature-badge">Not Available</span>
+                                </div>
+                                <div class="feature-row">
+                                    <span class="feature-label">Pricing Model:</span>
+                                    <span class="feature-badge warning">Surprise Bills</span>
+                                </div>
+                                <div class="feature-row">
+                                    <span class="feature-label">Response Time:</span>
+                                    <span class="feature-badge">2-3 Days</span>
+                                </div>
+                                <div class="feature-row">
+                                    <span class="feature-label">Automation:</span>
+                                    <span class="feature-badge">Manual</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Features Comparison (Other Firms) -->
+                        <div>
+                            <div class="additional-features">
+                                <h4>❌ What You're Missing</h4>
+                                <div class="feature-comparison-row">
+                                    <span class="feature-comparison-label">Access & Responsiveness</span>
+                                    <span class="feature-comparison-value">Email-Only, Slow Turnaround</span>
+                                </div>
+                                <div class="feature-comparison-row">
+                                    <span class="feature-comparison-label">Team Ownership</span>
+                                    <span class="feature-comparison-value">Multiple Teams, Handoffs, Follow-ups</span>
+                                </div>
+                                <div class="feature-comparison-row">
+                                    <span class="feature-comparison-label">Founder Visibility</span>
+                                    <span class="feature-comparison-value">Only Reports/PDFs, Limited Visibility</span>
+                                </div>
+                                <div class="feature-comparison-row">
+                                    <span class="feature-comparison-label">Pricing</span>
+                                    <span class="feature-comparison-value">Variable Billing, Add-ons Later</span>
+                                </div>
+                                <div class="feature-comparison-row">
+                                    <span class="feature-comparison-label">Operating Experience</span>
+                                    <span class="feature-comparison-value">Compliance-Only Teams</span>
+                                </div>
+                                <div class="feature-comparison-row">
+                                    <span class="feature-comparison-label">Cross-Border Expertise</span>
+                                    <span class="feature-comparison-value">Generic Firm, Weak Cross-Border Support</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bottom CTA (Other Firms) -->
+                        <div>
+                            <div class="bottom-cta">
+                                <h3>Traditional firms leave you in the dark with scattered services.</h3>
+                                <p>Disconnected teams, hidden fees, and no real visibility into your finances.</p>
+                                <a href="#" class="cta-button">See What You're Missing</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slider Handle -->
+            <div class="slider-handle" id="sliderHandle"></div>
+        </div>
+    </div>
+   
+<!-- Our Trusted Partners Section -->
+<section class="partners-section py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12 reveal">
+            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">Our Trusted Partners</h2>
+            <p class="text-slate-500 text-lg">Proud to work with leading startups and enterprises</p>
+        </div>
+        
+        <div class="carousel-container">
+            <div class="carousel-track" id="partnerCarousel">
+                <!-- First Set -->
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="1.webp" alt="Ragas">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="2.webp" alt="Goldcast">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="3.webp" alt="Scalekit">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="4.webp" alt="Kwanzoo">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="5.webp" alt="E42AI@Work">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="6.webp" alt="WayToCloudsols">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="7.webp" alt="ReachISO">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="8.webp" alt="CareerKarma">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="9.webp" alt="PostHog">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="10.webp" alt="Limitless">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="11.webp" alt="Explo">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="12.webp" alt="Tydo">
+                    </div>
+                </div>
+                <!-- Duplicate Set for Seamless Loop -->
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="1.webp" alt="Ragas">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="2.webp" alt="Goldcast">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="3.webp" alt="Scalekit">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="4.webp" alt="Kwanzoo">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="5.webp" alt="E42AI@Work">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="6.webp" alt="WayToCloudsols">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="7.webp" alt="ReachISO">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="8.webp" alt="CareerKarma">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="9.webp" alt="PostHog">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="10.webp" alt="Limitless">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="11.webp" alt="Explo">
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-box">
+                        <img src="12.webp" alt="Tydo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>  
+    <section id="services" class="py-32 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Our Services</h2>
+                <p class="text-slate-500 mt-4 max-w-2xl mx-auto text-lg">Comprehensive financial solutions tailored for global startups</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card bg-white border-2 border-slate-100 rounded-[2rem] h-80 reveal">
+                    <div class="p-10 h-full flex flex-col justify-center items-center text-center">
+                        <div class="text-6xl mb-6">📊</div>
+                        <h3 class="text-2xl font-bold text-slate-900">Book-Keeping</h3>
+                    </div>
+                    <div class="service-card-content">
+                        <h4 class="text-xl font-bold mb-3">Book keeping services</h4>
+                        <p class="text-sm leading-relaxed opacity-90">Stay on top of your finances. Get accurate monthly reports, expense tracking, and reconciliation done by experts</p>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white border-2 border-slate-100 rounded-[2rem] h-80 reveal" style="transition-delay: 0.1s;">
+                    <div class="p-10 h-full flex flex-col justify-center items-center text-center">
+                        <div class="text-6xl mb-6">📋</div>
+                        <h3 class="text-2xl font-bold text-slate-900">Tax</h3>
+                    </div>
+                    <div class="service-card-content">
+                        <h4 class="text-xl font-bold mb-3">Tax Compliance Services</h4>
+                        <p class="text-sm leading-relaxed opacity-90">Stop stressing over taxes. We handle 1120, 5471, 5472, R&D credits, and Delaware Franchise Tax with expert care and accuracy.</p>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white border-2 border-slate-100 rounded-[2rem] h-80 reveal" style="transition-delay: 0.2s;">
+                    <div class="p-10 h-full flex flex-col justify-center items-center text-center">
+                        <div class="text-6xl mb-6">👔</div>
+                        <h3 class="text-2xl font-bold text-slate-900">FP&A And Fractional CFO</h3>
+                    </div>
+                    <div class="service-card-content">
+                        <h4 class="text-xl font-bold mb-3">Finance consulting</h4>
+                        <p class="text-sm leading-relaxed opacity-90">Get strategic financial insights. From budgeting to fundraising prep, we help you make smarter money decisions.</p>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white border-2 border-slate-100 rounded-[2rem] h-80 reveal" style="transition-delay: 0.3s;">
+                    <div class="p-10 h-full flex flex-col justify-center items-center text-center">
+                        <div class="text-6xl mb-6">🤝</div>
+                        <h3 class="text-2xl font-bold text-slate-900">Incorporation</h3>
+                    </div>
+                    <div class="service-card-content">
+                        <h4 class="text-xl font-bold mb-3">Incorporation services</h4>
+                        <p class="text-sm leading-relaxed opacity-90">Starting a business should be exciting, not stressful. We help you set up your company with the right structure, documentation, and compliance so you can avoid mistakes that cost time and money later.</p>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white border-2 border-slate-100 rounded-[2rem] h-80 reveal" style="transition-delay: 0.4s;">
+                    <div class="p-10 h-full flex flex-col justify-center items-center text-center">
+                        <div class="text-6xl mb-6">🏙️</div>
+                        <h3 class="text-2xl font-bold text-slate-900">Tax Compliance For Bangalore Businesses</h3>
+                    </div>
+                    <div class="service-card-content">
+                        <h4 class="text-xl font-bold mb-3">Tax compliance for Businesses in Bangalore</h4>
+                        <p class="text-sm leading-relaxed opacity-90">Stay tax compliant with professional US Taxation compliance for businesses in Bangalore</p>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white border-2 border-slate-100 rounded-[2rem] h-80 reveal" style="transition-delay: 0.5s;">
+                    <div class="p-10 h-full flex flex-col justify-center items-center text-center">
+                        <div class="text-6xl mb-6">🌐</div>
+                        <h3 class="text-2xl font-bold text-slate-900">Cross-Border Compliance</h3>
+                    </div>
+                    <div class="service-card-content">
+                        <h4 class="text-xl font-bold mb-3">Cross-border compliance</h4>
+                        <p class="text-sm leading-relaxed opacity-90">Expand globally with ease. Navigate international tax laws, reporting, and regulations without the usual headaches.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+<section id="industries" class="py-32 bg-gradient-to-br from-slate-50 to-blue-50 px-6"></section>
+
+    <section id="compliance" class="py-32 bg-white px-6">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+            <div class="lg:w-1/2 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-8 leading-tight">The <span class="text-blue-600">US-India</span><br>Compliance Nexus.</h2>
+                <p class="text-slate-500 text-lg mb-12">Handling the complex friction points of cross-border operations so your team can stay focused on building.</p>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-6 p-6 rounded-3xl border border-slate-50 hover:bg-slate-50 transition-all cursor-default group">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold group-hover:bg-blue-600 group-hover:text-white transition">1</div>
+                        <span class="font-bold text-slate-700 text-lg">Delaware Franchise Tax & MCA Filings</span>
+                    </div>
+                    <div class="flex items-center gap-6 p-6 rounded-3xl border border-slate-50 hover:bg-slate-50 transition-all cursor-default group">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold group-hover:bg-blue-600 group-hover:text-white transition">2</div>
+                        <span class="font-bold text-slate-700 text-lg">Cross-border Transfer Pricing (Cost Plus)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2 reveal" style="transition-delay: 0.2s;">
+                <div class="bg-slate-900 p-12 rounded-[3.5rem] text-white shadow-3xl relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-600/20 rounded-full blur-[80px]"></div>
+                    <h4 class="text-blue-400 font-bold uppercase text-xs mb-12 tracking-[0.2em]">Regulatory Assistant 2.0</h4>
+                    <div class="space-y-10">
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-4 opacity-70 uppercase tracking-widest"><span>Entity Consolidation</span><span>100%</span></div>
+                            <div class="h-2.5 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-emerald-500 progress-bar" data-val="100%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-4 opacity-70 uppercase tracking-widest"><span>Nexus Vulnerability</span><span>85%</span></div>
+                            <div class="h-2.5 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-blue-500 progress-bar" data-val="85%"></div></div>
+                        </div>
+                        <div class="pt-8 grid grid-cols-2 gap-5">
+                            <button onclick="openTaxModal()" class="bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl text-xs font-bold transition shadow-xl">FORM 5471 / 5472</button>
+                            <button onclick="handleAction('Portal Login')" class="bg-white/5 border border-white/10 py-4 rounded-2xl text-xs font-bold transition hover:bg-white/10">MCA PORTAL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-32 bg-slate-50 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Transparent Investment</h2>
+                <p class="text-slate-500 mt-4 text-lg">Scalable finance plans for every stage of your startup journey.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-24">
+                <div class="bg-white p-12 rounded-[3rem] border border-slate-200 hover:border-blue-400 transition-all reveal">
+                    <h3 class="text-2xl font-bold mb-2">Seed</h3>
+                    <div class="text-5xl font-extrabold text-blue-600 mb-8">$1000<span class="text-sm text-slate-400 font-medium">/mo</span></div>
+                    <ul class="space-y-5 text-slate-600 text-sm mb-12">
+                        <li class="flex items-center gap-3">✓ Delaware HQ Compliance</li>
+                        <li class="flex items-center gap-3">✓ FBAR & FATCA Filings</li>
+                        <li class="flex items-center gap-3">✓ Quarterly Strategy Calls</li>
+                    </ul>
+                    <button onclick="handleAction('Plan Selected: Seed')" class="w-full py-5 border-2 border-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all shadow-md">Select Plan</button>
+                </div>
+                <div class="bg-blue-600 p-12 rounded-[3rem] text-white shadow-2xl transform md:-translate-y-8 relative reveal" style="transition-delay: 0.1s;">
+                    <div class="absolute top-6 right-8 bg-white text-blue-600 text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">Recommended</div>
+                    <h3 class="text-2xl font-bold mb-2">Growth</h3>
+                    <div class="text-5xl font-extrabold mb-8">$2000<span class="text-sm text-blue-200 font-medium">/mo</span></div>
+                    <ul class="space-y-5 text-sm mb-12">
+                        <li class="flex items-center gap-3">✓ Everything in Seed</li>
+                        <li class="flex items-center gap-3">✓ Unit Economics Modeling</li>
+                        <li class="flex items-center gap-3">✓ Monthly Board Reporting</li>
+                    </ul>
+                    <button onclick="handleAction('Plan Selected: Growth')" class="w-full py-5 bg-white text-blue-600 rounded-2xl font-bold shadow-xl hover:bg-blue-50 transition-all">Select Plan</button>
+                </div>
+                <div class="bg-white p-12 rounded-[3rem] border border-slate-200 hover:border-blue-400 transition-all reveal" style="transition-delay: 0.2s;">
+                    <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                <div class="text-5xl font-extrabold text-blue-600 mb-8">Custom</div>
+                <ul class="space-y-5 text-slate-600 text-sm mb-12">
+                <li class="flex items-center gap-3">✓ M&A Strategy Support</li>
+                <li class="flex items-center gap-3">✓ Dedicated CFO Partner</li>
+                <li class="flex items-center gap-3">✓ Multi-Entity Consolidation</li>
+                </ul>
+                <button onclick="handleAction('Plan Selected: Enterprise')" class="w-full py-5 border-2 border-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all shadow-md">Contact Sales</button>
+                </div>
+                </div>
+                <div class="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm reveal">
+            <h4 class="text-2xl font-bold mb-10 text-center tracking-tight">Feature Matrix</h4>
+            <div class="overflow-x-auto no-scrollbar">
+                <table class="w-full text-left text-sm border-collapse min-w-[600px]">
+                    <thead>
+                        <tr class="border-b border-slate-100">
+                            <th class="pb-6 font-bold text-slate-400 uppercase text-[10px] tracking-[0.1em]">Capability</th>
+                            <th class="pb-6 font-bold text-slate-900">Seed</th>
+                            <th class="pb-6 font-bold text-slate-900">Growth</th>
+                            <th class="pb-6 font-bold text-slate-900">Enterprise</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600">
+                        <tr class="border-b border-slate-50 hover:bg-slate-50 transition"><td class="py-6 font-bold text-slate-900">Entity Consolidation</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                        <tr class="border-b border-slate-50 hover:bg-slate-50 transition"><td class="py-6 font-bold text-slate-900">Virtual Data Room</td><td>—</td><td>✓</td><td>✓</td></tr>
+                        <tr class="border-b border-slate-50 hover:bg-slate-50 transition"><td class="py-6 font-bold text-slate-900">Board Deck Prep</td><td>—</td><td>Monthly</td><td>Unlimited</td></tr>
+                        <tr class="border-b border-slate-50 hover:bg-slate-50 transition"><td class="py-6 font-bold text-slate-900">Strategic Support</td><td>Quarterly</td><td>Monthly</td><td>24/7 Priority</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-blue-700 text-white px-6 overflow-hidden relative">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-[100px] -mr-20 -mt-20"></div>
+    <div class="max-w-5xl mx-auto text-center relative z-10 reveal">
+        <h2 class="text-4xl md:text-6xl font-extrabold mb-10 tracking-tight leading-tight">Don't wait for an audit.</h2>
+        <p class="text-blue-100 text-xl md:text-2xl mb-12 max-w-3xl mx-auto font-medium">Identify 40+ potential cross-border compliance leaks in 72 hours with our Nexus Scan.</p>
+        <button onclick="handleAction('Diagnostic Requested')" class="btn-animate bg-white text-blue-700 px-12 py-6 rounded-2xl font-extrabold text-xl shadow-[0_20px_40px_rgba(0,0,0,0.15)]">
+            Request Diagnostic Audit
+        </button>
+    </div>
+</section>
+
+<section class="py-32 bg-white px-6">
+    <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-20 reveal">
+            <h2 class="text-4xl font-extrabold tracking-tight">Compliance & Friction</h2>
+            <p class="text-slate-500 mt-4 text-lg">Solving the hurdles of multi-entity global scaling.</p>
+        </div>
+        <div class="space-y-5 reveal">
+            <div class="border-2 border-slate-100 rounded-3xl overflow-hidden transition-all hover:border-blue-400">
+                <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                    <span>Section 174 Amortization Risks</span>
+                    <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                </button>
+                <div class="accordion-content px-8 text-slate-500 text-base leading-relaxed">
+                    Strategically restructuring R&D expenses to comply with IRS Section 174 rules, ensuring your development burn doesn't create unexpected tax liabilities.
+                </div>
+            </div>
+            <div class="border-2 border-slate-100 rounded-3xl overflow-hidden transition-all hover:border-blue-400">
+                <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                    <span>Sales Tax (Wayfair) Economic Nexus</span>
+                    <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                </button>
+                <div class="accordion-content px-8 text-slate-500 text-base leading-relaxed">
+                    Economic nexus tracking across all 50 US states. We automate the registration, collection, and remittance of sales tax regardless of physical presence.
+                </div>
+            </div>
+            <div class="border-2 border-slate-100 rounded-3xl overflow-hidden transition-all hover:border-blue-400">
+                <button onclick="toggleAccordion(this)" class="w-full p-8 text-left font-bold text-xl flex justify-between items-center text-slate-900 group">
+                    <span>FBAR & FATCA Disclosure</span>
+                    <span class="accordion-icon text-3xl font-light text-blue-600 transition-transform">+</span>
+                </button>
+                <div class="accordion-content px-8 text-slate-500 text-base leading-relaxed">
+                    Comprehensive reporting of all foreign bank accounts. We ensure timely FinCEN filing to prevent 6-figure penalties and ensure international banking health.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="insights" class="py-32 bg-slate-50 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal">
+            <div class="max-w-xl">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Insights Hub</h2>
+                <p class="text-slate-500 mt-4 text-lg">The latest in 2026 cross-border tax code, venture funding, and strategic finance.</p>
+            </div>
+            <button onclick="window.location.href='blogs.html'" class="subtle-jitter-button mt-8 md:mt-0 font-bold text-blue-600 border-b-2 border-blue-600 pb-1">
+    Browse All Articles
+</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-24">
+            <article class="bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group reveal">
+                <div class="h-60 overflow-hidden">
+                    <img src="https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Finance Chart">
+                </div>
+                <div class="p-10">
+                    <div class="text-[10px] font-bold text-blue-600 mb-5 tracking-widest uppercase">Compliance</div>
+                    <h4 class="font-bold text-2xl mb-5 leading-tight">Mastering Form 5471 for Offshore Subsidiaries</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-8">How to navigate the complex disclosure requirements for US entities with Indian subsidiaries.</p>
+                    <button onclick="handleAction('Read Article: Form 5471')" class="text-slate-900 font-extrabold text-sm border-b-2 border-slate-900">Read Article</button>
+                </div>
+            </article>
+            <article class="bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group reveal" style="transition-delay: 0.1s;">
+                <div class="h-60 overflow-hidden">
+                    <img src="https://images.pexels.com/photos/5900222/pexels-photo-5900222.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Finance Chart">
+                </div>
+                <div class="p-10">
+                    <div class="text-[10px] font-bold text-emerald-600 mb-5 tracking-widest uppercase">Strategy</div>
+                    <h4 class="font-bold text-2xl mb-5 leading-tight">LTV/CAC Benchmarks for 2026 SaaS Founders</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-8">What venture capitalists are looking for in unit economics in the current funding environment.</p>
+                    <button onclick="handleAction('Read Article: SaaS Benchmarks')" class="text-slate-900 font-extrabold text-sm border-b-2 border-slate-900">Read Article</button>
+                </div>
+            </article>
+            <article class="bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all group reveal" style="transition-delay: 0.2s;">
+                <div class="h-60 overflow-hidden">
+                    <img src="https://images.pexels.com/photos/7063771/pexels-photo-7063771.jpeg?auto=compress&cs=tinysrgb&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Finance Chart">
+                </div>
+                <div class="p-10">
+                    <div class="text-[10px] font-bold text-purple-600 mb-5 tracking-widest uppercase">Funding</div>
+                    <h4 class="font-bold text-2xl mb-5 leading-tight">Bridge Rounds vs. Runway Extension</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-8">Choosing the right financial instrument to reach your next milestone without excessive dilution.</p>
+                    <button onclick="handleAction('Read Article: Bridge Rounds')" class="text-slate-900 font-extrabold text-sm border-b-2 border-slate-900">Read Article</button>
+                </div>
+            </article>
+        </div>
+
+        <div class="bg-slate-900 rounded-[3.5rem] p-12 md:p-20 flex flex-col md:flex-row items-center gap-12 reveal">
+            <div class="md:w-1/2">
+                <h3 class="text-3xl md:text-5xl font-extrabold text-white mb-6">Join 5,000+ Founders</h3>
+                <p class="text-slate-400 text-lg">Bi-weekly tax alerts and strategy insights delivered to your work inbox.</p>
+            </div>
+            <div class="md:w-1/2 w-full">
+                <form onsubmit="event.preventDefault(); handleAction('Newsletter Subscribed')" class="flex flex-col sm:flex-row gap-5">
+                    <input type="email" placeholder="workemail@startup.com" class="flex-1 bg-white/5 border border-white/10 p-5 rounded-2xl text-white outline-none focus:border-blue-500 transition-all shadow-inner">
+                    <button class="bg-blue-600 text-white px-10 py-5 rounded-2xl font-bold hover:bg-blue-500 transition shadow-xl">Join Hub</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ========================================
+     SECTION 2: CALCULATORS SECTION
+     Location: Replace the entire #resources section in index.html
+     ======================================== -->
+
+<section id="resources" class="py-32 bg-white px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20 reveal">
+            <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Financial Calculators</h2>
+            <p class="text-slate-500 mt-4 max-w-2xl mx-auto text-lg">Powerful tools to help you understand your financials</p>
+        </div>
+
+        <!-- Calculator Tabs -->
+        <div class="mb-12 reveal">
+    <div class="calculator-tabs-grid">
+        <button onclick="showCalculator('delaware')" class="calc-tab active" data-calc="delaware">Delaware Franchise Tax</button>
+        <button onclick="showCalculator('runway')" class="calc-tab" data-calc="runway">Runway Calculator</button>
+        <button onclick="showCalculator('burn')" class="calc-tab" data-calc="burn">Burn Multiple</button>
+        <button onclick="showCalculator('cac')" class="calc-tab" data-calc="cac">CAC Payback</button>
+        
+        <button onclick="showCalculator('ltv')" class="calc-tab" data-calc="ltv">LTV:CAC Ratio</button>
+        <button onclick="showCalculator('growth')" class="calc-tab" data-calc="growth">Revenue Growth</button>
+        <button onclick="showCalculator('breakeven')" class="calc-tab" data-calc="breakeven">Break-Even</button>
+        <button onclick="showCalculator('savings')" class="calc-tab" data-calc="savings">LedgersCFO Savings</button>
+    </div>
+</div>
+
+        <!-- Calculator Containers -->
+        <div class="calculator-wrapper">
+            
+            <!-- 1. DELAWARE FRANCHISE TAX CALCULATOR -->
+            <div id="calc-delaware" class="calculator-container active reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">Delaware Franchise Tax Calculator</h3>
+                        <p class="text-slate-600 mb-8">Estimate your 2025 Delaware Franchise Tax before the official notice arrives.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Authorized Shares</label>
+                            <input type="number" id="delaware_shares" class="calculator-input" placeholder="e.g., 10,000,000" oninput="calculateDelawareTax()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Assumed Par Value ($)</label>
+                            <input type="number" id="delaware_par" class="calculator-input" placeholder="e.g., 0.0001" step="0.0001" oninput="calculateDelawareTax()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Total Gross Assets ($)</label>
+                            <input type="number" id="delaware_assets" class="calculator-input" placeholder="e.g., 1,000,000" oninput="calculateDelawareTax()">
+                        </div>
+
+                        <div id="delaware_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Estimated Tax Owed</p>
+                            <div class="tax-amount" id="delaware_amount">$0</div>
+                            <div class="method-badge" id="delaware_method">Authorized Shares Method</div>
+                            <p class="text-xs text-slate-500 mt-4">This is an estimate. Actual tax may vary.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. RUNWAY CALCULATOR -->
+            <div id="calc-runway" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">Runway Calculator</h3>
+                        <p class="text-slate-600 mb-8">Calculate how many months of runway you have left.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Current Cash Balance ($)</label>
+                            <input type="number" id="runway_cash" class="calculator-input" placeholder="e.g., 500,000" oninput="calculateRunway()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Monthly Burn Rate ($)</label>
+                            <input type="number" id="runway_burn" class="calculator-input" placeholder="e.g., 50,000" oninput="calculateRunway()">
+                        </div>
+
+                        <div id="runway_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Months of Runway</p>
+                            <div class="tax-amount" id="runway_months">0</div>
+                            <p class="text-sm text-slate-600 mt-4"><strong>Zero Cash Date:</strong> <span id="runway_date">-</span></p>
+                            <div class="method-badge" id="runway_status">Healthy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. BURN MULTIPLE CALCULATOR -->
+            <div id="calc-burn" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">Burn Multiple Calculator</h3>
+                        <p class="text-slate-600 mb-8">Measure your capital efficiency. Lower is better (ideal < 1.5x).</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Net Burn (Monthly $)</label>
+                            <input type="number" id="burn_net" class="calculator-input" placeholder="e.g., 50,000" oninput="calculateBurnMultiple()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Net New ARR (Monthly $)</label>
+                            <input type="number" id="burn_arr" class="calculator-input" placeholder="e.g., 40,000" oninput="calculateBurnMultiple()">
+                        </div>
+
+                        <div id="burn_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Burn Multiple</p>
+                            <div class="tax-amount" id="burn_multiple">0x</div>
+                            <div class="method-badge" id="burn_rating">Excellent</div>
+                            <p class="text-xs text-slate-500 mt-4">< 1.5x = Great | 1.5-2x = Good | 2-3x = Needs Work | > 3x = Critical</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. CAC PAYBACK CALCULATOR -->
+            <div id="calc-cac" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">CAC Payback Period Calculator</h3>
+                        <p class="text-slate-600 mb-8">How long to recover your customer acquisition cost?</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Customer Acquisition Cost (CAC) $</label>
+                            <input type="number" id="cac_cost" class="calculator-input" placeholder="e.g., 1,200" oninput="calculateCAC()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Monthly Recurring Revenue per Customer ($)</label>
+                            <input type="number" id="cac_mrr" class="calculator-input" placeholder="e.g., 100" oninput="calculateCAC()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Gross Margin (%)</label>
+                            <input type="number" id="cac_margin" class="calculator-input" placeholder="e.g., 80" min="0" max="100" oninput="calculateCAC()">
+                        </div>
+
+                        <div id="cac_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Payback Period</p>
+                            <div class="tax-amount" id="cac_months">0 months</div>
+                            <div class="method-badge" id="cac_rating">Excellent</div>
+                            <p class="text-xs text-slate-500 mt-4">< 12 months = Great | 12-18 = Good | > 18 = Needs Work</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. LTV:CAC RATIO CALCULATOR -->
+            <div id="calc-ltv" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">LTV:CAC Ratio Calculator</h3>
+                        <p class="text-slate-600 mb-8">Fundamental unit economics metric. Target > 3:1.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Average Revenue per Customer ($)</label>
+                            <input type="number" id="ltv_revenue" class="calculator-input" placeholder="e.g., 100" oninput="calculateLTV()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Customer Lifetime (months)</label>
+                            <input type="number" id="ltv_lifetime" class="calculator-input" placeholder="e.g., 36" oninput="calculateLTV()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Gross Margin (%)</label>
+                            <input type="number" id="ltv_margin" class="calculator-input" placeholder="e.g., 80" min="0" max="100" oninput="calculateLTV()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Customer Acquisition Cost ($)</label>
+                            <input type="number" id="ltv_cac" class="calculator-input" placeholder="e.g., 1,200" oninput="calculateLTV()">
+                        </div>
+
+                        <div id="ltv_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">LTV:CAC Ratio</p>
+                            <div class="tax-amount" id="ltv_ratio">0:1</div>
+                            <div class="method-badge" id="ltv_rating">Excellent</div>
+                            <p class="text-xs text-slate-500 mt-4">> 3:1 = Great | 2-3:1 = Good | < 2:1 = Needs Work</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. REVENUE GROWTH CALCULATOR -->
+            <div id="calc-growth" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">Revenue Growth Rate Calculator</h3>
+                        <p class="text-slate-600 mb-8">Track your momentum with growth rate calculations.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Current Period Revenue ($)</label>
+                            <input type="number" id="growth_current" class="calculator-input" placeholder="e.g., 100,000" oninput="calculateGrowth()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Previous Period Revenue ($)</label>
+                            <input type="number" id="growth_previous" class="calculator-input" placeholder="e.g., 80,000" oninput="calculateGrowth()">
+                        </div>
+
+                        <div id="growth_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Growth Rate</p>
+                            <div class="tax-amount" id="growth_rate">0%</div>
+                            <div class="method-badge" id="growth_rating">Strong Growth</div>
+                            <p class="text-xs text-slate-500 mt-4">10%+ MoM = Excellent | 5-10% = Good | < 5% = Needs Work</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. BREAK-EVEN CALCULATOR -->
+            <div id="calc-breakeven" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">Break-Even Analysis Calculator</h3>
+                        <p class="text-slate-600 mb-8">Find your break-even point in units and revenue.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Fixed Costs (Monthly $)</label>
+                            <input type="number" id="breakeven_fixed" class="calculator-input" placeholder="e.g., 50,000" oninput="calculateBreakeven()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Variable Cost per Unit ($)</label>
+                            <input type="number" id="breakeven_variable" class="calculator-input" placeholder="e.g., 20" oninput="calculateBreakeven()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Price per Unit ($)</label>
+                            <input type="number" id="breakeven_price" class="calculator-input" placeholder="e.g., 100" oninput="calculateBreakeven()">
+                        </div>
+
+                        <div id="breakeven_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Break-Even Point</p>
+                            <div class="tax-amount" id="breakeven_units">0 units</div>
+                            <p class="text-sm text-slate-600 mt-4"><strong>Revenue Needed:</strong> <span id="breakeven_revenue">$0</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. LEDGERSCFO SAVINGS CALCULATOR -->
+            <div id="calc-savings" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">What LedgersCFO Saves You</h3>
+                        <p class="text-slate-600 mb-8">Calculate your ROI with LedgersCFO vs. traditional firms.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Company Size</label>
+                            <select id="savings_size" class="calculator-input" onchange="calculateSavings()">
+                                <option value="">Select size...</option>
+                                <option value="seed">Seed Stage (0-10 employees)</option>
+                                <option value="growth">Growth Stage (10-50 employees)</option>
+                                <option value="scale">Scale Stage (50+ employees)</option>
+                            </select>
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Current Accounting Setup</label>
+                            <select id="savings_setup" class="calculator-input" onchange="calculateSavings()">
+                                <option value="">Select setup...</option>
+                                <option value="inhouse">In-house bookkeeper</option>
+                                <option value="traditional">Traditional CPA firm</option>
+                                <option value="multiple">Multiple vendors</option>
+                                <option value="diy">DIY / No system</option>
+                            </select>
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Hours Spent on Finance (Monthly)</label>
+                            <input type="number" id="savings_hours" class="calculator-input" placeholder="e.g., 40" oninput="calculateSavings()">
+                        </div>
+
+                        <div id="savings_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Annual Savings</p>
+                            <div class="tax-amount" id="savings_amount">$0</div>
+                            <div class="grid grid-cols-2 gap-4 mt-6 text-sm">
+                                <div class="text-center p-4 bg-blue-50 rounded-xl">
+                                    <p class="font-bold text-blue-900" id="savings_time">0 hours</p>
+                                    <p class="text-xs text-blue-600">Time Saved/Year</p>
+                                </div>
+                                <div class="text-center p-4 bg-blue-50 rounded-xl">
+                                    <p class="font-bold text-blue-900" id="savings_errors">$0</p>
+                                    <p class="text-xs text-blue-600">Error Prevention</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="audit-form" class="py-32 bg-white px-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+        <div class="reveal">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight leading-[1.1]">Initiate Your <br><span class="text-blue-600">Nexus Audit.</span></h2>
+            <p class="text-xl text-slate-500 mb-12">Trusted by founders building between Delaware and Bangalore. Join 100+ growth-stage startups today.</p>
+            <div class="p-10 bg-slate-50 rounded-[3rem] border border-slate-100 shadow-sm relative">
+                <div class="absolute -top-5 -left-5 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-serif">"</div>
+                <p class="text-slate-600 text-lg italic leading-relaxed mb-8">"LedgersCFO handled our entire transition seamlessly. Their understanding of cross-border tax is unrivaled in the market."</p>
+                <div class="flex items-center gap-5">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-2xl font-bold text-blue-600 uppercase">A</div>
+                    <div><p class="font-extrabold text-slate-900 text-xl">Aman S.</p><p class="text-sm text-slate-400 font-bold uppercase tracking-widest mt-1">Founder & CEO, SaaS</p></div>
+                </div>
+            </div>
+        </div>
+        <div class="reveal">
+            <form onsubmit="event.preventDefault(); handleAction('Form Submitted')" class="bg-slate-900 p-12 rounded-[3.5rem] text-white shadow-3xl border border-slate-800">
+                <div class="floating-group"><input type="text" class="floating-input" placeholder=" " required><label class="floating-label">Full Name</label></div>
+                <div class="floating-group"><input type="email" class="floating-input" placeholder=" " required><label class="floating-label">Work Email</label></div>
+                <div class="floating-group"><input type="text" class="floating-input" placeholder=" " required><label class="floating-label">Company Name</label></div>
+                <div class="floating-group">
+                    <select class="floating-input bg-slate-900" style="appearance: none;"><option value="" disabled selected></option><option>$0-$100k</option><option>$100k-$500k</option><option>$500k+</option></select>
+                    <label class="floating-label">Monthly Burn</label>
+                </div>
+                <button class="w-full bg-blue-600 py-6 rounded-[1.5rem] font-extrabold text-xl hover:bg-blue-500 transition-all mt-8 shadow-[0_20px_40px_rgba(37,99,235,0.3)]">Request Onboarding</button>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- US Tax Filing Modal -->
+<div class="modal-overlay" id="taxFilingModal" onclick="closeTaxModal()"></div>
+<div class="modal-container" id="taxFilingContainer">
+    <div class="modal-header">
+        <button class="modal-close" onclick="closeTaxModal()">×</button>
+        <h2 class="text-4xl font-extrabold mb-3">US Tax Return Filing</h2>
+        <p class="text-blue-100 text-lg">Accurate, Compliant, On Time</p>
+        <p class="text-white/90 mt-4">Expert tax professionals + smart communication. Our tax filing service ensures your Federal and State filings are prepared correctly and filed before deadlines.</p>
+        <div class="flex gap-4 mt-6">
+            <button onclick="handleAction('Free Consultation Booked')" class="bg-white text-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-50 transition">Book A Free Consultation</button>
+            <button onclick="document.getElementById('pricing-section').scrollIntoView({behavior:'smooth'})" class="bg-white/10 border-2 border-white/30 text-white px-8 py-3 rounded-xl font-bold hover:bg-white/20 transition">See Pricing</button>
+        </div>
+    </div>
+
+    <div class="modal-body">
+        <!-- End-to-end Support -->
+        <section class="mb-12">
+            <h3 class="text-3xl font-bold mb-6">End-to-end US tax support</h3>
+            <p class="text-slate-600 text-lg mb-6">Federal (1120/1065), State returns, 5471/5472, FinCEN 114, 1099 & R&D Credit Assistance</p>
+            
+            <div class="bg-gradient-to-br from-blue-50 to-slate-50 p-8 rounded-3xl border-2 border-blue-100">
+                <h4 class="text-2xl font-bold mb-6">Quick Scope Check</h4>
+                <p class="text-slate-600 mb-6">Tell us your entity type, states, and tax year to receive a fixed quote.</p>
+                <ul class="space-y-3 mb-6">
+                    <li class="flex items-center gap-3 text-slate-700"><span class="text-blue-600 font-bold">✓</span> C‑Corp/LLC</li>
+                    <li class="flex items-center gap-3 text-slate-700"><span class="text-blue-600 font-bold">✓</span> Foreign ownership forms (5472/5471) handled</li>
+                    <li class="flex items-center gap-3 text-slate-700"><span class="text-blue-600 font-bold">✓</span> FinCEN 114 and 1099 filings included</li>
+                </ul>
+                <button onclick="handleAction('Free Consultation Booked')" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-500 transition shadow-lg">Book A Free Consultation</button>
+            </div>
+        </section>
+
+        <!-- Process Steps -->
+        <section class="mb-12">
+            <h3 class="text-3xl font-bold mb-2 text-center">Simple 4‑Step Filing Process</h3>
+            <p class="text-slate-500 text-center mb-8">Trusted by many startups</p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Kickoff (15–30m)</h4>
+                        <p class="text-slate-600">We map your structure, states, and deadlines.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Documents</h4>
+                        <p class="text-slate-600">Secure checklist + read‑only access to books/bank.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Prep & Review</h4>
+                        <p class="text-slate-600">We prepare returns, reconcile, and review with you.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">File & Deliver</h4>
+                        <p class="text-slate-600">E‑filed returns + summary + next‑year roadmap. Dedicated Slack/WhatsApp support throughout.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Table -->
+        <section id="pricing-section" class="mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-center">Transparent Pricing</h3>
+            
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Description</th>
+                        <th>Starting From</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-bold">Federal Return (Form 1120)</td>
+                        <td class="text-slate-600">Annual return for C‑Corp (books finalized)</td>
+                        <td class="font-bold text-blue-600">$500</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Federal Return (Form 1120 — Nil revenue)</td>
+                        <td class="text-slate-600">No revenue/transactions for the year</td>
+                        <td class="font-bold text-blue-600">$150</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">State Return (each)</td>
+                        <td class="text-slate-600">Delaware, California, New York, others based on nexus</td>
+                        <td class="font-bold text-blue-600">$200</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Form 5472</td>
+                        <td class="text-slate-600">Foreign‑owned US corporation reporting</td>
+                        <td class="font-bold text-blue-600">$150</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Form 5471</td>
+                        <td class="text-slate-600">US shareholder of foreign corporation reporting</td>
+                        <td class="font-bold text-blue-600">$300</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">FinCEN Form 114 (FBAR)</td>
+                        <td class="text-slate-600">Foreign bank account report</td>
+                        <td class="font-bold text-blue-600">$150</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Form 1099 Filing</td>
+                        <td class="text-slate-600">Annual reporting for payments to contractors/vendors</td>
+                        <td class="font-bold text-blue-600">from $10 per form</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Miscellaneous Forms</td>
+                        <td class="text-slate-600">Extensions, statements, elections & other schedules</td>
+                        <td class="font-bold text-blue-600">from $50</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="bg-blue-50 p-6 rounded-2xl mt-6 border-2 border-blue-100">
+                <p class="text-slate-700 mb-4"><strong>R&D Tax Credit:</strong> Our team will help you determine if you qualify for the R&D tax credit. If you do, we'll handle the filing process for you.</p>
+                <p class="text-slate-700 mb-4"><strong>Not sure yet or haven't finalized the books?</strong> We'll file your extension for free to protect your deadlines.</p>
+                <p class="text-blue-700 font-bold text-lg">🎉 Limited time: We're offering a 40% discount on filing fees. Please reach out to avail.</p>
+            </div>
+
+            <div class="text-center mt-8">
+                <button onclick="handleAction('Free Consultation Booked')" class="bg-blue-600 text-white px-12 py-5 rounded-2xl font-extrabold text-xl hover:bg-blue-500 transition shadow-xl">Book Free Consultation</button>
+            </div>
+        </section>
+
+        <!-- Who Can Avail -->
+        <section class="mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-center">Who Can Avail This Service</h3>
+            
+            <div class="client-cards">
+                <div class="client-card">
+                    <div class="text-4xl mb-4">🏢</div>
+                    <h4 class="text-xl font-bold mb-3">US C‑Corps & LLCs</h4>
+                    <p class="text-slate-600">Standard Federal (1120/1065) + State filings. Extensions, amendments and notices handled.</p>
+                </div>
+                <div class="client-card">
+                    <div class="text-4xl mb-4">🌏</div>
+                    <h4 class="text-xl font-bold mb-3">US C‑Corps with India Subsidiary</h4>
+                    <p class="text-slate-600">Federal return, State returns based on nexus, Form 5471, FinCEN 114 (commonly required), and other forms after analysis.</p>
+                </div>
+                <div class="client-card">
+                    <div class="text-4xl mb-4">🇮🇳</div>
+                    <h4 class="text-xl font-bold mb-3">India Founders with US Entity</h4>
+                    <p class="text-slate-600">Federal return, State returns based on nexus, Form 5472, FinCEN 114 (if applicable), and related schedules.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose -->
+        <section>
+            <h3 class="text-3xl font-bold mb-6 text-center">Why Founders Choose LedgersCFO</h3>
+            
+            <div class="why-choose-grid">
+                <div class="why-item">
+                    <div class="why-icon">👨‍💼</div>
+                    <h4 class="text-xl font-bold mb-3">Expert Team</h4>
+                    <p class="text-slate-600">US tax specialists with cross‑border capability. Investor‑ready workpapers.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">💰</div>
+                    <h4 class="text-xl font-bold mb-3">Save 50–60%</h4>
+                    <p class="text-slate-600">Transparent, fixed pricing that beats typical US CPA firms.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">💬</div>
+                    <h4 class="text-xl font-bold mb-3">Dedicated Support</h4>
+                    <p class="text-slate-600">Work on Slack or WhatsApp — whichever you're comfortable with.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<footer class="bg-slate-900 text-white py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+        <!-- Main Footer Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+            
+            <!-- Brand Column -->
+            <div class="lg:col-span-1">
+                <div class="mb-6">
+                    <p class="text-3xl font-bold tracking-tighter">LEDGERS<span class="text-blue-400">CFO</span></p>
+                    <p class="text-slate-400 text-sm mt-3 leading-relaxed">Providing institutional finance for global startups. Your trusted partner in US-India compliance.</p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="https://www.linkedin.com/company/ledgerscfo" target="_blank" class="w-10 h-10 bg-slate-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://twitter.com/ledgerscfo" target="_blank" class="w-10 h-10 bg-slate-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Quick Links</h4>
+                <ul class="space-y-3">
+                    <li><a href="#home" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Home</a></li>
+                    <li><a href="#services" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Services</a></li>
+                    <li><a href="#pricing" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Pricing</a></li>
+                    <li><a href="#resources" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Resources</a></li>
+                    <li><a href="#insights" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Insights</a></li>
+                </ul>
+                <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Legal</h4>
+                <ul class="space-y-3">
+                    <li><button onclick="openPrivacyPolicy()" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm text-left">Privacy Policy</button></li>
+                    <li><button onclick="openTermsOfService()" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm text-left">Terms of Service</button></li>
+                </ul>
+            </div>
+
+            <!-- Contact USA -->
+            <div>
+                <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Contact Us - USA</h4>
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Address</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">5900 Balcones Drive STE 100<br>Austin, TX 78731<br>USA</p>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Phone</p>
+                        <a href="tel:+18575041102" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold text-sm">+1 (857) 504-1102</a>
+                    </div>
+                </div>
+            
+            </div>
+
+            <!-- Contact India -->
+            <div>
+                <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Contact Us - India</h4>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Address</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">3rd floor, 38/17, #11678<br>SMART AVENUE, Nehru Road<br>Kammanahalli, HRBR Layout<br>Bangalore-560043</p>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Phone</p>
+                        <a href="tel:+918197210333" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold text-sm">+91 81972 10333</a>
+                    </div>
+                </div>
+            </div>
+            <div>
+            <div>
+                <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Contact Us - USA</h4>
+                <p class="text-slate-300 text-sm leading-relaxed">700 LAVACA STREET STE 1401<br>AUSTIN, TX 78701<br>USA</p>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Contact Us - India</h4>
+                <p class="text-slate-300 text-sm leading-relaxed">No. 11678, 3rd Floor, Smart Avenue<br>Nehru Road, Kammanahalli<br>Bangalore, KA 560043</p>
+            </div>
+        </div>
+        </div>
+
+        <section class="py-16 bg-slate-50 border-t border-slate-100">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">Our clients are funded by</p>
+        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60">
+            <span class="font-bold text-xl">Y Combinator</span>
+            <span class="font-bold text-xl">Together Fund</span>
+            <span class="font-bold text-xl">Westbridge Capital</span>
+            <span class="font-bold text-xl">Forum Ventures</span>
+            <span class="font-bold text-xl">Unusual Ventures</span>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-slate-900 text-white py-12 px-6 text-center">
+        <p class="text-sm text-slate-400">© 2026 LedgersCFO Inc. All rights reserved.</p>
+    </footer>
+
+        <!-- Bottom Bar -->
+        <div class="pt-8 border-t border-slate-800">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-slate-400 text-sm">© 2026 LedgersCFO Inc. All rights reserved. Built for Growth.</p>
+                <div class="flex gap-8 text-xs font-semibold text-slate-400 uppercase tracking-widest">
+                    <button onclick="openPrivacyPolicy()" class="hover:text-blue-400 transition-colors">Privacy</button>
+                    <button onclick="openTermsOfService()" class="hover:text-blue-400 transition-colors">Terms</button>
+                    <a href="mailto:hello@ledgerscfo.com" class="hover:text-blue-400 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Reveal Logic (Scroll Animations)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                const bars = entry.target.querySelectorAll('.progress-bar');
+                bars.forEach(bar => bar.style.width = bar.getAttribute('data-val'));
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Scroll Event for Video & Nav
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('mainNav');
+        const video = document.getElementById('videoWidget');
+        const footer = document.getElementById('audit-form');
+        const videoElement = document.getElementById('testimonialVideo');
+
+        // Nav background logic
+        nav.classList.toggle('scrolled', window.scrollY > 50);
+
+        // Conditional Video Appearance (Only show at Footer)
+        const footerPos = footer.getBoundingClientRect().top;
+        if (footerPos < window.innerHeight) {
+            video.classList.add('visible');
+            videoElement.play();
+        } else {
+            video.classList.remove('visible');
+            videoElement.pause();
+        }
+    });
+
+        // Open Tax Filing Modal
+        function openTaxModal() {
+            document.getElementById('taxFilingModal').classList.add('active');
+            document.getElementById('taxFilingContainer').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        // Close Tax Filing Modal
+        function closeTaxModal() {
+            document.getElementById('taxFilingModal').classList.remove('active');
+            document.getElementById('taxFilingContainer').classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+    // Interactive Button Handler (Simulation)
+    function handleAction(msg) {
+        const toast = document.getElementById('toast');
+        toast.innerText = msg;
+        toast.classList.add('show');
+        
+        // If message is audit-related, scroll to form
+        if (msg.toLowerCase().includes('audit') || msg.toLowerCase().includes('onboarding')) {
+            document.getElementById('audit-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Privacy Policy Modal
+function openPrivacyPolicy() {
+    const modal = `
+        <div id="policyModal" class="modal-overlay active" onclick="closePolicyModal()">
+            <div class="modal-container active" style="max-width: 900px;" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <button class="modal-close" onclick="closePolicyModal()">×</button>
+                    <h2 class="text-4xl font-extrabold">Privacy Policy</h2>
+                    <p class="text-blue-100 mt-2">Last Updated: January 2026</p>
+                </div>
+                <div class="modal-body">
+                    <div class="prose prose-slate max-w-none">
+                        <h3 class="text-2xl font-bold mb-4">Information We Collect</h3>
+                        <p class="text-slate-600 mb-6">At LedgersCFO, we collect information that you provide directly to us, including your name, email address, company information, and financial data necessary to provide our services.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">How We Use Your Information</h3>
+                        <p class="text-slate-600 mb-6">We use the information we collect to provide, maintain, and improve our services, process transactions, send you technical notices and support messages, and respond to your comments and questions.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">Data Security</h3>
+                        <p class="text-slate-600 mb-6">We implement appropriate technical and organizational measures to protect the security of your personal information. However, please note that no method of transmission over the Internet is 100% secure.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">Your Rights</h3>
+                        <p class="text-slate-600 mb-6">You have the right to access, update, or delete your personal information at any time. Please contact us at privacy@ledgerscfo.com for any privacy-related requests.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">Contact Us</h3>
+                        <p class="text-slate-600">If you have any questions about this Privacy Policy, please contact us at:</p>
+                        <p class="text-slate-600 mt-2"><strong>Email:</strong> privacy@ledgerscfo.com</p>
+                        <p class="text-slate-600"><strong>Phone:</strong> +1 (857) 504-1102</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modal);
+    document.body.style.overflow = 'hidden';
+}
+
+function handleAction(msg) {
+    console.log(msg);
+    alert(msg);
+}
+
+// Slider functionality
+const container = document.getElementById('sliderContainer');
+        const handle = document.getElementById('sliderHandle');
+        const beforeLayer = document.getElementById('beforeLayer');
+        
+        let isDragging = false;
+        
+        handle.addEventListener('mousedown', () => isDragging = true);
+        document.addEventListener('mouseup', () => isDragging = false);
+        
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percentage = (x / rect.width) * 100;
+            const clampedPercentage = Math.max(5, Math.min(95, percentage));
+            
+            handle.style.left = clampedPercentage + '%';
+            beforeLayer.style.clipPath = `inset(0 ${100 - clampedPercentage}% 0 0)`;
+        });
+        
+        // Touch support
+        handle.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+        
+        document.addEventListener('touchend', () => isDragging = false);
+        
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            
+            const rect = container.getBoundingClientRect();
+            const x = e.touches[0].clientX - rect.left;
+            const percentage = (x / rect.width) * 100;
+            const clampedPercentage = Math.max(5, Math.min(95, percentage));
+            
+            handle.style.left = clampedPercentage + '%';
+            beforeLayer.style.clipPath = `inset(0 ${100 - clampedPercentage}% 0 0)`;
+        });
+
+// Terms of Service Modal
+function openTermsOfService() {
+    const modal = `
+        <div id="policyModal" class="modal-overlay active" onclick="closePolicyModal()">
+            <div class="modal-container active" style="max-width: 900px;" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <button class="modal-close" onclick="closePolicyModal()">×</button>
+                    <h2 class="text-4xl font-extrabold">Terms of Service</h2>
+                    <p class="text-blue-100 mt-2">Last Updated: January 2026</p>
+                </div>
+                <div class="modal-body">
+                    <div class="prose prose-slate max-w-none">
+                        <h3 class="text-2xl font-bold mb-4">Agreement to Terms</h3>
+                        <p class="text-slate-600 mb-6">By accessing or using LedgersCFO's services, you agree to be bound by these Terms of Service and all applicable laws and regulations.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">Services Provided</h3>
+                        <p class="text-slate-600 mb-6">LedgersCFO provides financial services including but not limited to: tax filing, bookkeeping, CFO services, and compliance management for US and India-based entities.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">User Responsibilities</h3>
+                        <p class="text-slate-600 mb-6">You are responsible for providing accurate and complete information necessary for us to provide our services. You agree to maintain the confidentiality of your account credentials.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">Payment Terms</h3>
+                        <p class="text-slate-600 mb-6">Payment is due as specified in your service agreement. All fees are non-refundable except as required by law or as explicitly stated in your agreement.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">Limitation of Liability</h3>
+                        <p class="text-slate-600 mb-6">LedgersCFO shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use the service.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">Governing Law</h3>
+                        <p class="text-slate-600 mb-6">These Terms shall be governed by the laws of the State of Delaware, USA, without regard to its conflict of law provisions.</p>
+                        
+                        <h3 class="text-2xl font-bold mb-4 mt-8">Contact Information</h3>
+                        <p class="text-slate-600">For questions about these Terms, please contact us at:</p>
+                        <p class="text-slate-600 mt-2"><strong>Email:</strong> legal@ledgerscfo.com</p>
+                        <p class="text-slate-600"><strong>Phone:</strong> +1 (857) 504-1102</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modal);
+    document.body.style.overflow = 'hidden';
+}
+// Calculator Tab Switching
+function showCalculator(calcId) {
+    document.querySelectorAll('.calc-tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.calculator-container').forEach(calc => calc.classList.remove('active'));
+    
+    document.querySelector(`[data-calc="${calcId}"]`).classList.add('active');
+    document.getElementById(`calc-${calcId}`).classList.add('active');
+}
+
+// 1. Delaware Franchise Tax Calculator
+function calculateDelawareTax() {
+    const shares = parseFloat(document.getElementById('delaware_shares').value) || 0;
+    const par = parseFloat(document.getElementById('delaware_par').value) || 0;
+    const assets = parseFloat(document.getElementById('delaware_assets').value) || 0;
+    
+    if (shares === 0) {
+        document.getElementById('delaware_result').style.display = 'none';
+        return;
+    }
+    
+    // Authorized Shares Method
+    let authorizedMethod = 175;
+    if (shares > 5000 && shares <= 10000) {
+        authorizedMethod = 250;
+    } else if (shares > 10000) {
+        const additionalShares = Math.ceil((shares - 10000) / 10000);
+        authorizedMethod = 250 + (additionalShares * 85);
+    }
+    authorizedMethod = Math.min(authorizedMethod, 200000);
+    
+    // Assumed Par Value Method
+    let parValueMethod = 400;
+    if (par > 0) {
+        const totalParValue = shares * par;
+        if (totalParValue >= 1000000) {
+            const excessValue = totalParValue - 1000000;
+            parValueMethod = 400 + Math.ceil(excessValue / 1000000) * 400;
+        }
+    }
+    parValueMethod = Math.min(parValueMethod, 200000);
+    
+    const finalTax = Math.max(175, Math.min(authorizedMethod, parValueMethod));
+    const methodUsed = authorizedMethod < parValueMethod ? "Authorized Shares Method" : "Assumed Par Value Method";
+    
+    document.getElementById('delaware_amount').textContent = '$' + finalTax.toLocaleString();
+    document.getElementById('delaware_method').textContent = methodUsed;
+    document.getElementById('delaware_result').style.display = 'block';
+}
+
+// 2. Runway Calculator
+function calculateRunway() {
+    const cash = parseFloat(document.getElementById('runway_cash').value) || 0;
+    const burn = parseFloat(document.getElementById('runway_burn').value) || 0;
+    
+    if (cash === 0 || burn === 0) {
+        document.getElementById('runway_result').style.display = 'none';
+        return;
+    }
+    
+    const months = Math.floor(cash / burn);
+    const today = new Date();
+    const zeroCashDate = new Date(today.setMonth(today.getMonth() + months));
+    
+    let status = 'Critical';
+    let statusColor = '#dc2626';
+    if (months > 18) {
+        status = 'Excellent';
+        statusColor = '#16a34a';
+    } else if (months > 12) {
+        status = 'Healthy';
+        statusColor = '#2563eb';
+    } else if (months > 6) {
+        status = 'Warning';
+        statusColor = '#f59e0b';
+    }
+    
+    document.getElementById('runway_months').textContent = months;
+    document.getElementById('runway_date').textContent = zeroCashDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    document.getElementById('runway_status').textContent = status;
+    document.getElementById('runway_status').style.background = statusColor;
+    document.getElementById('runway_result').style.display = 'block';
+}
+
+// 3. Burn Multiple Calculator
+function calculateBurnMultiple() {
+    const netBurn = parseFloat(document.getElementById('burn_net').value) || 0;
+    const arr = parseFloat(document.getElementById('burn_arr').value) || 0;
+    
+    if (netBurn === 0 || arr === 0) {
+        document.getElementById('burn_result').style.display = 'none';
+        return;
+    }
+    
+    const multiple = (netBurn / arr).toFixed(2);
+    
+    let rating = 'Critical';
+    let ratingColor = '#dc2626';
+    if (multiple < 1.5) {
+        rating = 'Excellent';
+        ratingColor = '#16a34a';
+    } else if (multiple < 2) {
+        rating = 'Good';
+        ratingColor = '#2563eb';
+    } else if (multiple < 3) {
+        rating = 'Needs Work';
+        ratingColor = '#f59e0b';
+    }
+    
+    document.getElementById('burn_multiple').textContent = multiple + 'x';
+    document.getElementById('burn_rating').textContent = rating;
+    document.getElementById('burn_rating').style.background = ratingColor;
+    document.getElementById('burn_result').style.display = 'block';
+}
+
+// 4. CAC Payback Calculator
+function calculateCAC() {
+    const cac = parseFloat(document.getElementById('cac_cost').value) || 0;
+    const mrr = parseFloat(document.getElementById('cac_mrr').value) || 0;
+    const margin = parseFloat(document.getElementById('cac_margin').value) || 0;
+    
+    if (cac === 0 || mrr === 0 || margin === 0) {
+        document.getElementById('cac_result').style.display = 'none';
+        return;
+    }
+    
+    const months = Math.ceil(cac / (mrr * (margin / 100)));
+    
+    let rating = 'Needs Work';
+    let ratingColor = '#f59e0b';
+    if (months < 12) {
+        rating = 'Excellent';
+        ratingColor = '#16a34a';
+    } else if (months < 18) {
+        rating = 'Good';
+        ratingColor = '#2563eb';
+    }
+    
+    document.getElementById('cac_months').textContent = months + ' months';
+    document.getElementById('cac_rating').textContent = rating;
+    document.getElementById('cac_rating').style.background = ratingColor;
+    document.getElementById('cac_result').style.display = 'block';
+}
+
+// 5. LTV:CAC Calculator
+function calculateLTV() {
+    const revenue = parseFloat(document.getElementById('ltv_revenue').value) || 0;
+    const lifetime = parseFloat(document.getElementById('ltv_lifetime').value) || 0;
+    const margin = parseFloat(document.getElementById('ltv_margin').value) || 0;
+    const cac = parseFloat(document.getElementById('ltv_cac').value) || 0;
+    
+    if (revenue === 0 || lifetime === 0 || margin === 0 || cac === 0) {
+        document.getElementById('ltv_result').style.display = 'none';
+        return;
+    }
+    
+    const ltv = revenue * lifetime * (margin / 100);
+    const ratio = (ltv / cac).toFixed(1);
+    
+    let rating = 'Needs Work';
+    let ratingColor = '#f59e0b';
+    if (ratio >= 3) {
+        rating = 'Excellent';
+        ratingColor = '#16a34a';
+    } else if (ratio >= 2) {
+        rating = 'Good';
+        ratingColor = '#2563eb';
+    }
+    
+    document.getElementById('ltv_ratio').textContent = ratio + ':1';
+    document.getElementById('ltv_rating').textContent = rating;
+    document.getElementById('ltv_rating').style.background = ratingColor;
+    document.getElementById('ltv_result').style.display = 'block';
+}
+
+// 6. Revenue Growth Calculator
+function calculateGrowth() {
+    const current = parseFloat(document.getElementById('growth_current').value) || 0;
+    const previous = parseFloat(document.getElementById('growth_previous').value) || 0;
+
+    if (current === 0 || previous === 0) {
+        document.getElementById('growth_result').style.display = 'none';
+        return;
+    }
+
+    const growthRate = (((current - previous) / previous) * 100).toFixed(1);
+
+    let rating = 'Slow Growth';
+    let ratingColor = '#f59e0b';
+    if (growthRate >= 15) {
+        rating = 'Hyper Growth';
+        ratingColor = '#16a34a';
+    } else if (growthRate >= 7) {
+        rating = 'Strong Growth';
+        ratingColor = '#2563eb';
+    }
+
+    document.getElementById('growth_rate').textContent = growthRate + '%';
+    document.getElementById('growth_rating').textContent = rating;
+    document.getElementById('growth_rating').style.background = ratingColor;
+    document.getElementById('growth_result').style.display = 'block';
+}
+
+// 7. Break-Even Analysis Calculator
+function calculateBreakeven() {
+    const fixed = parseFloat(document.getElementById('breakeven_fixed').value) || 0;
+    const variable = parseFloat(document.getElementById('breakeven_variable').value) || 0;
+    const price = parseFloat(document.getElementById('breakeven_price').value) || 0;
+
+    if (fixed === 0 || price <= variable) {
+        document.getElementById('breakeven_result').style.display = 'none';
+        return;
+    }
+
+    const units = Math.ceil(fixed / (price - variable));
+    const revenue = units * price;
+
+    document.getElementById('breakeven_units').textContent = units.toLocaleString() + ' units';
+    document.getElementById('breakeven_revenue').textContent = '$' + revenue.toLocaleString();
+    document.getElementById('breakeven_result').style.display = 'block';
+}
+
+// 8. LedgersCFO Savings Calculator
+function calculateSavings() {
+    const size = document.getElementById('savings_size').value;
+    const setup = document.getElementById('savings_setup').value;
+    const hours = parseFloat(document.getElementById('savings_hours').value) || 0;
+
+    if (!size || !setup || hours === 0) {
+        document.getElementById('savings_result').style.display = 'none';
+        return;
+    }
+
+    // Logic for estimated savings
+    const hourlyRate = 150; // Average executive/founder time value
+    const traditionalCost = size === 'seed' ? 15000 : (size === 'growth' ? 45000 : 90000);
+    const timeSavedValue = hours * 0.7 * hourlyRate * 12; // 70% efficiency gain
+    const totalSavings = Math.round(traditionalCost + timeSavedValue);
+    
+    document.getElementById('savings_amount').textContent = '$' + totalSavings.toLocaleString();
+    document.getElementById('savings_time').textContent = Math.round(hours * 0.7 * 12) + ' hours';
+    document.getElementById('savings_errors').textContent = '$' + Math.round(totalSavings * 0.15).toLocaleString();
+    document.getElementById('savings_result').style.display = 'block';
+}
+    // Close Policy/Terms Modal
+    function closePolicyModal() {
+        const modal = document.getElementById('policyModal');
+        if (modal) {
+            modal.remove();
+        }
+        document.body.style.overflow = 'auto';
+    }
+    // Accordion Toggle
+    function toggleAccordion(btn) {
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector('.accordion-icon');
+        const isOpen = content.classList.contains('open');
+
+        // Close all others
+        document.querySelectorAll('.accordion-content').forEach(c => {
+            c.classList.remove('open');
+            c.previousElementSibling.querySelector('.accordion-icon').innerText = '+';
+            c.previousElementSibling.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+        });
+
+        if (!isOpen) {
+            content.classList.add('open');
+            icon.innerText = '-';
+            icon.style.transform = 'rotate(180deg)';
+        }
+    }
+
+    function closeVideo() {
+        document.getElementById('videoWidget').style.display = 'none';
+    }
+
+    // Chart.js - High Fidelity Financial Growth Chart
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, '#2563eb');
+    gradient.addColorStop(1, '#60a5fa');
+
+            let currentSlide = 1;
+        const totalSlides = 4;
+        let autoSlideInterval;
+
+        // Change slide function
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide > totalSlides) currentSlide = 1;
+            if (currentSlide < 1) currentSlide = totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Go to specific slide
+        function goToSlide(slideNum) {
+            currentSlide = slideNum;
+            showSlide(currentSlide);
+        }
+
+        // Show slide function
+        function showSlide(slideNum) {
+            // Hide all slides
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Remove active from all dots
+            document.querySelectorAll('.slide-dot').forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Show current slide
+            const currentSlideEl = document.querySelector(`[data-slide="${slideNum}"]`);
+            currentSlideEl.classList.add('active');
+            
+            // Activate current dot
+            const currentDot = document.querySelector(`[data-dot="${slideNum}"]`);
+            currentDot.classList.add('active');
+
+            // Trigger reveal animation
+            setTimeout(() => {
+                currentSlideEl.querySelectorAll('.reveal').forEach(el => {
+                    el.classList.add('active');
+                });
+            }, 100);
+
+            // Reset auto-slide timer
+            resetAutoSlide();
+        }
+
+        // Auto-slide functionality
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                changeSlide(1);
+            }, 5000); // Change slide every 5 seconds
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        // Start auto-slide on page load
+        startAutoSlide();
+
+        // Pause auto-slide on hover
+        document.querySelector('.slides-wrapper').addEventListener('mouseenter', () => {
+            clearInterval(autoSlideInterval);
+        });
+
+        document.querySelector('.slides-wrapper').addEventListener('mouseleave', () => {
+            startAutoSlide();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Additional reveals are handled by the existing observer above
+
+        // Nav scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Handle action function
+        function handleAction(msg) {
+            console.log(msg);
+            alert(`Action: ${msg}`);
+        }
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Q1 25', 'Q2 25', 'Q3 25', 'Q4 25', 'Q1 2026'],
+            datasets: [{
+                data: [42, 68, 55, 88, 105],
+                backgroundColor: ['#e2e8f0', '#cbd5e1', '#94a3b8', '#3b82f6', '#1e40af'],
+                hoverBackgroundColor: '#2563eb',
+                borderRadius: 20,
+                barThickness: 60, // Increased Width for better visibility
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#1e293b',
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 12 },
+                    padding: 15,
+                    displayColors: false,
+                    callbacks: { label: (ctx) => ` $${ctx.raw}M AUM` }
+                }
+            },
+            scales: {
+                y: { display: false, grid: { display: false } },
+                x: { 
+                    grid: { display: false }, 
+                    border: { display: false },
+                    ticks: { 
+                        font: { size: 11, weight: 'bold', family: 'Plus Jakarta Sans' },
+                        color: '#94a3b8'
+                    }
+                }
+            },
+            animation: {
+                duration: 2500,
+                easing: 'easeOutElastic',
+                delay: (ctx) => ctx.dataIndex * 400
+            },
+        }
+    });
+</script>
+</body>
+</html>
