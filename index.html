@@ -212,6 +212,11 @@ body {
 body {
   overflow-x: hidden;
 }
+@media (max-width: 768px) {
+  .dropdown-menu {
+    display: none !important;
+  }
+}
 
         /* Navigation Glassmorphism */
         .glass-nav { 
@@ -1652,35 +1657,35 @@ body {
 </head>
 <body>
 
-<nav class="sticky top-0 glass-nav z-50" id="mainNav">
+<nav class="sticky top-0 glass-nav z-50 bg-white/70 backdrop-blur" id="mainNav">
   <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-    
-    <!-- LOGO + HAMBURGER (LEFT) -->
-    <div class="flex items-center gap-3">
+    <!-- LOGO + HAMBURGER -->
+    <div class="flex items-center justify-between w-full md:w-auto">
       <a href="#home" class="text-2xl font-extrabold tracking-tighter hover:opacity-80 transition">
         LEDGERS<span class="text-blue-600">CFO</span>
       </a>
 
-      <!-- HAMBURGER (MOBILE ONLY) -->
-      <button 
-        class="md:hidden flex flex-col justify-between w-7 h-5 nav-toggle" 
+      <!-- MOBILE HAMBURGER -->
+      <button
+        class="md:hidden ml-4 inline-flex items-center justify-center p-2 rounded-md text-slate-700 hover:bg-slate-100 transition"
         aria-label="Toggle navigation"
+        id="mobileMenuButton"
       >
-        <span class="block h-0.5 w-full bg-slate-900 rounded-full"></span>
-        <span class="block h-0.5 w-full bg-slate-900 rounded-full"></span>
-        <span class="block h-0.5 w-full bg-slate-900 rounded-full"></span>
+        <span class="block w-6 h-0.5 bg-slate-800 mb-1 rounded-full"></span>
+        <span class="block w-6 h-0.5 bg-slate-800 mb-1 rounded-full"></span>
+        <span class="block w-6 h-0.5 bg-slate-800 rounded-full"></span>
       </button>
     </div>
 
-    <!-- NAV LINKS + CTA -->
-    <div class="hidden md:flex items-center space-x-10 font-bold text-sm text-slate-500 nav-links">
+    <!-- DESKTOP NAV -->
+    <div class="hidden md:flex items-center space-x-10 font-bold text-sm text-slate-500">
       <a href="#landing-slides" class="hover:text-blue-600 transition">Home</a>
       <a href="#strategy" class="hover:text-blue-600 transition">Strategy</a>
       <a href="compliance.html" class="hover:text-blue-600 transition">Compliance</a>
       <a href="#pricing" class="hover:text-blue-600 transition">Pricing</a>
       <a href="#resources" class="hover:text-blue-600 transition">Resources</a>
 
-      <div class="nav-item">
+      <div class="nav-item relative">
         <a href="#services" class="hover:text-blue-600 transition inline-flex items-center gap-1">
           Services
           <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1695,7 +1700,7 @@ body {
         </div>
       </div>
 
-      <div class="nav-item">
+      <div class="nav-item relative">
         <a href="#insights" class="hover:text-blue-600 transition cursor-pointer">Insights</a>
         <div class="dropdown-menu">
           <a href="blogs.html" class="dropdown-item">
@@ -1704,27 +1709,39 @@ body {
           </a>
         </div>
       </div>
-
-      <button onclick="handleAction('Audit Requested')" class="btn-animate bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-extrabold shadow-lg">
-        Schedule Audit
-      </button>
     </div>
 
-    <!-- MOBILE DROPDOWN MENU -->
-    <div class="md:hidden hidden flex-col gap-4 font-bold text-sm text-slate-600 bg-white/90 backdrop-blur nav-menu-mobile absolute left-0 right-0 top-full px-6 pb-6 shadow-lg">
-      <a href="#landing-slides" class="hover:text-blue-600 transition">Home</a>
-      <a href="#strategy" class="hover:text-blue-600 transition">Strategy</a>
-      <a href="compliance.html" class="hover:text-blue-600 transition">Compliance</a>
-      <a href="#pricing" class="hover:text-blue-600 transition">Pricing</a>
-      <a href="#resources" class="hover:text-blue-600 transition">Resources</a>
+    <!-- DESKTOP CTA -->
+    <button
+      onclick="handleAction('Audit Requested')"
+      class="hidden md:inline-flex btn-animate bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-extrabold shadow-lg"
+    >
+      Schedule Audit
+    </button>
+  </div>
 
-      <button onclick="handleAction('Audit Requested')" class="btn-animate bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-extrabold shadow-lg w-full text-center">
-        Schedule Audit
-      </button>
-    </div>
+  <!-- MOBILE MENU (FULL LIST) -->
+  <div
+    id="mobileMenu"
+    class="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur px-6 pt-4 pb-6 space-y-3 font-semibold text-sm text-slate-700 hidden"
+  >
+    <a href="#landing-slides" class="block py-2">Home</a>
+    <a href="#strategy" class="block py-2">Strategy</a>
+    <a href="compliance.html" class="block py-2">Compliance</a>
+    <a href="#pricing" class="block py-2">Pricing</a>
+    <a href="#resources" class="block py-2">Resources</a>
+    <a href="#services" class="block py-2">Services</a>
+    <a href="#insights" class="block py-2">Insights</a>
+
+    <!-- Mobile CTA with good spacing -->
+    <button
+      onclick="handleAction('Audit Requested')"
+      class="w-full mt-3 btn-animate bg-blue-700 text-white px-5 py-3 rounded-full text-sm font-extrabold shadow-lg"
+    >
+      Schedule Audit
+    </button>
   </div>
 </nav>
-
 
     <!-- Landing Slides Section -->
     <section id="landing-slides" class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
@@ -3401,14 +3418,19 @@ body {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const toggle = document.querySelector(".nav-toggle");
-    const mobileMenu = document.querySelector(".nav-menu-mobile");
+    const btn = document.getElementById("mobileMenuButton");
+    const menu = document.getElementById("mobileMenu");
 
-    if (toggle && mobileMenu) {
-      toggle.addEventListener("click", function () {
-        mobileMenu.classList.toggle("hidden");
-      });
-    }
+    if (!btn || !menu) return;
+
+    btn.addEventListener("click", function () {
+      const isHidden = menu.classList.contains("hidden");
+      if (isHidden) {
+        menu.classList.remove("hidden");
+      } else {
+        menu.classList.add("hidden");
+      }
+    });
   });
 
     // Reveal Logic (Scroll Animations)
