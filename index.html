@@ -1151,6 +1151,29 @@ canvas {
     min-height: 120px;
   }
 }
+/* Keep table structure identical on mobile */
+.pricing-table,
+.pricing-table table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* Equal column sizing */
+.pricing-table th,
+.pricing-table td {
+    width: 25%; /* adjust if you have 2 or 3 columns */
+    vertical-align: middle;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+/* Mobile fix: remove forced min-width */
+@media (max-width: 640px) {
+    .pricing-table,
+    .pricing-table table {
+        min-width: 100% !important;
+    }
+}
 
 
 
@@ -1938,7 +1961,7 @@ canvas {
                 <div class="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm reveal">
             <h4 class="text-2xl font-bold mb-10 text-center tracking-tight">Feature Matrix</h4>
             <div class="overflow-x-auto no-scrollbar">
-                <table class="w-full text-left text-sm border-collapse min-w-[600px]">
+                <table class="pricing-table w-full text-left text-sm border-collapse">
                     <thead>
                         <tr class="border-b border-slate-100">
                             <th class="pb-6 font-bold text-slate-400 uppercase text-[10px] tracking-[0.1em]">Capability</th>
