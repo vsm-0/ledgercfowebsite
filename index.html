@@ -1196,6 +1196,7 @@ canvas {
         flex-shrink: 0 !important;     /* critical: prevent collapsing */
         display: block !important;     /* ensure it renders as a block */
         overflow: hidden;              /* prevent content from bleeding in */
+        flex: 0 0 70px !important;     /* prevent flex growth/shrink */
     }
 
     /* Ensure right column panels stack properly */
@@ -1211,6 +1212,31 @@ canvas {
         flex-shrink: 0;
         display: block;
         overflow: hidden;
+    }
+    
+    /* Fix right column cell alignment to match left column */
+    #pane-other .comp-cell,
+    #pane-ledgers .comp-cell{
+        height: auto !important;
+        min-height: 80px !important;
+        flex: 0 0 auto !important;
+    }
+    
+    #pane-other .comp-cell.lg-cell,
+    #pane-ledgers .comp-cell.lg-cell{
+        height: auto !important;
+        min-height: 120px !important;
+        flex: 0 0 auto !important;
+    }
+    
+    /* Reduce header title font size on mobile */
+    .comp-header-cell{
+        font-size: 0.875rem !important; /* smaller font for mobile */
+        padding: 1rem 0.75rem !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+        text-align: left !important;
     }
 
     #comparison{
