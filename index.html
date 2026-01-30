@@ -1017,7 +1017,7 @@ canvas {
 /* Section titles */
 .label-heading{
     height: var(--cell-h);
-    padding: 0 2rem;
+    padding: 0 2rem 0 1rem;  /* reduced left padding to align text to border */
     background: rgba(255,255,255,0.03);
     font-weight: 800;
     font-size: 0.75rem;
@@ -1032,7 +1032,7 @@ canvas {
 /* Feature labels (left column) */
 .feature-label{
     height: var(--cell-h);
-    padding: 0 2rem;
+    padding: 0 2rem 0 1rem;  /* reduced left padding for alignment */
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -1122,8 +1122,8 @@ canvas {
     .feature-label,
     .comp-cell,
     .section-spacer{
-        min-height: auto;              /* auto height */
-        padding: 0.9rem 1rem;
+        min-height: 65px;              /* increased min-height for better spacing */
+        padding: 1.2rem 1rem;          /* increased padding */
         font-size: 0.75rem;
         line-height: 1.6;
         align-items: flex-start;
@@ -1132,17 +1132,24 @@ canvas {
     .label-heading{
         padding-top: 1rem;
         padding-bottom: 1rem;
+        padding-left: 1rem;            /* align subtitles to left edge */
         letter-spacing: 0.08em;
     }
 
     .comp-cell{
         justify-content: flex-start;
+        padding: 1.2rem 1rem;          /* increased padding */
     }
 
     .comp-cell p{
         margin-top: 0.3rem;
         font-size: 0.7rem;
         line-height: 1.5;
+    }
+
+    .lg-cell{
+        min-height: 85px !important;   /* larger cells for longer content */
+        padding: 1.2rem 1rem !important;
     }
 
     #comparison{
@@ -2683,14 +2690,14 @@ canvas {
                 <div class="flex gap-8 text-xs font-semibold text-slate-400 uppercase tracking-widest">
                     <button onclick="openPrivacyPolicy()" class="hover:text-blue-400 transition-colors">Privacy</button>
                     <button onclick="openTermsOfService()" class="hover:text-blue-400 transition-colors">Terms</button>
-                    <a href="mailto:hello@ledgerscfo.com" class="hover:text-blue-400 transition-colors">Contact</a>
+                    <a href="/cdn-cgi/l/email-protection#a4ccc1c8c8cbe4c8c1c0c3c1d6d7c7c2cb8ac7cbc9" class="hover:text-blue-400 transition-colors">Contact</a>
                 </div>
             </div>
         </div>
     </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
   document.addEventListener("DOMContentLoaded", function () {
     const btn = document.getElementById("mobileMenuButton");
