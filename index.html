@@ -1169,9 +1169,9 @@ canvas {
 
 /* Mobile fix: remove forced min-width */
 @media (max-width: 640px) {
-    .pricing-table,
-    .pricing-table table {
-        min-width: 100% !important;
+    .pricing-table td:nth-child(2),
+    .pricing-table th:nth-child(2) {
+        font-size: 0.8rem; /* ~12.8px */
     }
 }
 
