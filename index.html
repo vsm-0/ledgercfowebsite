@@ -1000,104 +1000,6 @@ canvas {
         }
 
 /* Standardization of Comparison Grid */
-.comp-header-cell {
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.label-heading {
-    height: 3.5rem;
-    padding: 0 2rem; /* Consistent padding */
-    background: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
-    font-weight: 800;
-    font-size: 0.75rem;
-    color: #1e40af;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Forced Left Alignment */
-    gap: 0.75rem;
-}
-
-.feature-label {
-    height: 4rem; 
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Forced Left Alignment */
-    font-size: 0.875rem;
-    color: #475569;
-    font-weight: 600;
-    border-bottom: 1px solid #f1f5f9;
-    text-align: left;
-}
-
-.comp-cell {
-    height: 4rem; 
-    padding: 0 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start; 
-    text-align: left;
-    font-size: 0.875rem;
-    border-bottom: 1px solid #f1f5f9;
-}
-/* ================= LEFT COLUMN DESIGN ================= */
-
-/* Entire first column background */
-#comparison .grid > div:first-child{
-    background: #0b1f3a; /* Dark blue */
-}
-
-/* Feature Analysis (Top header cell) */
-.comp-header-cell span{
-    color: #7dd3fc; /* light blue */
-    text-align: left;
-}
-
-/* Section titles like:
-   Real-Time Metrics
-   Problems vs Solutions
-   Timeline & Efficiency
-   Core Features & Services
-   Detailed Comparison */
-.label-heading{
-    background: rgba(255,255,255,0.03);
-    color: #7dd3fc !important;   /* light blue */
-    text-align: left;
-    justify-content: flex-start;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-/* Icons in section titles */
-.label-heading i{
-    color: #7dd3fc;
-}
-
-/* Subtitles (feature labels in left column) */
-.feature-label{
-    color: #ffffff !important;  /* white */
-    font-weight: 500;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-/* Left column text alignment */
-.comp-header-cell,
-.label-heading,
-.feature-label{
-    justify-content: flex-start;
-    text-align: left;
-}
-
-/* Group spacers in left column */
-.grid > div:first-child .group-spacer{
-    background: rgba(255,255,255,0.04);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
 /* ================= GLOBAL ROW STANDARD ================= */
 
 :root{
@@ -1191,18 +1093,60 @@ canvas {
     color: #ffffff !important;
 }
 
+
+/* ================= EMPTY STRUCTURAL ROW ================= */
+
+.section-spacer{
+    border-bottom: 1px solid #f1f5f9;
+    background: transparent;
+}
+
+/* ================= DESKTOP ================= */
+
+@media (min-width: 769px){
+    .comp-header-cell,
+    .label-heading,
+    .feature-label,
+    .comp-cell,
+    .section-spacer{
+        min-height: var(--row-h-desktop);
+    }
+}
+
 /* ================= MOBILE ================= */
 
 @media (max-width: 768px){
-    :root{
-        --cell-h: 56px;
-    }
 
+    .comp-header-cell,
+    .label-heading,
     .feature-label,
     .comp-cell,
-    .label-heading{
-        padding: 0 1rem;
+    .section-spacer{
+        min-height: auto;              /* auto height */
+        padding: 0.9rem 1rem;
         font-size: 0.75rem;
+        line-height: 1.6;
+        align-items: flex-start;
+    }
+
+    .label-heading{
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        letter-spacing: 0.08em;
+    }
+
+    .comp-cell{
+        justify-content: flex-start;
+    }
+
+    .comp-cell p{
+        margin-top: 0.3rem;
+        font-size: 0.7rem;
+        line-height: 1.5;
+    }
+
+    #comparison{
+        overflow-x: hidden;
     }
 }
 
@@ -1589,7 +1533,7 @@ canvas {
                     <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Feature Analysis</span>
                 </div>
                 
-                <div class="label-heading px-8 justify-start"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> Real-Time Metrics</div>
+                <div class="label-heading px-8"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> Real-Time Metrics</div>
                 <div class="feature-label">ARR (Annual Recurring Revenue)</div>
                 <div class="feature-label">Cash Balance</div>
                 <div class="feature-label">Cash Runway</div>
@@ -1601,14 +1545,14 @@ canvas {
                 <div class="feature-label">Burn Multiple</div>
                 <div class="feature-label">CAC / LTV</div>
 
-                <div class="label-heading px-8 justify-start"><i data-lucide="alert-circle" class="w-4 h-4"></i> Problems vs Solutions</div>
+                <div class="label-heading px-8"><i data-lucide="alert-circle" class="w-4 h-4"></i> Problems vs Solutions</div>
                 <div class="feature-label lg-cell">Communication & Response Time</div>
                 <div class="feature-label lg-cell">Pricing Transparency</div>
                 <div class="feature-label lg-cell">Cross-Border Compliance</div>
                 <div class="feature-label lg-cell">Workflow Automation</div>
                 <div class="feature-label lg-cell">Deadline Management</div>
 
-                <div class="label-heading px-8 justify-start"><i data-lucide="timer" class="w-4 h-4"></i> Timeline & Efficiency</div>
+                <div class="label-heading px-8"><i data-lucide="timer" class="w-4 h-4"></i> Timeline & Efficiency</div>
                 <div class="feature-label">Initial Response Time</div>
                 <div class="feature-label">Document Collection</div>
                 <div class="feature-label">Draft Review Time</div>
@@ -1616,14 +1560,14 @@ canvas {
                 <div class="feature-label font-bold text-slate-900">Total Time Required</div>
                 <div class="feature-label font-bold text-slate-900">Investment / Cost</div>
 
-                <div class="label-heading px-8 justify-start"><i data-lucide="sparkles" class="w-4 h-4"></i> Core Features & Services</div>
+                <div class="label-heading px-8"><i data-lucide="sparkles" class="w-4 h-4"></i> Core Features & Services</div>
                 <div class="feature-label">Compliance Coverage</div>
                 <div class="feature-label">CFO Support</div>
                 <div class="feature-label">Pricing Model</div>
                 <div class="feature-label">Response Time</div>
                 <div class="feature-label">Automation Level</div>
 
-                <div class="label-heading px-8 justify-start"><i data-lucide="target" class="w-4 h-4"></i> Detailed Comparison</div>
+                <div class="label-heading px-8"><i data-lucide="target" class="w-4 h-4"></i> Detailed Comparison</div>
                 <div class="feature-label lg-cell">Access & Responsiveness</div>
                 <div class="feature-label lg-cell">Team Ownership</div>
                 <div class="feature-label lg-cell">Founder Visibility</div>
@@ -1636,7 +1580,7 @@ canvas {
                 <div id="comp-slider" class="flex transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" style="width: 200%; transform: translateX(-50%);">
                     
                     <div class="w-1/2 opacity-40 grayscale blur-[0.5px] transition-all duration-700" id="pane-other">
-                        <div class="comp-header-cell justify-start px-8 font-bold text-slate-500 text-xl">Other Firms</div>
+                        <div class="comp-header-cell px-8 font-bold text-slate-500 text-xl">Other Firms</div>
                         <div class="group-spacer"></div>
                         <div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div>
                         <div class="group-spacer"></div>
@@ -1660,7 +1604,7 @@ canvas {
                     </div>
 
                     <div class="w-1/2 transition-all duration-700" id="pane-ledgers">
-                        <div class="comp-header-cell justify-start px-8 font-bold text-blue-600 text-xl bg-blue-50/30">LedgersCFO</div>
+                        <div class="comp-header-cell px-8 font-bold text-blue-600 text-xl bg-blue-50/30">LedgersCFO</div>
                         <div class="group-spacer bg-blue-50/50"></div>
                         <div class="comp-cell text-blue-700 font-bold">$2,400,000</div><div class="comp-cell text-blue-700 font-bold">$850,000</div><div class="comp-cell text-blue-700 font-bold">18 months</div><div class="comp-cell text-blue-700 font-bold">$3,200,000</div><div class="comp-cell text-blue-700 font-bold">$640,000</div><div class="comp-cell text-blue-700 font-bold">$480,000</div><div class="comp-cell text-blue-700 font-bold">$720,000</div><div class="comp-cell text-blue-700 font-bold">$320,000</div><div class="comp-cell text-blue-700 font-bold">1.2x</div><div class="comp-cell text-blue-700 font-bold">$12.5k / $48k</div>
                         <div class="group-spacer bg-blue-50/50"></div>
