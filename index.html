@@ -999,757 +999,213 @@ canvas {
             margin-top: 0.5rem;
         }
 
-/* Table-style two-column comparison */
-.comparison-table {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.75rem;
-  font-size: 0.85rem;          /* small font */
+/* Standardization of Comparison Grid */
+.comp-header-cell {
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-/* Column cards */
-.comparison-col {
-  background: #ffffff;
-  border-radius: 1.75rem;
-  padding: 1.75rem 1.5rem;
-  border: 1px solid #e2e8f0;
+.label-heading {
+    height: 3.5rem;
+    padding: 0 2rem; /* Consistent padding */
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    font-weight: 800;
+    font-size: 0.75rem;
+    color: #1e40af;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Forced Left Alignment */
+    gap: 0.75rem;
 }
 
-/* Slight visual difference for LedgersCFO side */
-.comparison-col-ledgers {
-  background: #eef2ff;
-  border-color: #c7d2fe;
+.feature-label {
+    height: 4rem; 
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Forced Left Alignment */
+    font-size: 0.875rem;
+    color: #475569;
+    font-weight: 600;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: left;
 }
 
-/* Tighten inner blocks for compact look */
-.comparison-col .metrics-list,
-.comparison-col .points-list,
-.comparison-col .features-box,
-.comparison-col .additional-features,
-.comparison-col .timeline-box,
-.comparison-col .bottom-cta {
-  margin-bottom: 1.25rem;
-}
-
-/* Smaller text but readable */
-.comparison-col p,
-.comparison-col li,
-.comparison-col .metric-label,
-.comparison-col .metric-value {
-  font-size: 0.82rem;
-  line-height: 1.4;
-}
-@media (max-width: 768px) {
-  .comparison-wrapper {
-    padding: 2rem 1rem;
-  }
-
-  .comparison-table {
-    grid-template-columns: 1fr;   /* stack columns */
-    gap: 1.25rem;
-    font-size: 0.8rem;
-  }
-
-  .comparison-col {
-    padding: 1.25rem 1rem;
-    border-radius: 1.25rem;
-  }
-
-  .comparison-header h2 {
-    font-size: 1.7rem;
-    line-height: 1.2;
-  }
-
-  .comparison-header p {
-    font-size: 0.95rem;
-  }
-
-  .section-title {
-    font-size: 1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .metric-row {
-    padding: 0.7rem 0.9rem;
-  }
-
-  .point-item {
-    padding: 0.85rem;
-  }
-
-  .timeline-box,
-  .features-box,
-  .additional-features,
-  .bottom-cta {
-    padding: 1.1rem 1rem;
-  }
-}
-
-
-        /* Disable text selection while sliding */
-.select-none {
-    user-select: none;
-    -webkit-user-select: none;
-}
-#sliderContainer {
-    cursor: ew-resize;
-}
-        .dropdown-item {
-            display: block;
-            padding: 0.75rem 1.25rem;
-            color: #475569;
-            font-weight: 600;
-            font-size: 0.875rem;
-            border-radius: 0.75rem;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .dropdown-item:hover {
-            background: #eff6ff;
-            color: #2563eb;
-            transform: translateX(4px);
-        }
-
-        .dropdown-item-icon {
-            display: inline-block;
-            margin-right: 0.5rem;
-            font-size: 1rem;
-        }
-
-.select-none { user-select: none; -webkit-user-select: none; }
-    #sliderContainer { cursor: ew-resize; }
-    /* Ensure the before layer stays on top but allows events through the handle */
-    #beforeLayer { z-index: 10; transition: clip-path 0.05s linear; }
-    #sliderHandle { z-index: 20; }
-
-                /* Subtle Jitter - only animates every few seconds */
-        @keyframes subtle-jitter {
-            0%, 90%, 100% { transform: rotate(0deg); }
-            91% { transform: rotate(-2deg); }
-            92% { transform: rotate(2deg); }
-            93% { transform: rotate(-2deg); }
-            94% { transform: rotate(2deg); }
-            95% { transform: rotate(-2deg); }
-        }
-
-        .subtle-jitter-button {
-            display: inline-block;
-            animation: subtle-jitter 4s ease-in-out infinite;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .subtle-jitter-button:hover {
-            animation: none;
-            transform: scale(1.05);
-        }
-
-        /* Fallback text for partners without logos */
-        .partner-text {
-            font-weight: 700;
-            font-size: 1.125rem;
-            color: #1e293b;
-            white-space: nowrap;
-        }
-
-                /* Prose styling for modals */
-        .prose {
-            color: #334155;
-            line-height: 1.75;
-        }
-
-        .prose h3 {
-            color: #0f172a;
-        }
-
-        .prose p {
-            margin-bottom: 1rem;
-        }
-
-        .prose strong {
-            color: #1e293b;
-            font-weight: 700;
-        }
-    .select-none { user-select: none; -webkit-user-select: none; }
-    #sliderContainer { cursor: ew-resize; position: relative; }
-    #beforeLayer { transition: clip-path 0.04s linear; will-change: clip-path; }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-        
-        .comparison-wrapper {
-            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-            padding: 6rem 2rem;
-        }
-        
-        .comparison-header {
-            max-width: 1400px;
-            margin: 0 auto 4rem;
-            text-align: center;
-        }
-        
-        .comparison-header h2 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: #0f172a;
-            margin-bottom: 1rem;
-        }
-        
-        .comparison-header p {
-            font-size: 1.25rem;
-            color: #64748b;
-            margin-bottom: 2rem;
-        }
-        
-        .vs-title {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #334155;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-        }
-        
-        .vs-title .other { opacity: 0.5; }
-        .vs-title .vs-text { color: #2563eb; font-style: italic; font-size: 1.5rem; }
-        .vs-title .ledgers { color: #2563eb; }
-        
-        .slider-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            background: white;
-            border-radius: 3rem;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
-            overflow: hidden;
-            min-height: 1000px;
-            user-select: none;
-            border: 2px solid #e2e8f0;
-        }
-        
-        .content-wrapper {
-            padding: 4rem;
-        }
-        
-        .single-col {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            font-size: 1.75rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            text-align: center;
-        }
-        
-        /* Metrics */
-        .metrics-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-bottom: 3rem;
-        }
-        
-        .metric-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            background: white;
-            border-radius: 1rem;
-            border: 2px solid #f1f5f9;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        
-        .metric-label {
-            font-size: 1rem;
-            color: #64748b;
-            font-weight: 600;
-        }
-        
-        .metric-value {
-            font-size: 1.125rem;
-            font-weight: 800;
-            color: #2563eb;
-        }
-        
-        /* Problems/Solutions */
-        .points-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-        
-        .point-item {
-            display: flex;
-    align-items: center;   /* vertical center */
-    justify-content: center; /* horizontal center */
-    gap: 1rem;
-    padding: 1.25rem;
-    background: white;
-    border-radius: 1.25rem;
-    border: 2px solid #f1f5f9;
-    text-align: center; /* center text */
-        }
-        
-        .point-icon {
-            font-size: 1.75rem;
-            flex-shrink: 0;
-        }
-        
-        .point-content h5 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 0.375rem;
-        }
-        
-        .point-content p {
-            font-size: 0.875rem;
-            color: #64748b;
-            line-height: 1.6;
-        }
-        
-        /* Timeline Box */
-        .timeline-box {
-            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-            border-radius: 2rem;
-            padding: 2.5rem;
-            color: white;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(37,99,235,0.3);
-        }
-        
-        .timeline-box h4 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-            text-align: center;
-        }
-        
-        .timeline-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.875rem 0;
-            font-size: 1rem;
-        }
-        
-        .timeline-item.total {
-            border-top: 2px solid rgba(255,255,255,0.2);
-            padding-top: 1.5rem;
-            margin-top: 1rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-        
-        .timeline-value {
-            font-weight: 700;
-            color: rgba(255,255,255,0.9);
-        }
-        
-        .timeline-total {
-            font-weight: 900;
-            color: #dbeafe;
-            font-size: 1.5rem;
-        }
-        
-        .pricing-badge {
-            background: rgba(30,64,175,0.5);
-            border: 2px solid rgba(219,234,254,0.3);
-            border-radius: 1.5rem;
-            padding: 1.75rem;
-            margin-top: 1.5rem;
-        }
-        
-        .pricing-badge .label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
-        }
-        
-        .pricing-badge .price {
-            font-size: 1.75rem;
-            font-weight: 900;
-            margin-bottom: 0.5rem;
-        }
-        
-        .pricing-badge .note {
-            font-size: 0.875rem;
-            opacity: 0.9;
-        }
-        
-        /* Features Box */
-        .features-box {
-            background: white;
-            border: 2px solid #dbeafe;
-            border-radius: 2rem;
-            padding: 2.5rem;
-            box-shadow: 0 4px 15px rgba(37,99,235,0.1);
-            margin-bottom: 2rem;
-        }
-        
-        .features-box h4 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        
-        .feature-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.25rem;
-            background: #eff6ff;
-            border-radius: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .feature-label {
-            font-size: 1rem;
-            color: #475569;
-            font-weight: 600;
-        }
-        
-        .feature-badge {
-            background: #2563eb;
-            color: white;
-            padding: 0.5rem 1.25rem;
-            border-radius: 0.75rem;
-            font-weight: 700;
-            font-size: 0.875rem;
-        }
-        
-        /* Additional Features Table */
-        .additional-features {
-            background: white;
-            border: 2px solid #dbeafe;
-            border-radius: 2rem;
-            padding: 2.5rem;
-            box-shadow: 0 4px 15px rgba(37,99,235,0.1);
-        }
-        
-        .additional-features h4 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        
-        .feature-comparison-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 1.5rem;
-            background: #f8fafc;
-            border-radius: 1rem;
-            margin-bottom: 0.75rem;
-            border: 2px solid #e2e8f0;
-        }
-        
-        .feature-comparison-label {
-            font-size: 0.95rem;
-            color: #334155;
-            font-weight: 600;
-            flex: 1;
-        }
-        
-        .feature-comparison-value {
-            font-size: 0.875rem;
-            color: #2563eb;
-            font-weight: 700;
-            text-align: right;
-            padding: 0.5rem 1rem;
-            background: #dbeafe;
-            border-radius: 0.5rem;
-        }
-        
-        /* Bottom CTA Section */
-        .bottom-cta {
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-            border-radius: 2rem;
-            padding: 3rem;
-            color: white;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(37,99,235,0.3);
-            margin-top: 2rem;
-        }
-        
-        .bottom-cta h3 {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-        }
-        
-        .bottom-cta p {
-            font-size: 1.125rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #2563eb;
-            padding: 1.25rem 3rem;
-            border-radius: 1rem;
-            font-weight: 800;
-            font-size: 1.125rem;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        }
-        
-        /* Before Layer (Other Firms) */
-        .before-layer {
-            position: absolute;
-            inset: 0;
-            background: white;
-            z-index: 10;
-            pointer-events: none;
-            clip-path: inset(0 50% 0 0);
-            border-right: 4px solid #2563eb;
-        }
-        
-        .before-layer .metric-row {
-            background: #f8fafc;
-            border-color: #e2e8f0;
-        }
-        
-        .before-layer .metric-value {
-            color: #94a3b8;
-        }
-        
-        .before-layer .section-title {
-            color: #94a3b8;
-        }
-        
-        .before-layer .point-item {
-            background: #f8fafc;
-            border-color: #e2e8f0;
-        }
-        
-        .before-layer .point-content h5 {
-            color: #64748b;
-        }
-        
-        .before-layer .timeline-box {
-            background: #f1f5f9;
-            color: #64748b;
-            box-shadow: none;
-            border: 2px solid #e2e8f0;
-        }
-        
-        .before-layer .timeline-box h4 {
-            color: #64748b;
-            border-bottom-color: #cbd5e1;
-        }
-        
-        .before-layer .timeline-value {
-            color: #64748b;
-        }
-        
-        .before-layer .timeline-total {
-            color: #ef4444;
-        }
-        
-        .before-layer .pricing-badge {
-            background: #e2e8f0;
-            border-color: #cbd5e1;
-        }
-        
-        .before-layer .pricing-badge .price {
-            color: #64748b;
-        }
-        
-        .before-layer .pricing-badge .note {
-            color: #ef4444;
-        }
-        
-        .before-layer .features-box {
-            background: #f8fafc;
-            border-color: #e2e8f0;
-            box-shadow: none;
-        }
-        
-        .before-layer .features-box h4 {
-            color: #64748b;
-        }
-        
-        .before-layer .feature-row {
-            background: #f1f5f9;
-        }
-        
-        .before-layer .feature-badge {
-            background: #cbd5e1;
-            color: #64748b;
-        }
-        
-        .before-layer .feature-badge.warning {
-            background: #fecaca;
-            color: #991b1b;
-        }
-        
-        .before-layer .additional-features {
-            background: #f8fafc;
-            border-color: #e2e8f0;
-            box-shadow: none;
-        }
-        
-        .before-layer .additional-features h4 {
-            color: #64748b;
-        }
-        
-        .before-layer .feature-comparison-row {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-        }
-        
-        .before-layer .feature-comparison-value {
-            background: #e2e8f0;
-            color: #64748b;
-        }
-        
-        .before-layer .bottom-cta {
-            background: #f1f5f9;
-            color: #64748b;
-            box-shadow: none;
-            border: 2px solid #e2e8f0;
-        }
-        
-        .before-layer .cta-button {
-            background: #cbd5e1;
-            color: #64748b;
-        }
-        
-        /* Slider Handle */
-        .slider-handle {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #2563eb;
-            left: 50%;
-            z-index: 50;
-            cursor: ew-resize;
-            transition: background 0.2s;
-        }
-        
-        .slider-handle:hover {
-            background: #1e40af;
-        }
-        
-        .slider-handle::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 64px;
-            height: 64px;
-            background: #2563eb;
-            border: 4px solid white;
-            border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .slider-handle:hover::before {
-            background: #1e40af;
-        }
-        
-        .slider-handle::after {
-            content: '⇔';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 1.75rem;
-            font-weight: 900;
-            z-index: 1;
-        }
-
-        .slider-handle {
-    display: none !important;
-}
-
-.comparison-wrapper {
+.comp-cell {
+    height: 4rem; 
+    padding: 0 2rem;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    padding: 3rem 1rem;
+    justify-content: center;
+    align-items: flex-start; 
+    text-align: left;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+/* ================= LEFT COLUMN DESIGN ================= */
+
+/* Entire first column background */
+#comparison .grid > div:first-child{
+    background: #0b1f3a; /* Dark blue */
 }
 
-.slider-container {
+/* Feature Analysis (Top header cell) */
+.comp-header-cell span{
+    color: #7dd3fc; /* light blue */
+    text-align: left;
+}
+
+/* Section titles like:
+   Real-Time Metrics
+   Problems vs Solutions
+   Timeline & Efficiency
+   Core Features & Services
+   Detailed Comparison */
+.label-heading{
+    background: rgba(255,255,255,0.03);
+    color: #7dd3fc !important;   /* light blue */
+    text-align: left;
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Icons in section titles */
+.label-heading i{
+    color: #7dd3fc;
+}
+
+/* Subtitles (feature labels in left column) */
+.feature-label{
+    color: #ffffff !important;  /* white */
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Left column text alignment */
+.comp-header-cell,
+.label-heading,
+.feature-label{
+    justify-content: flex-start;
+    text-align: left;
+}
+
+/* Group spacers in left column */
+.grid > div:first-child .group-spacer{
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+/* ================= GLOBAL ROW STANDARD ================= */
+
+:root{
+    --cell-h: 64px; /* ONE size for entire table */
+}
+
+/* Top header row */
+.comp-header-cell{
+    height: var(--cell-h);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Section titles */
+.label-heading{
+    height: var(--cell-h);
+    padding: 0 2rem;
+    background: rgba(255,255,255,0.03);
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Feature labels (left column) */
+.feature-label{
+    height: var(--cell-h);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    text-align: left;
+}
+
+/* Comparison cells */
+.comp-cell{
+    height: var(--cell-h);
+    padding: 0 2rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    min-height: auto;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #f1f5f9;
 }
 
-.before-layer {
-    position: static !important;
-    width: 100% !important;
-    height: auto !important;
-    transform: none !important;
-    clip-path: none !important;
-    border-right: none !important;
+/* 🔥 Remove large cell overrides */
+.lg-cell{
+    height: var(--cell-h) !important;
 }
 
-.container {
-    max-width: 100%;
-    padding: 16px;
-    overflow-x: hidden;
+/* 🔥 Remove artificial spacers */
+.group-spacer{
+    height: var(--cell-h);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: transparent;
 }
 
-.comparison-header {
-    max-width: 100%;
-    padding: 0 1rem;
+/* ================= LEFT COLUMN COLORS ================= */
+
+#comparison .grid > div:first-child{
+    background: #0b1f3a; /* dark blue */
 }
 
-.comparison-header h2 {
-    font-size: 2rem;
-    line-height: 1.2;
-    text-align: center;
+/* Feature Analysis title */
+.comp-header-cell span{
+    color: #7dd3fc; /* light blue */
 }
 
-.comparison-header p {
-    font-size: 1rem;
-    text-align: center;
+/* Section titles */
+.label-heading{
+    color: #7dd3fc !important;
 }
 
-.vs-title {
-    flex-direction: column;
-    text-align: center;
+/* Icons */
+.label-heading i{
+    color: #7dd3fc;
 }
+
+/* Left column subtitles */
+.feature-label{
+    color: #ffffff !important;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px){
+    :root{
+        --cell-h: 56px;
+    }
+
+    .feature-label,
+    .comp-cell,
+    .label-heading{
+        padding: 0 1rem;
+        font-size: 0.75rem;
+    }
+}
+
 
 .nav-toggle {
   width: 40px;
@@ -2113,566 +1569,127 @@ canvas {
      (Recommended: After the hero section or before pricing)
      ======================================== -->
 
-<section id="comparison" class="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 reveal">
-    <div class="container mx-auto px-6 max-w-7xl">
-        <!-- Section Header -->
+     <section id="comparison" class="py-24 bg-white reveal">
+    <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
-                Why Choose <span class="text-gradient">LedgersCFO</span>?
-            </h2>
-            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
-                See the clear difference between traditional firms and our operator-led approach
-            </p>
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">The Strategic <span class="text-gradient">Difference</span></h2>
+            <p class="text-slate-500 text-lg">Compare our operator-led approach against traditional compliance firms.</p>
         </div>
 
-        <!-- Comparison Table Container -->
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
-            
-            <!-- Table Header -->
-            <div class="grid grid-cols-1 md:grid-cols-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-                <div class="p-4 md:p-6 border-b md:border-b-0 md:border-r border-blue-500/30">
-                    <h3 class="text-xl md:text-2xl font-bold text-center">Feature</h3>
-                </div>
-                <div class="p-4 md:p-6 border-b md:border-b-0 md:border-r border-blue-500/30 bg-blue-500/20">
-                    <div class="text-center">
-                        <div class="text-2xl md:text-3xl mb-2">😰</div>
-                        <h3 class="text-xl md:text-2xl font-bold">Other Firms</h3>
-                    </div>
-                </div>
-                <div class="p-4 md:p-6 bg-blue-400/20">
-                    <div class="text-center">
-                        <div class="text-2xl md:text-3xl mb-2">🚀</div>
-                        <h3 class="text-xl md:text-2xl font-bold">LedgersCFO</h3>
-                    </div>
-                </div>
+        <div class="flex justify-center mb-10">
+            <div class="bg-slate-100 p-1 rounded-2xl flex items-center shadow-inner">
+                <button onclick="switchComparison('other')" id="btn-other" class="px-8 py-3 rounded-xl text-sm font-bold transition-all text-slate-400">Other Firms</button>
+                <button onclick="switchComparison('ledgers')" id="btn-ledgers" class="px-8 py-3 rounded-xl text-sm font-bold transition-all bg-blue-600 shadow-sm text-white">LedgersCFO</button>
             </div>
-
-            <!-- SECTION 1: REAL-TIME METRICS -->
-            <div class="bg-slate-100 px-4 md:px-6 py-3">
-                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
-                    <span>📊</span> Real-Time Metrics & Visibility
-                </h4>
-            </div>
-
-            <!-- ARR -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">ARR (Annual Recurring Revenue)</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">$2,400,000</p>
-                </div>
-            </div>
-
-            <!-- Cash Balance -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Cash Balance</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">$850,000</p>
-                </div>
-            </div>
-
-            <!-- Cash Runway -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Cash Runway</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">18 months</p>
-                </div>
-            </div>
-
-            <!-- Revenue -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Revenue</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">$3,200,000</p>
-                </div>
-            </div>
-
-            <!-- COGS -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">COGS (Cost of Goods Sold)</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">$640,000</p>
-                </div>
-            </div>
-
-            <!-- S&M Spend -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">S&M Spend (Sales & Marketing)</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">$480,000</p>
-                </div>
-            </div>
-
-            <!-- R&D Spend -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">R&D Spend (Research & Development)</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">$720,000</p>
-                </div>
-            </div>
-
-            <!-- G&A Spend -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">G&A Spend (General & Administrative)</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">$320,000</p>
-                </div>
-            </div>
-
-            <!-- Burn Multiple -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Burn Multiple</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">1.2x</p>
-                </div>
-            </div>
-
-            <!-- CAC / LTV -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">CAC / LTV (Customer Acquisition Cost / Lifetime Value)</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-slate-500 font-medium">???</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">$12.5k / $48k</p>
-                </div>
-            </div>
-
-            <!-- SECTION 2: PROBLEMS vs SOLUTIONS -->
-            <div class="bg-slate-100 px-4 md:px-6 py-3">
-                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
-                    <span>💡</span> Problems vs Solutions
-                </h4>
-            </div>
-
-            <!-- Communication -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Communication & Response Time</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">😵</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">Confusing Communication</p>
-                            <p class="text-xs text-slate-600">Emails take 2-3 days. Multiple back-and-forth cycles delay progress.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">⚡</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">Instant Communication</p>
-                            <p class="text-xs text-slate-600">Dedicated Slack/WhatsApp channel. Real-time answers within hours, not days.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pricing -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Pricing Transparency</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">💸</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">Hidden Costs</p>
-                            <p class="text-xs text-slate-600">"$2k basic filing" turns into $5k+ with surprise state returns and fees.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">💎</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">Transparent Pricing</p>
-                            <p class="text-xs text-slate-600">Fixed quotes upfront. No surprises. Save 50-60% vs traditional firms.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cross-Border Expertise -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Cross-Border Compliance</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">🤷</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">No Cross-Border Expertise</p>
-                            <p class="text-xs text-slate-600">US CPAs don't understand Indian compliance. You need multiple firms.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">🌍</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">True Cross-Border Expertise</p>
-                            <p class="text-xs text-slate-600">US CPAs + Indian CAs on one team handling compliance seamlessly.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Automation -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Workflow Automation</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">📊</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">Manual Everything</p>
-                            <p class="text-xs text-slate-600">Excel sheets and email attachments. You're doing all the heavy lifting.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">🤖</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">Automated Systems</p>
-                            <p class="text-xs text-slate-600">Connect your books once. Auto-sync bank feeds. We handle the heavy lifting.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Deadline Management -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Deadline Management</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">⏰</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-red-700 mb-1">Deadline Stress</p>
-                            <p class="text-xs text-slate-600">Last-minute scrambles lead to costly penalties and compliance issues.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <div class="flex items-start gap-2">
-                        <span class="text-base md:text-lg">✅</span>
-                        <div>
-                            <p class="text-xs md:text-sm font-semibold text-blue-700 mb-1">Proactive Deadline Management</p>
-                            <p class="text-xs text-slate-600">Zero penalties on our watch. Automated tracking keeps you ahead.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION 3: TIMELINE COMPARISON -->
-            <div class="bg-slate-100 px-4 md:px-6 py-3">
-                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
-                    <span>⏱️</span> Timeline & Efficiency
-                </h4>
-            </div>
-
-            <!-- Initial Response -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Initial Response Time</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-red-600 font-bold">2-3 days</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">2-4 hours</p>
-                </div>
-            </div>
-
-            <!-- Document Collection -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Document Collection</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-red-600 font-bold">2-3 weeks</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">3-5 days</p>
-                </div>
-            </div>
-
-            <!-- Draft Review -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Draft Review Time</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-red-600 font-bold">1-2 weeks</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">2-3 days</p>
-                </div>
-            </div>
-
-            <!-- Final Filing -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Final Filing</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-xs md:text-sm text-red-600 font-bold">2-4 days</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <p class="text-xs md:text-sm text-blue-700 font-bold">Same day</p>
-                </div>
-            </div>
-
-            <!-- Total Time -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 bg-slate-50">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-bold text-slate-800">⏳ Total Time Required</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-sm md:text-base text-red-700 font-extrabold">6-8 Weeks</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-100 text-center">
-                    <p class="text-sm md:text-base text-blue-700 font-extrabold">1-2 Weeks</p>
-                </div>
-            </div>
-
-            <!-- Cost Comparison -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 bg-slate-50">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-bold text-slate-800">💰 Investment / Cost</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <p class="text-sm md:text-base text-red-700 font-extrabold mb-1">$4,500 - $7,000</p>
-                    <p class="text-xs text-red-600">⚠️ Plus surprise fees</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-100 text-center">
-                    <p class="text-sm md:text-base text-blue-700 font-extrabold mb-1">Starting at $1,000/year</p>
-                    <p class="text-xs text-blue-600">✅ All-inclusive. No hidden fees.</p>
-                </div>
-            </div>
-
-            <!-- SECTION 4: CORE FEATURES -->
-            <div class="bg-slate-100 px-4 md:px-6 py-3">
-                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
-                    <span>✨</span> Core Features & Services
-                </h4>
-            </div>
-
-            <!-- Compliance Coverage -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Compliance Coverage</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">Fragmented</span>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">End-to-End</span>
-                </div>
-            </div>
-
-            <!-- CFO Support -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">CFO Support</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">Not Available</span>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">Included</span>
-                </div>
-            </div>
-
-            <!-- Pricing Model -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Pricing Model</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">Surprise Bills</span>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">Fixed & Clear</span>
-                </div>
-            </div>
-
-            <!-- Response Time -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Response Time</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">2-3 Days</span>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">Real-Time</span>
-                </div>
-            </div>
-
-            <!-- Automation -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Automation Level</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200 text-center">
-                    <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">Manual</span>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50 text-center">
-                    <span class="inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-bold">Full Stack</span>
-                </div>
-            </div>
-
-            <!-- SECTION 5: FEATURE COMPARISON -->
-            <div class="bg-slate-100 px-4 md:px-6 py-3">
-                <h4 class="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
-                    <span>🎯</span> Detailed Feature Comparison
-                </h4>
-            </div>
-
-            <!-- Access & Responsiveness -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Access & Responsiveness</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs text-slate-600">Email-only, slow turnaround</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <p class="text-xs text-blue-700 font-semibold">Slack / WhatsApp + Very Responsive</p>
-                </div>
-            </div>
-
-            <!-- Team Ownership -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Team Ownership</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs text-slate-600">Multiple teams, handoffs, follow-ups</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <p class="text-xs text-blue-700 font-semibold">One Dedicated Team End-to-End</p>
-                </div>
-            </div>
-
-            <!-- Founder Visibility -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Founder Visibility</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs text-slate-600">Only reports/PDFs, limited visibility</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <p class="text-xs text-blue-700 font-semibold">Dashboard: Cash, Burn, Runway, ARR, P&L</p>
-                </div>
-            </div>
-
-            <!-- Pricing -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Pricing Structure</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs text-slate-600">Variable billing, add-ons come later</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <p class="text-xs text-blue-700 font-semibold">Fixed Pricing, No Surprise Bills</p>
-                </div>
-            </div>
-
-            <!-- Operating Experience -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Operating Experience</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs text-slate-600">Compliance-only teams (no operating experience)</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <p class="text-xs text-blue-700 font-semibold">Operator-Led (Startup Finance Experience)</p>
-                </div>
-            </div>
-
-            <!-- Cross-Border Expertise -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs md:text-sm font-semibold text-slate-700">Cross-Border Expertise</p>
-                </div>
-                <div class="p-3 md:p-4 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p class="text-xs text-slate-600">Generic firm, weak cross-border support</p>
-                </div>
-                <div class="p-3 md:p-4 bg-blue-50/50">
-                    <p class="text-xs text-blue-700 font-semibold">US ↔ India Specialists (Delaware + India Ops)</p>
-                </div>
-            </div>
-
         </div>
 
-        <!-- Bottom CTA -->
-        <div class="mt-12 text-center bg-gradient-to-r from-blue-600 to-blue-700 rounded-3xl p-8 md:p-12 text-white shadow-2xl reveal">
-            <h3 class="text-2xl md:text-4xl font-bold mb-4">
-                LedgersCFO isn't just tax filing — it's finance operations built for founders.
-            </h3>
-            <p class="text-base md:text-xl mb-6 opacity-95">
-                Get transparency, control, and peace of mind with operator-led finance teams.
-            </p>
-            <button onclick="handleAction('Get Pricing & Compliance Plan')" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition-all btn-animate shadow-lg">
-                Get Pricing & Compliance Plan
-            </button>
+        <div class="grid grid-cols-2 gap-0 border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-2xl bg-white">
+            <div class="bg-slate-50/50 border-r border-slate-200">
+                <div class="comp-header-cell px-8 justify-start">
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Feature Analysis</span>
+                </div>
+                
+                <div class="label-heading px-8 justify-start"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> Real-Time Metrics</div>
+                <div class="feature-label">ARR (Annual Recurring Revenue)</div>
+                <div class="feature-label">Cash Balance</div>
+                <div class="feature-label">Cash Runway</div>
+                <div class="feature-label">Revenue</div>
+                <div class="feature-label">COGS (Cost of Goods Sold)</div>
+                <div class="feature-label">S&M Spend (Sales & Marketing)</div>
+                <div class="feature-label">R&D Spend (Research & Development)</div>
+                <div class="feature-label">G&A Spend (General & Administrative)</div>
+                <div class="feature-label">Burn Multiple</div>
+                <div class="feature-label">CAC / LTV</div>
+
+                <div class="label-heading px-8 justify-start"><i data-lucide="alert-circle" class="w-4 h-4"></i> Problems vs Solutions</div>
+                <div class="feature-label lg-cell">Communication & Response Time</div>
+                <div class="feature-label lg-cell">Pricing Transparency</div>
+                <div class="feature-label lg-cell">Cross-Border Compliance</div>
+                <div class="feature-label lg-cell">Workflow Automation</div>
+                <div class="feature-label lg-cell">Deadline Management</div>
+
+                <div class="label-heading px-8 justify-start"><i data-lucide="timer" class="w-4 h-4"></i> Timeline & Efficiency</div>
+                <div class="feature-label">Initial Response Time</div>
+                <div class="feature-label">Document Collection</div>
+                <div class="feature-label">Draft Review Time</div>
+                <div class="feature-label">Final Filing</div>
+                <div class="feature-label font-bold text-slate-900">Total Time Required</div>
+                <div class="feature-label font-bold text-slate-900">Investment / Cost</div>
+
+                <div class="label-heading px-8 justify-start"><i data-lucide="sparkles" class="w-4 h-4"></i> Core Features & Services</div>
+                <div class="feature-label">Compliance Coverage</div>
+                <div class="feature-label">CFO Support</div>
+                <div class="feature-label">Pricing Model</div>
+                <div class="feature-label">Response Time</div>
+                <div class="feature-label">Automation Level</div>
+
+                <div class="label-heading px-8 justify-start"><i data-lucide="target" class="w-4 h-4"></i> Detailed Comparison</div>
+                <div class="feature-label lg-cell">Access & Responsiveness</div>
+                <div class="feature-label lg-cell">Team Ownership</div>
+                <div class="feature-label lg-cell">Founder Visibility</div>
+                <div class="feature-label lg-cell">Pricing Structure</div>
+                <div class="feature-label lg-cell">Operating Experience</div>
+                <div class="feature-label lg-cell">Cross-Border Expertise</div>
+            </div>
+
+            <div class="relative overflow-hidden bg-white">
+                <div id="comp-slider" class="flex transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" style="width: 200%; transform: translateX(-50%);">
+                    
+                    <div class="w-1/2 opacity-40 grayscale blur-[0.5px] transition-all duration-700" id="pane-other">
+                        <div class="comp-header-cell justify-start px-8 font-bold text-slate-500 text-xl">Other Firms</div>
+                        <div class="group-spacer"></div>
+                        <div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div><div class="comp-cell">???</div>
+                        <div class="group-spacer"></div>
+                        <div class="comp-cell lg-cell text-red-600"><b>Confusing Communication</b><p class="text-xs text-slate-400 mt-1">Emails take 2-3 days. Multiple back-and-forth cycles.</p></div>
+                        <div class="comp-cell lg-cell text-red-600"><b>Hidden Costs</b><p class="text-xs text-slate-400 mt-1">"$2k basic filing" turns into $5k+ with surprise fees.</p></div>
+                        <div class="comp-cell lg-cell text-red-600"><b>No Cross-Border Expertise</b><p class="text-xs text-slate-400 mt-1">Firms don't understand Indian MCA/Compliance nexus.</p></div>
+                        <div class="comp-cell lg-cell text-red-600"><b>Manual Everything</b><p class="text-xs text-slate-400 mt-1">Heavy Excel lifting and manual attachment management.</p></div>
+                        <div class="comp-cell lg-cell text-red-600"><b>Deadline Stress</b><p class="text-xs text-slate-400 mt-1">Last minute scrambles leading to costly penalties.</p></div>
+                        <div class="group-spacer"></div>
+                        <div class="comp-cell">2-3 days</div><div class="comp-cell">2-3 weeks</div><div class="comp-cell">1-2 weeks</div><div class="comp-cell">2-4 days</div>
+                        <div class="comp-cell font-bold text-red-600">6-8 Weeks</div><div class="comp-cell font-bold text-red-600">$4,500 - $7,000+ (plus fees)</div>
+                        <div class="group-spacer"></div>
+                        <div class="comp-cell">Fragmented</div><div class="comp-cell">Not Available</div><div class="comp-cell">Surprise Bills</div><div class="comp-cell">2-3 Days</div><div class="comp-cell">Manual</div>
+                        <div class="group-spacer"></div>
+                        <div class="comp-cell lg-cell">Email-only, slow turnaround</div>
+                        <div class="comp-cell lg-cell">Multiple teams, handoffs, follow-ups</div>
+                        <div class="comp-cell lg-cell">Only reports/PDFs, limited visibility</div>
+                        <div class="comp-cell lg-cell">Variable billing, add-ons come later</div>
+                        <div class="comp-cell lg-cell">Compliance-only (no operating experience)</div>
+                        <div class="comp-cell lg-cell">Generic firm, weak cross-border support</div>
+                    </div>
+
+                    <div class="w-1/2 transition-all duration-700" id="pane-ledgers">
+                        <div class="comp-header-cell justify-start px-8 font-bold text-blue-600 text-xl bg-blue-50/30">LedgersCFO</div>
+                        <div class="group-spacer bg-blue-50/50"></div>
+                        <div class="comp-cell text-blue-700 font-bold">$2,400,000</div><div class="comp-cell text-blue-700 font-bold">$850,000</div><div class="comp-cell text-blue-700 font-bold">18 months</div><div class="comp-cell text-blue-700 font-bold">$3,200,000</div><div class="comp-cell text-blue-700 font-bold">$640,000</div><div class="comp-cell text-blue-700 font-bold">$480,000</div><div class="comp-cell text-blue-700 font-bold">$720,000</div><div class="comp-cell text-blue-700 font-bold">$320,000</div><div class="comp-cell text-blue-700 font-bold">1.2x</div><div class="comp-cell text-blue-700 font-bold">$12.5k / $48k</div>
+                        <div class="group-spacer bg-blue-50/50"></div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">Instant Communication<p class="text-xs text-blue-500 font-normal mt-1">Dedicated Slack/WhatsApp channel. Hours, not days.</p></div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">Transparent Pricing<p class="text-xs text-blue-500 font-normal mt-1">Fixed quotes upfront. No surprises. Save 50-60%.</p></div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">True Cross-Border Expertise<p class="text-xs text-blue-500 font-normal mt-1">US CPAs + Indian CAs on one team seamlessly.</p></div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">Automated Systems<p class="text-xs text-blue-500 font-normal mt-1">Auto-sync bank feeds. We handle the heavy lifting.</p></div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">Proactive Management<p class="text-xs text-blue-500 font-normal mt-1">Zero penalties. Automated tracking keeps you ahead.</p></div>
+                        <div class="group-spacer bg-blue-50/50"></div>
+                        <div class="comp-cell text-blue-700 font-bold">2-4 hours</div><div class="comp-cell text-blue-700 font-bold">3-5 days</div><div class="comp-cell text-blue-700 font-bold">2-3 days</div><div class="comp-cell text-blue-700 font-bold">Same day</div>
+                        <div class="comp-cell font-bold text-blue-700">1-2 Weeks</div><div class="comp-cell font-bold text-blue-700">Starts at $1,000/year (All-inclusive)</div>
+                        <div class="group-spacer bg-blue-50/50"></div>
+                        <div class="comp-cell font-bold text-blue-700">End-to-End</div><div class="comp-cell font-bold text-blue-700">Included</div><div class="comp-cell font-bold text-blue-700">Fixed & Clear</div><div class="comp-cell font-bold text-blue-700">Real-Time</div><div class="comp-cell font-bold text-blue-700">Full Stack</div>
+                        <div class="group-spacer bg-blue-50/50"></div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">Slack / WhatsApp + Very Responsive</div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">One Dedicated Team End-to-End</div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">Dashboard: Cash, Burn, Runway, ARR, P&L</div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">Fixed Pricing, No Surprise Bills</div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">Operator-Led (Startup Finance Experience)</div>
+                        <div class="comp-cell lg-cell text-blue-800 font-bold">US ↔ India Specialists (Delaware + India)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center max-w-3xl mx-auto">
+            <h4 class="text-2xl font-bold mb-4">LedgersCFO isn't just tax filing — it's finance operations built for founders.</h4>
+            <p class="text-slate-500 mb-8">Get transparency, control, and peace of mind with operator-led finance teams.</p>
+            <button onclick="handleAction('Get Pricing & Compliance Plan')" class="btn-animate bg-blue-600 text-white px-12 py-5 rounded-2xl font-bold text-lg shadow-xl">Get Pricing & Compliance Plan</button>
         </div>
     </div>
 </section>
@@ -2892,8 +1909,6 @@ canvas {
             </div>
         </div>
     </section>
-    
-<section id="industries" class="py-32 bg-gradient-to-br from-slate-50 to-blue-50 px-6"></section>
 
     <section id="compliance" class="py-32 bg-white px-6">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
@@ -3913,46 +2928,44 @@ function handleAction(msg) {
 }
 
 // Slider functionality
-const container = document.getElementById('sliderContainer');
-        const handle = document.getElementById('sliderHandle');
-        const beforeLayer = document.getElementById('beforeLayer');
+function switchComparison(target) {
+    const slider = document.getElementById('comp-slider');
+    const paneOther = document.getElementById('pane-other');
+    const paneLedgers = document.getElementById('pane-ledgers');
+    const btnOther = document.getElementById('btn-other');
+    const btnLedgers = document.getElementById('btn-ledgers');
+
+    if (target === 'other') {
+        slider.style.transform = 'translateX(0%)';
+        paneOther.style.opacity = '1';
+        paneOther.style.filter = 'grayscale(0) blur(0)';
+        paneLedgers.style.opacity = '0.4';
+        paneLedgers.style.filter = 'grayscale(1) blur(0.5px)';
         
-        let isDragging = false;
+        btnOther.classList.add('bg-blue-600', 'shadow-sm', 'text-white');
+        btnOther.classList.remove('text-slate-400');
+        btnLedgers.classList.remove('bg-blue-600', 'shadow-sm', 'text-white');
+        btnLedgers.classList.add('text-slate-400');
+    } else {
+        slider.style.transform = 'translateX(-50%)';
+        paneLedgers.style.opacity = '1';
+        paneLedgers.style.filter = 'grayscale(0) blur(0)';
+        paneOther.style.opacity = '0.4';
+        paneOther.style.filter = 'grayscale(1) blur(0.5px)';
         
-        handle.addEventListener('mousedown', () => isDragging = true);
-        document.addEventListener('mouseup', () => isDragging = false);
-        
-        container.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const percentage = (x / rect.width) * 100;
-            const clampedPercentage = Math.max(5, Math.min(95, percentage));
-            
-            handle.style.left = clampedPercentage + '%';
-            beforeLayer.style.clipPath = `inset(0 ${100 - clampedPercentage}% 0 0)`;
-        });
-        
-        // Touch support
-        handle.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            e.preventDefault();
-        });
-        
-        document.addEventListener('touchend', () => isDragging = false);
-        
-        container.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            
-            const rect = container.getBoundingClientRect();
-            const x = e.touches[0].clientX - rect.left;
-            const percentage = (x / rect.width) * 100;
-            const clampedPercentage = Math.max(5, Math.min(95, percentage));
-            
-            handle.style.left = clampedPercentage + '%';
-            beforeLayer.style.clipPath = `inset(0 ${100 - clampedPercentage}% 0 0)`;
-        });
+        btnLedgers.classList.add('bg-blue-600', 'shadow-sm', 'text-white');
+        btnLedgers.classList.remove('text-slate-400');
+        btnOther.classList.remove('bg-blue-600', 'shadow-sm', 'text-white');
+        btnOther.classList.add('text-slate-400');
+    }
+}
+
+// Initializing Icons
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+});
 
 // Terms of Service Modal
 function openTermsOfService() {
