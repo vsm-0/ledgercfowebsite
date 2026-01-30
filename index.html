@@ -1027,6 +1027,8 @@ canvas {
     justify-content: flex-start;
     gap: 0.75rem;
     border-bottom: 1px solid rgba(255,255,255,0.08);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Feature labels (left column) */
@@ -1040,6 +1042,8 @@ canvas {
     font-weight: 500;
     border-bottom: 1px solid rgba(255,255,255,0.06);
     text-align: left;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Comparison cells */
@@ -1053,6 +1057,8 @@ canvas {
     text-align: left;
     font-size: 0.875rem;
     border-bottom: 1px solid #f1f5f9;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* 🔥 Remove large cell overrides */
@@ -1117,43 +1123,86 @@ canvas {
 
 @media (max-width: 768px){
 
+    /* Override the fixed cell height for mobile */
+    #comparison{
+        --cell-h: auto;
+    }
+
     .comp-header-cell,
     .label-heading,
     .feature-label,
     .comp-cell,
     .section-spacer{
-        min-height: 65px;              /* increased min-height for better spacing */
-        padding: 1.2rem 1rem;          /* increased padding */
+        height: auto;                  /* allow height to be flexible */
+        min-height: 80px;              /* significantly increased min-height */
+        padding: 1.5rem 1rem;          /* more padding for breathing room */
         font-size: 0.75rem;
         line-height: 1.6;
         align-items: flex-start;
     }
 
     .label-heading{
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        padding-left: 1rem;            /* align subtitles to left edge */
+        height: auto;
+        min-height: 70px;              /* specific height for subtitles */
+        padding: 1.5rem 1rem;
         letter-spacing: 0.08em;
+        font-size: 0.7rem;             /* slightly smaller for better fit */
+    }
+
+    .feature-label{
+        height: auto;
+        min-height: 80px;              /* consistent with other cells */
+        padding: 1.5rem 1rem;
     }
 
     .comp-cell{
+        height: auto;
+        min-height: 80px;
         justify-content: flex-start;
-        padding: 1.2rem 1rem;          /* increased padding */
+        padding: 1.5rem 1rem;
     }
 
     .comp-cell p{
         margin-top: 0.3rem;
-        font-size: 0.7rem;
-        line-height: 1.5;
+        font-size: 0.65rem;            /* smaller paragraph text */
+        line-height: 1.4;
     }
 
     .lg-cell{
-        min-height: 85px !important;   /* larger cells for longer content */
-        padding: 1.2rem 1rem !important;
+        height: auto !important;
+        min-height: 120px !important;  /* much larger cells for long content */
+        padding: 1.5rem 1rem !important;
+    }
+
+    .comp-cell.lg-cell{
+        height: auto !important;
+        min-height: 120px !important;
+    }
+
+    .feature-label.lg-cell{
+        height: auto !important;
+        min-height: 120px !important;
+    }
+
+    .group-spacer{
+        height: auto;
+        min-height: 70px;
     }
 
     #comparison{
         overflow-x: hidden;
+    }
+
+    /* Ensure the grid container doesn't cause overflow */
+    #comparison .grid{
+        overflow: visible;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Make sure columns are equal and contained */
+    #comparison .grid > div{
+        min-width: 0;  /* allows flex items to shrink below content size */
+        width: 100%;
     }
 }
 
