@@ -1071,6 +1071,8 @@ canvas {
     height: var(--cell-h);
     border-bottom: 1px solid rgba(255,255,255,0.08);
     background: transparent;
+    flex-shrink: 0;  /* prevent collapsing */
+    min-height: 64px; /* ensure minimum space */
 }
 
 /* ================= LEFT COLUMN COLORS ================= */
@@ -1139,6 +1141,8 @@ canvas {
         font-size: 0.75rem;
         line-height: 1.6;
         align-items: flex-start;
+        display: block !important;     /* force block display */
+        clear: both;                   /* clear any floats */
     }
 
     .label-heading{
@@ -1160,6 +1164,8 @@ canvas {
         min-height: 80px;
         justify-content: flex-start;
         padding: 1.5rem 1rem;
+        display: block !important;     /* force block display */
+        clear: both;                   /* prevent floating */
     }
 
     .comp-cell p{
@@ -1185,8 +1191,26 @@ canvas {
     }
 
     .group-spacer{
-        height: auto;
-        min-height: 70px;
+        height: 70px !important;       /* fixed height to maintain empty space */
+        min-height: 70px !important;
+        flex-shrink: 0 !important;     /* critical: prevent collapsing */
+        display: block !important;     /* ensure it renders as a block */
+        overflow: hidden;              /* prevent content from bleeding in */
+    }
+
+    /* Ensure right column panels stack properly */
+    #pane-other,
+    #pane-ledgers{
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Ensure all cells in right panels are contained */
+    #pane-other > *,
+    #pane-ledgers > *{
+        flex-shrink: 0;
+        display: block;
+        overflow: hidden;
     }
 
     #comparison{
