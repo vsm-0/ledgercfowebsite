@@ -218,191 +218,6 @@ body {
   }
 }
 
-/* ============================================
-   MOBILE TABLE OPTIMIZATION STYLES
-   ============================================ */
-
-/* Base table responsiveness */
-@media (max-width: 768px) {
-  /* Table container with horizontal scroll */
-  .table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    position: relative;
-  }
-  
-  /* Scroll indicator shadow */
-  .table-responsive::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 30px;
-    background: linear-gradient(to left, rgba(255,255,255,0.9), transparent);
-    pointer-events: none;
-  }
-  
-  /* Reduce table font sizes on mobile */
-  table {
-    font-size: 11px !important;
-    min-width: 600px; /* Ensure table doesn't collapse too much */
-  }
-  
-  /* Table headers - smaller and tighter */
-  table th {
-    font-size: 10px !important;
-    padding: 8px 6px !important;
-    line-height: 1.3 !important;
-    font-weight: 600 !important;
-    white-space: normal !important;
-    word-wrap: break-word !important;
-  }
-  
-  /* Table cells - compact with better wrapping */
-  table td {
-    font-size: 11px !important;
-    padding: 10px 6px !important;
-    line-height: 1.4 !important;
-    white-space: normal !important;
-    word-wrap: break-word !important;
-    vertical-align: top !important;
-  }
-  
-  /* First column (labels) - slightly wider and sticky */
-  table td:first-child,
-  table th:first-child {
-    min-width: 120px !important;
-    max-width: 150px !important;
-    font-weight: 600 !important;
-    position: sticky !important;
-    left: 0 !important;
-    background: white !important;
-    z-index: 10 !important;
-    box-shadow: 2px 0 4px rgba(0,0,0,0.05);
-  }
-  
-  /* Other columns - flexible width */
-  table td:not(:first-child),
-  table th:not(:first-child) {
-    min-width: 100px !important;
-    max-width: 140px !important;
-  }
-  
-  /* Comparison tables (Other Firms vs LedgersCFO) */
-  .comparison-table td:nth-child(2),
-  .comparison-table th:nth-child(2) {
-    background-color: #fef2f2 !important; /* Light red for "Other Firms" */
-  }
-  
-  .comparison-table td:last-child,
-  .comparison-table th:last-child {
-    background-color: #eff6ff !important; /* Light blue for "LedgersCFO" */
-  }
-  
-  /* Pricing table specific adjustments */
-  .pricing-table td {
-    font-size: 10px !important;
-    padding: 8px 5px !important;
-  }
-  
-  /* Feature matrix checkmarks */
-  table td svg,
-  table td .checkmark {
-    width: 16px !important;
-    height: 16px !important;
-  }
-  
-  /* Numbers and metrics - keep readable */
-  table td strong,
-  table td b {
-    font-size: 12px !important;
-    display: block !important;
-    margin-bottom: 2px !important;
-  }
-  
-  /* Section headings within tables */
-  table tr.section-header td {
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    background: #f8fafc !important;
-    padding: 12px 8px !important;
-  }
-  
-  /* Mobile table helper text */
-  .mobile-scroll-hint {
-    display: block !important;
-    text-align: center;
-    font-size: 11px;
-    color: #64748b;
-    padding: 8px;
-    background: #f1f5f9;
-    border-radius: 8px;
-    margin-bottom: 12px;
-  }
-  
-  /* Comparison table specific mobile styles */
-  .comp-header-cell {
-    font-size: 14px !important;
-    padding: 12px 8px !important;
-  }
-  
-  .feature-label {
-    font-size: 10px !important;
-    padding: 10px 6px !important;
-    line-height: 1.3 !important;
-  }
-  
-  .feature-label.lg-cell {
-    font-size: 10px !important;
-    padding: 12px 6px !important;
-  }
-  
-  .comp-cell {
-    font-size: 10px !important;
-    padding: 10px 6px !important;
-    line-height: 1.3 !important;
-  }
-  
-  .comp-cell.lg-cell {
-    font-size: 10px !important;
-    padding: 12px 6px !important;
-  }
-  
-  .comp-cell b,
-  .comp-cell strong {
-    font-size: 11px !important;
-  }
-  
-  .comp-cell p {
-    font-size: 9px !important;
-    line-height: 1.3 !important;
-    margin-top: 4px !important;
-  }
-  
-  .label-heading {
-    font-size: 11px !important;
-    padding: 10px 8px !important;
-  }
-  
-  .group-spacer {
-    min-height: 8px !important;
-  }
-  
-  /* Hide desktop-only table columns if any */
-  .desktop-only-col {
-    display: none !important;
-  }
-}
-
-/* Desktop - hide mobile hints */
-@media (min-width: 769px) {
-  .mobile-scroll-hint {
-    display: none !important;
-  }
-}
-
         /* Navigation Glassmorphism */
         .glass-nav { 
             background: rgba(255, 255, 255, 0.75); 
@@ -442,6 +257,48 @@ body {
         /* Accordion */
         .accordion-content { transition: all 0.4s ease-in-out; max-height: 0; overflow: hidden; opacity: 0; }
         .accordion-content.open { max-height: 500px; opacity: 1; padding-bottom: 1.5rem; }
+/* Mobile Table Images */
+.table-desktop {
+    display: block;
+}
+
+.table-mobile-image {
+    display: none;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Hide "Other Firms" mobile image by default, show LedgersCFO */
+#comparison-mobile-other {
+    display: none;
+}
+
+#comparison-mobile-ledgers {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .table-desktop {
+        display: none !important;
+    }
+    
+    .table-mobile-image {
+        display: block;
+        margin: 1rem 0;
+    }
+    
+    /* Show LedgersCFO comparison by default on mobile */
+    #comparison-mobile-ledgers {
+        display: block;
+    }
+    
+    #comparison-mobile-other {
+        display: none;
+    }
+}
+
 /* Canvas Chart Specific Styles */
 canvas {
     display: block !important;
@@ -1767,13 +1624,16 @@ canvas {
             </div>
         </div>
 
-        <!-- Mobile Scroll Hint -->
-        <div class="mobile-scroll-hint">
-            👈 Swipe left/right to compare features
+        <!-- Mobile Image for Comparison Tables -->
+        <div class="table-mobile-image" id="comparison-mobile-other">
+            <img src="comparison-other-firms-mobile.png" alt="Other Firms Comparison Table" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
         </div>
-        
-        <div class="table-responsive">
-        <div class="grid grid-cols-2 gap-0 border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-2xl bg-white" style="min-width: 700px;">
+        <div class="table-mobile-image" id="comparison-mobile-ledgers">
+            <img src="comparison-ledgerscfo-mobile.png" alt="LedgersCFO Comparison Table" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        </div>
+
+        <!-- Desktop Table -->
+        <div class="grid grid-cols-2 gap-0 border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-2xl bg-white table-desktop">
             <div class="bg-slate-50/50 border-r border-slate-200">
                 <div class="comp-header-cell px-8 justify-start">
                     <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Feature Analysis</span>
@@ -1874,7 +1734,6 @@ canvas {
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <div class="mt-16 text-center max-w-3xl mx-auto">
@@ -2182,13 +2041,14 @@ canvas {
                 <div class="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm reveal">
             <h4 class="text-2xl font-bold mb-10 text-center tracking-tight">Feature Matrix</h4>
             
-            <!-- Mobile Scroll Hint -->
-            <div class="mobile-scroll-hint">
-                👈 Swipe to see all plan features
+            <!-- Mobile Image for Feature Matrix -->
+            <div class="table-mobile-image">
+                <img src="feature-matrix-mobile.png" alt="Feature Matrix Table" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
             </div>
-            
-            <div class="table-responsive">
-                <table class="pricing-table w-full text-left text-sm border-collapse comparison-table" style="min-width: 600px;">
+
+            <!-- Desktop Table -->
+            <div class="overflow-x-auto no-scrollbar table-desktop">
+                <table class="pricing-table w-full text-left text-sm border-collapse">
                     <thead>
                         <tr class="border-b border-slate-100">
                             <th class="pb-6 font-bold text-slate-400 uppercase text-[10px] tracking-[0.1em]">Capability</th>
@@ -2719,13 +2579,13 @@ canvas {
         <section id="pricing-section" class="mb-12">
             <h3 class="text-3xl font-bold mb-6 text-center">Transparent Pricing</h3>
             
-            <!-- Mobile Scroll Hint -->
-            <div class="mobile-scroll-hint">
-                👈 Swipe to see all pricing details
+            <!-- Mobile Image for Pricing Table -->
+            <div class="table-mobile-image">
+                <img src="pricing-table-mobile.png" alt="Transparent Pricing Table" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
             </div>
-            
-            <div class="table-responsive">
-            <table class="pricing-table" style="min-width: 650px;">
+
+            <!-- Desktop Table -->
+            <table class="pricing-table table-desktop">
                 <thead>
                     <tr>
                         <th>Service</th>
@@ -2776,7 +2636,6 @@ canvas {
                     </tr>
                 </tbody>
             </table>
-            </div>
 
             <div class="bg-blue-50 p-6 rounded-2xl mt-6 border-2 border-blue-100">
                 <p class="text-slate-700 mb-4"><strong>R&D Tax Credit:</strong> Our team will help you determine if you qualify for the R&D tax credit. If you do, we'll handle the filing process for you.</p>
@@ -3138,6 +2997,10 @@ function switchComparison(target) {
     const paneLedgers = document.getElementById('pane-ledgers');
     const btnOther = document.getElementById('btn-other');
     const btnLedgers = document.getElementById('btn-ledgers');
+    
+    // Mobile image elements
+    const mobileOther = document.getElementById('comparison-mobile-other');
+    const mobileLedgers = document.getElementById('comparison-mobile-ledgers');
 
     if (target === 'other') {
         slider.style.transform = 'translateX(0%)';
@@ -3150,6 +3013,10 @@ function switchComparison(target) {
         btnOther.classList.remove('text-slate-400');
         btnLedgers.classList.remove('bg-blue-600', 'shadow-sm', 'text-white');
         btnLedgers.classList.add('text-slate-400');
+        
+        // Toggle mobile images
+        if (mobileOther) mobileOther.style.display = 'block';
+        if (mobileLedgers) mobileLedgers.style.display = 'none';
     } else {
         slider.style.transform = 'translateX(-50%)';
         paneLedgers.style.opacity = '1';
@@ -3161,6 +3028,10 @@ function switchComparison(target) {
         btnLedgers.classList.remove('text-slate-400');
         btnOther.classList.remove('bg-blue-600', 'shadow-sm', 'text-white');
         btnOther.classList.add('text-slate-400');
+        
+        // Toggle mobile images
+        if (mobileOther) mobileOther.style.display = 'none';
+        if (mobileLedgers) mobileLedgers.style.display = 'block';
     }
 }
 
