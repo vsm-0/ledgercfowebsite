@@ -115,6 +115,20 @@ body {
   overflow-x: hidden;
 }
 
+/* Reduce spacing between sections on mobile */
+@media (max-width: 768px) {
+  section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  #home {
+    min-height: 100vh;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+}
+
 /* Global mobile padding */
 @media (max-width: 768px) {
   section {
@@ -1580,7 +1594,7 @@ canvas {
         </button>
     </div> -->
 
-    <section id="home" class="relative pt-20 pb-32 px-6 z-10" alignment="center">
+    <section id="home" class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-white px-6 py-12 md:py-32 overflow-hidden">
     <div class="max-w-7xl mx-auto flex flex-col items-center justify-center">
         <div class="reveal active" style="transition-delay: 0.2s; display: flex; justify-content: center; width: 100%;">
             <div class="bg-white p-10 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)] border border-slate-100 relative max-w-2xl w-full z-20">
@@ -2080,7 +2094,7 @@ canvas {
     </div>
 </section>
 
-<section class="py-32 bg-white px-6">
+<section class="py-12 md:py-20 px-6 bg-white">
     <div class="max-w-3xl mx-auto">
         <div class="text-center mb-20 reveal">
             <h2 class="text-4xl font-extrabold tracking-tight">Compliance & Friction</h2>
@@ -2204,6 +2218,12 @@ canvas {
         <button onclick="showCalculator('growth')" class="calc-tab" data-calc="growth">Revenue Growth</button>
         <button onclick="showCalculator('breakeven')" class="calc-tab" data-calc="breakeven">Break-Even</button>
         <button onclick="showCalculator('savings')" class="calc-tab" data-calc="savings">LedgersCFO Savings</button>
+        
+        <button onclick="showCalculator('rdtax')" class="calc-tab" data-calc="rdtax">R&D Tax Credit</button>
+        <button onclick="showCalculator('compliance')" class="calc-tab" data-calc="compliance">Compliance Calculator</button>
+        <button onclick="showCalculator('federaltax')" class="calc-tab" data-calc="federaltax">Federal & State Income Tax</button>
+        <button onclick="showCalculator('duedate')" class="calc-tab" data-calc="duedate">Federal & State Due Date</button>
+        <button onclick="showCalculator('incorporation')" class="calc-tab" data-calc="incorporation">US Entity Incorporation</button>
     </div>
 </div>
 
@@ -2474,6 +2494,235 @@ canvas {
                 </div>
             </div>
 
+            <!-- 9. R&D TAX CREDIT CALCULATOR -->
+            <div id="calc-rdtax" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">R&D Tax Credit Calculator</h3>
+                        <p class="text-slate-600 mb-8">Estimate your potential R&D tax credit savings.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Annual R&D Expenses ($)</label>
+                            <input type="number" id="rdtax_expenses" class="calculator-input" placeholder="e.g., 500000" oninput="calculateRDTax()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Number of R&D Employees</label>
+                            <input type="number" id="rdtax_employees" class="calculator-input" placeholder="e.g., 10" oninput="calculateRDTax()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Eligible R&D Activities (%)</label>
+                            <input type="number" id="rdtax_percent" class="calculator-input" placeholder="e.g., 80" min="0" max="100" oninput="calculateRDTax()">
+                        </div>
+
+                        <div id="rdtax_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Estimated R&D Tax Credit</p>
+                            <div class="tax-amount" id="rdtax_amount">$0</div>
+                            <p class="text-xs text-slate-500 mt-4">* Federal credit estimated at ~10-14% of qualified expenses. Actual credit may vary based on detailed analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. COMPLIANCE CALCULATOR -->
+            <div id="calc-compliance" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">Compliance Cost Calculator</h3>
+                        <p class="text-slate-600 mb-8">Estimate your annual compliance costs across jurisdictions.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Business Structure</label>
+                            <select id="compliance_structure" class="calculator-input" onchange="calculateCompliance()">
+                                <option value="">Select structure...</option>
+                                <option value="single">Single US Entity</option>
+                                <option value="usindia">US Entity with India Subsidiary</option>
+                                <option value="multi">Multiple Entities (US + International)</option>
+                            </select>
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Annual Revenue ($)</label>
+                            <input type="number" id="compliance_revenue" class="calculator-input" placeholder="e.g., 1000000" oninput="calculateCompliance()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Number of States with Nexus</label>
+                            <input type="number" id="compliance_states" class="calculator-input" placeholder="e.g., 3" oninput="calculateCompliance()">
+                        </div>
+
+                        <div id="compliance_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Estimated Annual Compliance Costs</p>
+                            <div class="tax-amount" id="compliance_amount">$0</div>
+                            <div class="mt-4 text-sm text-slate-600 space-y-2">
+                                <p><strong>Includes:</strong></p>
+                                <ul class="list-disc list-inside pl-4 text-xs space-y-1">
+                                    <li>Federal & State Tax Filings</li>
+                                    <li>International Reporting (5471/5472/FinCEN 114)</li>
+                                    <li>Sales Tax Compliance</li>
+                                    <li>Bookkeeping & Monthly Close</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. FEDERAL & STATE INCOME TAX CALCULATOR -->
+            <div id="calc-federaltax" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">Federal & State Income Tax Calculator</h3>
+                        <p class="text-slate-600 mb-8">Estimate your corporate tax liability.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Taxable Income ($)</label>
+                            <input type="number" id="federaltax_income" class="calculator-input" placeholder="e.g., 500000" oninput="calculateFederalTax()">
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">State</label>
+                            <select id="federaltax_state" class="calculator-input" onchange="calculateFederalTax()">
+                                <option value="">Select state...</option>
+                                <option value="CA" data-rate="8.84">California (8.84%)</option>
+                                <option value="TX" data-rate="0">Texas (0%)</option>
+                                <option value="NY" data-rate="6.5">New York (6.5%)</option>
+                                <option value="DE" data-rate="8.7">Delaware (8.7%)</option>
+                                <option value="FL" data-rate="5.5">Florida (5.5%)</option>
+                                <option value="WA" data-rate="0">Washington (0%)</option>
+                                <option value="MA" data-rate="8">Massachusetts (8%)</option>
+                            </select>
+                        </div>
+
+                        <div id="federaltax_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Estimated Tax Liability</p>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="text-center p-4 bg-blue-50 rounded-xl">
+                                    <p class="font-bold text-blue-900 text-2xl" id="federaltax_federal">$0</p>
+                                    <p class="text-xs text-blue-600">Federal Tax (21%)</p>
+                                </div>
+                                <div class="text-center p-4 bg-blue-50 rounded-xl">
+                                    <p class="font-bold text-blue-900 text-2xl" id="federaltax_state_amount">$0</p>
+                                    <p class="text-xs text-blue-600">State Tax</p>
+                                </div>
+                            </div>
+                            <div class="tax-amount" id="federaltax_total">$0</div>
+                            <p class="text-xs text-slate-500 mt-2">Total Estimated Tax</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12. FEDERAL & STATE DUE DATE CALCULATOR -->
+            <div id="calc-duedate" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">Federal & State Due Date Calculator</h3>
+                        <p class="text-slate-600 mb-8">Find filing deadlines for your tax returns.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Entity Type</label>
+                            <select id="duedate_entity" class="calculator-input" onchange="calculateDueDate()">
+                                <option value="">Select entity type...</option>
+                                <option value="ccorp">C-Corporation</option>
+                                <option value="scorp">S-Corporation</option>
+                                <option value="partnership">Partnership/LLC</option>
+                                <option value="individual">Individual/Sole Proprietor</option>
+                            </select>
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Tax Year End</label>
+                            <select id="duedate_yearend" class="calculator-input" onchange="calculateDueDate()">
+                                <option value="">Select year end...</option>
+                                <option value="12-31">December 31</option>
+                                <option value="01-31">January 31</option>
+                                <option value="02-28">February 28</option>
+                                <option value="03-31">March 31</option>
+                                <option value="06-30">June 30</option>
+                                <option value="09-30">September 30</option>
+                            </select>
+                        </div>
+
+                        <div id="duedate_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-4">Filing Deadlines (2026)</p>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                                    <span class="font-semibold text-slate-700">Federal Return:</span>
+                                    <span class="text-blue-600 font-bold" id="duedate_federal">-</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                                    <span class="font-semibold text-slate-700">With Extension:</span>
+                                    <span class="text-blue-600 font-bold" id="duedate_extension">-</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                                    <span class="font-semibold text-slate-700">State Returns:</span>
+                                    <span class="text-slate-600 font-bold">Varies by state</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-4">* Deadlines may vary based on weekends/holidays. Always verify with your tax advisor.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13. US ENTITY INCORPORATION CALCULATOR -->
+            <div id="calc-incorporation" class="calculator-container reveal">
+                <div class="calculator-box-wrapper">
+                    <div class="calculator-box">
+                        <h3 class="text-3xl font-bold mb-4">US Entity Incorporation Cost Calculator</h3>
+                        <p class="text-slate-600 mb-8">Estimate costs for incorporating your US entity.</p>
+                        
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Entity Type</label>
+                            <select id="incorporation_type" class="calculator-input" onchange="calculateIncorporation()">
+                                <option value="">Select entity type...</option>
+                                <option value="ccorp">C-Corporation</option>
+                                <option value="llc">LLC</option>
+                                <option value="scorp">S-Corporation</option>
+                            </select>
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">State of Incorporation</label>
+                            <select id="incorporation_state" class="calculator-input" onchange="calculateIncorporation()">
+                                <option value="">Select state...</option>
+                                <option value="DE" data-fee="90">Delaware</option>
+                                <option value="CA" data-fee="100">California</option>
+                                <option value="TX" data-fee="300">Texas</option>
+                                <option value="NY" data-fee="125">New York</option>
+                                <option value="WY" data-fee="100">Wyoming</option>
+                            </select>
+                        </div>
+
+                        <div class="calculator-input-group">
+                            <label class="block text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Include Registered Agent?</label>
+                            <select id="incorporation_agent" class="calculator-input" onchange="calculateIncorporation()">
+                                <option value="yes">Yes (Recommended)</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+
+                        <div id="incorporation_result" class="calculator-result" style="display: none;">
+                            <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">Estimated Incorporation Costs</p>
+                            <div class="tax-amount" id="incorporation_amount">$0</div>
+                            <div class="mt-4 text-sm text-slate-600 space-y-2">
+                                <p><strong>Includes:</strong></p>
+                                <ul class="list-disc list-inside pl-4 text-xs space-y-1">
+                                    <li>State Filing Fees</li>
+                                    <li>Registered Agent (Annual)</li>
+                                    <li>Operating Agreement/Bylaws</li>
+                                    <li>EIN Application</li>
+                                    <li>LedgersCFO Service Fee</li>
+                                </ul>
+                                <p class="text-xs text-blue-600 font-semibold mt-4">First year cost. Annual maintenance fees apply thereafter.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
@@ -2717,7 +2966,7 @@ canvas {
                     </a>
                 </div>
             </div>
-
+            
             <!-- Quick Links -->
             <div>
                 <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Quick Links</h4>
@@ -2728,6 +2977,10 @@ canvas {
                     <li><a href="#resources" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Resources</a></li>
                     <li><a href="#insights" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm">Insights</a></li>
                 </ul>
+            </div>
+
+            <!-- Legal -->
+            <div>
                 <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Legal</h4>
                 <ul class="space-y-3">
                     <li><button onclick="openPrivacyPolicy()" class="text-slate-400 hover:text-white transition-colors duration-300 text-sm text-left">Privacy Policy</button></li>
@@ -2741,7 +2994,7 @@ canvas {
                 <div class="space-y-4 mb-8">
                     <div>
                         <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Address</p>
-                        <p class="text-slate-300 text-sm leading-relaxed">5900 Balcones Drive STE 100<br>Austin, TX 78731<br>USA</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">700 Lavaca Street STE 1401<br>Austin, TX 78701<br>USA</p>
                     </div>
                     <div>
                         <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Phone</p>
@@ -2757,7 +3010,7 @@ canvas {
                 <div class="space-y-4">
                     <div>
                         <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Address</p>
-                        <p class="text-slate-300 text-sm leading-relaxed">3rd floor, 38/17, #11678<br>SMART AVENUE, Nehru Road<br>Kammanahalli, HRBR Layout<br>Bangalore-560043</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">No. 11678, 3rd Floor, Smart Avenue<br>Nehru Road, Kammanahalli<br>Bangalore, KA 560043, India</p>
                     </div>
                     <div>
                         <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 font-bold">Phone</p>
@@ -2765,28 +3018,112 @@ canvas {
                     </div>
                 </div>
             </div>
-            <div>
-            <div>
-                <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Contact Us - USA</h4>
-                <p class="text-slate-300 text-sm leading-relaxed">700 LAVACA STREET STE 1401<br>AUSTIN, TX 78701<br>USA</p>
-            </div>
-
-            <div class="space-y-4">
-                <h4 class="text-sm font-bold uppercase tracking-widest mb-6 text-blue-400">Contact Us - India</h4>
-                <p class="text-slate-300 text-sm leading-relaxed">No. 11678, 3rd Floor, Smart Avenue<br>Nehru Road, Kammanahalli<br>Bangalore, KA 560043</p>
-            </div>
-        </div>
         </div>
 
-        <section class="py-16 bg-slate-50 border-t border-slate-100">
+        <!-- Testimonials Section -->
+       <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-center">
+    <span style="-webkit-text-stroke: 1px #1e40af; -webkit-text-fill-color: white; text-stroke: 1px #1e40af;">What Our</span> 
+    <span class="text-gradient inline-block">Clients Say</span>
+</h2>
+                    <p class="text-slate-600 text-lg max-w-2xl mx-auto">Trusted by 100+ startups for investor-ready finance operations</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Testimonial 1 - Piyush -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                        <div class="mb-6">
+                            <svg class="w-10 h-10 text-blue-500 opacity-20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                        </div>
+                        <p class="text-slate-700 mb-6 leading-relaxed">"LedgersCFO helped us stay compliant across US-India operations with ease. Their expertise saved us countless hours and headaches."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <span class="text-blue-600 font-bold text-lg">P</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-900">Piyush</p>
+                                <p class="text-sm text-slate-500">Founder, E42 AI</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 - Chaitanya -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                        <div class="mb-6">
+                            <svg class="w-10 h-10 text-blue-500 opacity-20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                        </div>
+                        <p class="text-slate-700 mb-6 leading-relaxed">"From bookkeeping to investor-ready financials, LedgersCFO has been instrumental in scaling our finance operations efficiently."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <span class="text-blue-600 font-bold text-lg">C</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-900">Chaitanya</p>
+                                <p class="text-sm text-slate-500">Founder, Wayto Cloud</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 - Kishore -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                        <div class="mb-6">
+                            <svg class="w-10 h-10 text-blue-500 opacity-20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                        </div>
+                        <p class="text-slate-700 mb-6 leading-relaxed">"Professional, responsive, and knowledgeable. LedgersCFO simplified our tax compliance and gave us peace of mind for fundraising."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <span class="text-blue-600 font-bold text-lg">K</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-900">Kishore</p>
+                                <p class="text-sm text-slate-500">Founder, Goldcast</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 - Jithin -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                        <div class="mb-6">
+                            <svg class="w-10 h-10 text-blue-500 opacity-20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                        </div>
+                        <p class="text-slate-700 mb-6 leading-relaxed">"Their cross-border expertise is unmatched. LedgersCFO handled our complex US-India structure seamlessly and proactively."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <span class="text-blue-600 font-bold text-lg">J</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-900">Jithin</p>
+                                <p class="text-sm text-slate-500">Founder, Vibrant Labs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <p class="text-slate-600 font-semibold">Working with <span class="text-blue-600 font-bold">100+ startups</span> globally</p>
+                </div>
+            </div>
+        </section>
+
+<section class="py-16 bg-slate-50 border-t border-slate-100">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">Our clients are funded by</p>
-        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60">
-            <span class="font-bold text-xl">Y Combinator</span>
-            <span class="font-bold text-xl">Together Fund</span>
-            <span class="font-bold text-xl">Westbridge Capital</span>
-            <span class="font-bold text-xl">Forum Ventures</span>
-            <span class="font-bold text-xl">Unusual Ventures</span>
+        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+            <span class="font-bold text-xl text-slate-700">Y Combinator</span>
+            <span class="font-bold text-xl text-slate-700">Together Fund</span>
+            <span class="font-bold text-xl text-slate-700">Westbridge Capital</span>
+            <span class="font-bold text-xl text-slate-700">Forum Ventures</span>
+            <span class="font-bold text-xl text-slate-700">Unusual Ventures</span>
         </div>
     </div>
 </section>
@@ -3327,6 +3664,131 @@ function calculateSavings() {
     document.getElementById('savings_errors').textContent = '$' + Math.round(totalSavings * 0.15).toLocaleString();
     document.getElementById('savings_result').style.display = 'block';
 }
+
+// 9. R&D Tax Credit Calculator
+function calculateRDTax() {
+    const expenses = parseFloat(document.getElementById('rdtax_expenses').value) || 0;
+    const employees = parseFloat(document.getElementById('rdtax_employees').value) || 0;
+    const percent = parseFloat(document.getElementById('rdtax_percent').value) || 0;
+
+    if (expenses === 0 || percent === 0) {
+        document.getElementById('rdtax_result').style.display = 'none';
+        return;
+    }
+
+    const qualifiedExpenses = expenses * (percent / 100);
+    const estimatedCredit = Math.round(qualifiedExpenses * 0.12); // ~12% average credit rate
+
+    document.getElementById('rdtax_amount').textContent = '$' + estimatedCredit.toLocaleString();
+    document.getElementById('rdtax_result').style.display = 'block';
+}
+
+// 10. Compliance Calculator
+function calculateCompliance() {
+    const structure = document.getElementById('compliance_structure').value;
+    const revenue = parseFloat(document.getElementById('compliance_revenue').value) || 0;
+    const states = parseFloat(document.getElementById('compliance_states').value) || 0;
+
+    if (!structure || revenue === 0) {
+        document.getElementById('compliance_result').style.display = 'none';
+        return;
+    }
+
+    let baseCost = 0;
+    if (structure === 'single') {
+        baseCost = 3500;
+    } else if (structure === 'usindia') {
+        baseCost = 8500; // Includes 5471/5472/FinCEN forms
+    } else if (structure === 'multi') {
+        baseCost = 12000;
+    }
+
+    const stateCost = states * 750; // Average state return cost
+    const bookkeepingCost = revenue < 500000 ? 6000 : (revenue < 2000000 ? 12000 : 24000);
+    const totalCost = Math.round(baseCost + stateCost + bookkeepingCost);
+
+    document.getElementById('compliance_amount').textContent = '$' + totalCost.toLocaleString();
+    document.getElementById('compliance_result').style.display = 'block';
+}
+
+// 11. Federal & State Income Tax Calculator
+function calculateFederalTax() {
+    const income = parseFloat(document.getElementById('federaltax_income').value) || 0;
+    const stateSelect = document.getElementById('federaltax_state');
+    const stateRate = parseFloat(stateSelect.options[stateSelect.selectedIndex]?.dataset.rate) || 0;
+
+    if (income === 0 || !stateSelect.value) {
+        document.getElementById('federaltax_result').style.display = 'none';
+        return;
+    }
+
+    const federalTax = Math.round(income * 0.21); // 21% federal corporate rate
+    const stateTax = Math.round(income * (stateRate / 100));
+    const totalTax = federalTax + stateTax;
+
+    document.getElementById('federaltax_federal').textContent = '$' + federalTax.toLocaleString();
+    document.getElementById('federaltax_state_amount').textContent = '$' + stateTax.toLocaleString();
+    document.getElementById('federaltax_total').textContent = '$' + totalTax.toLocaleString();
+    document.getElementById('federaltax_result').style.display = 'block';
+}
+
+// 12. Due Date Calculator
+function calculateDueDate() {
+    const entity = document.getElementById('duedate_entity').value;
+    const yearEnd = document.getElementById('duedate_yearend').value;
+
+    if (!entity || !yearEnd) {
+        document.getElementById('duedate_result').style.display = 'none';
+        return;
+    }
+
+    let federalDeadline = '';
+    let extensionDeadline = '';
+
+    if (entity === 'ccorp') {
+        if (yearEnd === '12-31') {
+            federalDeadline = 'April 15, 2026';
+            extensionDeadline = 'October 15, 2026';
+        } else if (yearEnd === '06-30') {
+            federalDeadline = 'October 15, 2026';
+            extensionDeadline = 'April 15, 2027';
+        }
+    } else if (entity === 'scorp' || entity === 'partnership') {
+        if (yearEnd === '12-31') {
+            federalDeadline = 'March 15, 2026';
+            extensionDeadline = 'September 15, 2026';
+        }
+    } else if (entity === 'individual') {
+        federalDeadline = 'April 15, 2026';
+        extensionDeadline = 'October 15, 2026';
+    }
+
+    document.getElementById('duedate_federal').textContent = federalDeadline || 'Consult advisor';
+    document.getElementById('duedate_extension').textContent = extensionDeadline || 'Consult advisor';
+    document.getElementById('duedate_result').style.display = 'block';
+}
+
+// 13. Incorporation Calculator
+function calculateIncorporation() {
+    const type = document.getElementById('incorporation_type').value;
+    const stateSelect = document.getElementById('incorporation_state');
+    const stateFee = parseFloat(stateSelect.options[stateSelect.selectedIndex]?.dataset.fee) || 0;
+    const agent = document.getElementById('incorporation_agent').value;
+
+    if (!type || !stateSelect.value) {
+        document.getElementById('incorporation_result').style.display = 'none';
+        return;
+    }
+
+    const registeredAgentFee = agent === 'yes' ? 125 : 0;
+    const serviceFee = 500; // LedgersCFO service fee
+    const documentFee = 200; // Operating agreement/bylaws
+    const totalCost = Math.round(stateFee + registeredAgentFee + serviceFee + documentFee);
+
+    document.getElementById('incorporation_amount').textContent = '$' + totalCost.toLocaleString();
+    document.getElementById('incorporation_result').style.display = 'block';
+}
+
     // Close Policy/Terms Modal
     function closePolicyModal() {
         const modal = document.getElementById('policyModal');
